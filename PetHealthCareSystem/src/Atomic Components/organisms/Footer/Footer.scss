@@ -1,0 +1,22 @@
+.footer-container {
+  height: 100px;
+  background-color: black;
+
+  .footer-layout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin: 0 60px;
+    padding: 0 30px;
+
+    .footer-content {
+      color: white;
+
+      .copyright {
+        display: block;
+        font-weight: 400;
+      }
+    }
+  }
+}
