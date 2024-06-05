@@ -1,6 +1,9 @@
 .header-container {
   height: 80px;
   background-color: var(--LILY-WHITE);
+  position: fixed;
+  right: 0;
+  left: 0;
 
   .header-layout {
     justify-content: space-between;
@@ -35,8 +38,8 @@
           color: var(--JELLY-BEAN);
 
           &:hover {
-            background-color: #d0e6ee;
-            transition: 0.2s background-color;
+            background-color: #d0e6ee; 
+            transition: 0.25s background-color;
           }
         }
       }

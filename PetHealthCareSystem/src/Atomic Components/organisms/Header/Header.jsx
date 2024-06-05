@@ -31,18 +31,6 @@ function Header() {
               </li>
             </Link>
             <Link
-              to="/about"
-              className="nav-item"
-            >
-              <li className="nav-item">
-                <Text
-                  type="subtitle"
-                  content="About"
-                  cursor="pointer"
-                />
-              </li>
-            </Link>
-            <Link
               to="/services"
               className="nav-item"
             >
@@ -55,6 +43,18 @@ function Header() {
               </li>
             </Link>
             <Link
+              to="/your-pet"
+              className="nav-item"
+            >
+              <li className="nav-item">
+                <Text
+                  type="subtitle"
+                  content="Your Pet"
+                  cursor="pointer"
+                />
+              </li>
+            </Link>
+            {/* <Link
               to="/contact"
               className="nav-item"
             >
@@ -65,7 +65,7 @@ function Header() {
                   cursor="pointer"
                 />
               </li>
-            </Link>
+            </Link> */}
           </ul>
         </nav>
       </div>
