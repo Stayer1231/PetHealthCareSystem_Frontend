@@ -1,0 +1,60 @@
+.pet-card-container {
+	display: flex;
+	width: inherit;
+	border: 1px solid black;
+	border-radius: 15px;
+	box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.25);
+
+	.pet-image-container {
+		position: relative;
+		width: 120px;
+		height: 120px;
+		background-color: var(--JELLY-BEAN);
+		border-radius: 14px 0 0 14px;
+
+		.pet-image {
+			position: absolute;
+			width: 80%;
+			height: 80%;
+			border: 1px solid black;
+			border-radius: 50%;
+			object-fit: cover;
+			transform: translate(-40%, 10%);
+		}
+	}
+
+	.pet-information-container {
+		display: flex;
+		flex: 1;
+		padding: 5px 10px 5px 30px;
+
+		.pet-details-container {
+			.information-content {
+				font-weight: 400;
+			}
+
+			.pet-name {
+				margin-bottom: 5px;
+
+				.pet-name-content {
+					font-weight: 450;
+				}
+			}
+
+			.pet-sub-information {
+				.pet-age-content {
+					margin-right: 2px;
+				}
+
+				.pet-breed-content {
+					margin-left: 2px;
+				}
+			}
+		}
+
+		.profile-go-btn {
+			margin-left: auto;
+			margin-top: auto;
+		}
+	}
+}

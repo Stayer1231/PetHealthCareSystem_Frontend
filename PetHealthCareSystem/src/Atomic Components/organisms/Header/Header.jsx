@@ -43,7 +43,7 @@ function Header() {
               </li>
             </Link>
             <Link
-              to="/your-pet"
+              to="/your-pet/overview"
               className="nav-item"
             >
               <li className="nav-item">
