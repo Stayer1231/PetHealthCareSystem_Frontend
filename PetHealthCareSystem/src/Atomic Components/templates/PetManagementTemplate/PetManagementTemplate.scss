@@ -1,8 +1,10 @@
 .pet-management-container {
-  display: grid;
-  grid-template-columns: 1fr 9fr;
+	display: grid;
+	grid-template-columns: 2fr 9fr;
 
-  .main-information-container {
-    width: 100%;
-  }
+	.main-information-container {
+		width: 100%;
+		padding: 0 600px 0 100px;
+		margin-top: 50px;
+	}
 }

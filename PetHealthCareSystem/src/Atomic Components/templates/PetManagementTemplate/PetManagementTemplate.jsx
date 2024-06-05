@@ -7,7 +7,9 @@ function PetManagementTemplate() {
 	return (
 		<>
 			<div className="pet-management-container">
-				<Sidebar />
+				<dir>
+					<Sidebar />
+				</dir>
 				<div className="main-information-container">
 					<Outlet />
 				</div>

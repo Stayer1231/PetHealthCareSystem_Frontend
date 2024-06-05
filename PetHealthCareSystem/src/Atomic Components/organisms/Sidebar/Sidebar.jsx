@@ -21,7 +21,7 @@ function Sidebar() {
 						type={"subtitle"}
 						className={"item"}
 						cursor={"pointer"}
-					/> 	
+					/>
 				</Link>
 			</ul>
 		</div>

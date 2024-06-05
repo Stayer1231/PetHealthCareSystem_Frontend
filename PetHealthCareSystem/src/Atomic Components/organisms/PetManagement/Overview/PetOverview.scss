@@ -1,0 +1,19 @@
+.pet-overview-container {
+	.greeting-container {
+		background-color: var(--JELLY-BEAN);
+		padding: 20px 30px;
+		border-radius: 15px;
+
+		.greeting-content {
+			color: white;
+		}
+	}
+
+	.pet-list-container {
+		display: flex;
+		flex-direction: column;
+		gap: 30px;
+		margin-top: 50px;
+		width: 100%;
+	}
+}

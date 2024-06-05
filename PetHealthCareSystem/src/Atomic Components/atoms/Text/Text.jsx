@@ -24,4 +24,8 @@ Text.propTypes = {
   htmlFor: PropTypes.string,
 };
 
+Text.defaultProps = {
+  type: "subtitle",
+}
+
 export default Text;
