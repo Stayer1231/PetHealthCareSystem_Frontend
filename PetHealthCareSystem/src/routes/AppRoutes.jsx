@@ -4,6 +4,7 @@ import CommonLayout from "../Atomic Components/pages/CommonLayout/CommonLayout";
 import ScrollToTop from "./../Atomic Components/others/ScrollToTop";
 import PetManagementPage from "../Atomic Components/pages/PetManagementPage/PetManagementPage";
 import PetOverview from "../Atomic Components/organisms/PetManagement/Overview/PetOverview";
+import PetProfile from "../Atomic Components/organisms/PetManagement/PetProfile/PetProfile";
 
 function AppRoutes() {
 	return (
@@ -14,7 +15,6 @@ function AppRoutes() {
 						path="/"
 						element={<CommonLayout />}
 					>
-						{" "}
 						<Route
 							path="/your-pet"
 							element={<PetManagementPage />}
@@ -23,6 +23,7 @@ function AppRoutes() {
 								path="overview"
 								element={<PetOverview />}
 							/>
+							<Route path="pet-profile/:petId" element={<PetProfile />}/>
 						</Route>
 					</Route>
 				</Routes>
