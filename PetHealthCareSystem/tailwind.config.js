@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {},
+    colors: {
+      "jelly-bean": "#2d759f"
+    }
   },
   plugins: [],
 }

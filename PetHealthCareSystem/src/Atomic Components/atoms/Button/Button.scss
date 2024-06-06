@@ -1,0 +1,54 @@
+.btn-comp.filled {
+	background-color: var(--JELLY-BEAN);
+	color: white;
+	border: none;
+	padding: 8px;
+	cursor: pointer;
+	border-radius: 5px;
+
+	&:active {
+		background-color: var(--JELLY-BEAN-DARK);
+	}
+}
+
+.btn-comp.transparent {
+	background-color: transparent;
+	color: var(--JELLY-BEAN);
+	border: 1px solid var(--JELLY-BEAN);
+	padding: 7px;
+	cursor: pointer;
+	border-radius: 5px;
+
+	&:active {
+		background-color: var(--ACTIVE-COLOR);
+	}
+}
+
+.btn-comp.underlined {
+	background-color: transparent;
+	color: var(--JELLY-BEAN);
+	text-decoration: underline;
+	border: none;
+	padding: 8px;
+	cursor: pointer;
+	border-radius: 5px;
+
+	&:active {
+		background-color: var(--ACTIVE-COLOR);
+	}
+}
+
+.btn-comp.underlined.right-icon {
+	display: flex;
+	background-color: transparent;
+	color: var(--JELLY-BEAN);
+	text-decoration: underline;
+	border: none;
+	padding: 8px;
+	cursor: pointer;
+	border-radius: 5px;
+
+	&:active {
+		background-color: var(--ACTIVE-COLOR);
+	}
+}
