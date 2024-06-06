@@ -1,26 +1,78 @@
 $common-width: 100%;
+$arrow-rotation-active: 90deg;
+$arrow-rotation-inactive: 180deg;
+
+// ROTATE ARROW WHETHER ACTIVE OR NOT
+@mixin rotateArrow($active) {
+	@if $active {
+		transform: rotate($arrow-rotation-active);
+	} @else {
+		transform: rotate($arrow-rotation-inactive);
+	}
+
+	transition: 0.1s transform;
+}
 
 .sidebar-container {
-    width: $common-width;
-    height: 900px;
-    box-shadow: rgba(0, 0, 0, 0.12) 5px 0px 5px;
+	width: $common-width;
+	height: 900px;
+	box-shadow: rgba(0, 0, 0, 0.12) 5px 0px 5px;
 
-    .sidebar-items-list {
-        position: fixed;
-        width: 18.25%;
-        display: flex;
-        flex-direction: column;
-        list-style-type: none;
+	.sidebar-items-list {
+		position: fixed;
+		width: 18.25%;
+		display: flex;
+		flex-direction: column;
+		list-style-type: none;
 
-        a {
-            color: var(--JELLY-BEAN);
-            text-decoration: none;
-            border-bottom: 1px solid rgb(200, 200, 200);
-            padding: 15px 0 15px 20px;
-        }
+		.item {
+			font-weight: 400;
+		}
 
-        .item {
-            font-weight: 400;
-        }
-    }
+		a {
+			color: var(--JELLY-BEAN);
+			text-decoration: none;
+			border-bottom: 1px solid rgb(200, 200, 200);
+			padding: 15px 0 15px 20px;
+		}
+
+		.pet-profile-menu {
+			user-select: none;
+			color: var(--JELLY-BEAN);
+			text-decoration: none;
+			border-bottom: 1px solid rgb(200, 200, 200);
+			padding: 15px 0 15px 20px;
+
+			.pet-profile-submenu {
+				.submenu-container {
+					margin-top: 5px;
+					display: flex;
+					flex-direction: column;
+					gap: 5px;
+					list-style-type: none;
+					padding-left: 20px;
+
+					.submenu-item {
+						padding: 8px
+					}
+				}
+			}
+
+			.profile-menu-active {
+				.arrow-menu {
+					@include rotateArrow(true);
+				}
+			}
+
+			.profile-menu-inactive {
+				.arrow-menu {
+					@include rotateArrow(false);
+				}
+			}
+
+			.pet-profile-submenu.submenu-inactive {
+				display: none;
+			}
+		}
+	}
 }
