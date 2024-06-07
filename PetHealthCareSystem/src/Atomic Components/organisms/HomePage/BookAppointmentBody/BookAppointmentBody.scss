@@ -1,0 +1,43 @@
+.user-book-appointment-controller-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 0px 20px 0 20px;
+
+    .user-book-appointment-controller {
+        margin: 30px 80px 0 0;
+        display: grid;
+        height: max-content;
+        grid-template-rows: 1fr 1fr 1fr;
+
+        .user-book-appointment-controller-title-text {
+            display: block;
+            line-height: 120%;
+            font-weight: 600;
+        }
+
+        .user-book-appointment-controller-detail-text {
+            margin: 15px 0 0 0;
+            display: block;
+            line-height: 120%;
+            font-weight: 400;
+        }
+
+        .user-book-appointment-controller-button {
+            justify-self: center;
+            width: max-content;
+            height: max-content;
+            display: block;
+            margin: 20px 0 0 0;
+            border-radius: 15px;
+            height: 50px;
+            width: 170px;
+            background: rgb(45, 117, 159);
+            border-color: rgb(45, 117, 159);
+            color: white;
+        }
+    }
+
+    .user-book-appointment-controller-img-container {
+        display: block;
+    }
+}
