@@ -38,6 +38,37 @@
 	}
 }
 
+//  BUTTON NO-LAYOUT
+.btn-comp.no-layout {
+	background-color: transparent;
+	color: var(--JELLY-BEAN);
+	text-decoration: none;
+	border: none;
+	padding: 8px;
+	cursor: pointer;
+	border-radius: 5px;
+
+	&:active {
+		background-color: var(--ACTIVE-COLOR);
+	}
+}
+
+// BUTTON NO-LAYOUT WITH RIGHT-ICON
+.btn-comp.no-layout.right-icon {
+	display: flex;
+	background-color: transparent;
+	color: var(--JELLY-BEAN);
+	text-decoration: none;
+	border: none;
+	padding: 8px;
+	cursor: pointer;
+	border-radius: 5px;
+
+	&:active {
+		background-color: var(--ACTIVE-COLOR);
+	}
+}
+
 // Underlined with right-icon
 .btn-comp.underlined.right-icon {
 	display: flex;

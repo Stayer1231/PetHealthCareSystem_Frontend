@@ -6,7 +6,10 @@ import PetManagementPage from "../Atomic Components/pages/PetManagementPage/PetM
 import PetOverview from "../Atomic Components/organisms/PetManagement/Overview/PetOverview";
 import PetProfile from "../Atomic Components/organisms/PetManagement/PetProfile/PetProfile";
 import HomePage from "../Atomic Components/pages/HomePage/HomePage";
-
+import {
+	Accordion,
+	AccordionHeader,
+} from "../Atomic Components/molecules/Accordion/Accordion";
 
 function AppRoutes() {
 	return (
@@ -19,10 +22,8 @@ function AppRoutes() {
 					>
 						<Route
 							path=""
-							element={<HomePage/>}
-						>
-
-						</Route>
+							element={<HomePage />}
+						></Route>
 						<Route
 							path="/your-pet"
 							element={<PetManagementPage />}
@@ -37,6 +38,29 @@ function AppRoutes() {
 							/>
 						</Route>
 					</Route>
+					{/* <Route
+						path="/accordion"
+						element={
+							<>
+								<Accordion>
+									<AccordionItem title="Section 1">
+										<p>This is the content of Section 1.</p>
+										<p>This is the content of Section 1.</p>
+										<p>This is the content of Section 1.</p>
+										<p>This is the content of Section 1.</p>
+										<p>This is the content of Section 1.</p>
+										<p>This is the content of Section 1.</p>
+										<p>This is the content of Section 1.</p>
+										<p>This is the content of Section 1.</p>
+										<p>This is the content of Section 1.</p>
+										<p>This is the content of Section 1.</p>
+										<p>This is the content of Section 1.</p>
+										<p>This is the content of Section 1.</p>
+									</AccordionItem>
+								</Accordion>
+							</>
+						}
+					/> */}
 				</Routes>
 			</ScrollToTop>
 		</>
