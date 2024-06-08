@@ -29,7 +29,7 @@ $arrow-rotation-inactive: 180deg;
 			font-weight: 400;
 		}
 
-		a {
+		& > a {
 			color: var(--JELLY-BEAN);
 			text-decoration: none;
 			border-bottom: 1px solid rgb(200, 200, 200);
@@ -48,12 +48,13 @@ $arrow-rotation-inactive: 180deg;
 					margin-top: 5px;
 					display: flex;
 					flex-direction: column;
-					gap: 5px;
 					list-style-type: none;
 					padding-left: 20px;
 
-					.submenu-item {
-						padding: 8px
+					& > a {
+						color: var(--JELLY-BEAN);
+						text-decoration: none;
+						padding: 8px;
 					}
 				}
 			}

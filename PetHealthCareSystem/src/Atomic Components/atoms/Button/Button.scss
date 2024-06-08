@@ -38,13 +38,47 @@
 	}
 }
 
+// Underlined with right-icon
 .btn-comp.underlined.right-icon {
 	display: flex;
 	background-color: transparent;
 	color: var(--JELLY-BEAN);
 	text-decoration: underline;
 	border: none;
-	padding: 8px;
+	padding: 8px 0 8px 8px;
+	cursor: pointer;
+	border-radius: 5px;
+
+	&:active {
+		background-color: var(--ACTIVE-COLOR);
+	}
+}
+
+// Transparent with right-icon and stroke enable
+.btn-comp.transparent.right-icon.stroke-enable {
+	display: flex;
+	background-color: transparent;
+	color: var(--JELLY-BEAN);
+	text-decoration: underline;
+	gap: 5px;
+	padding: 8px 8px 8px 8px;
+	cursor: pointer;
+	border-radius: 5px;
+
+	&:active {
+		background-color: var(--JELLY-BEAN-DARK);
+	}
+}
+
+// Transparent with right-icon and stroke disable
+.btn-comp.transparent.right-icon.stroke-disable {
+	display: flex;
+	background-color: transparent;
+	color: var(--JELLY-BEAN);
+	text-decoration: underline;
+	gap: 5px;
+	border: none;
+	padding: 8px 8px 8px 8px;
 	cursor: pointer;
 	border-radius: 5px;
 

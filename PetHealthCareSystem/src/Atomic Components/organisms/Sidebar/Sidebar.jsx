@@ -50,8 +50,22 @@ function Sidebar() {
 						}`}
 					>
 						<ul className="submenu-container">
-							<li className="submenu-item">Con cho</li>
-							<li className="submenu-item">Con meo</li>
+							<Link to="/your-pet/pet-profile/Id=1">
+								<Text
+									content={"Courage"}
+									type={"subtitle"}
+									className={"item"}
+									cursor={"pointer"}
+								/>
+							</Link>
+							<Link to="/your-pet/pet-profile/Id=2">
+								<Text
+									content={"Courage"}
+									type={"subtitle"}
+									className={"item"}
+									cursor={"pointer"}
+								/>
+							</Link>
 						</ul>
 					</div>
 				</div>

@@ -31,7 +31,10 @@ function AppRoutes() {
 								path="overview"
 								element={<PetOverview />}
 							/>
-							<Route path="pet-profile/:petId" element={<PetProfile />}/>
+							<Route
+								path="pet-profile/:petId"
+								element={<PetProfile />}
+							/>
 						</Route>
 					</Route>
 				</Routes>
