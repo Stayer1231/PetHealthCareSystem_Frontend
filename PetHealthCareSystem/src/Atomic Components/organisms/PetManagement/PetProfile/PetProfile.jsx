@@ -4,6 +4,13 @@ import CatImg from "../../../../assets/img/Cat.jpg";
 import DogImg from "../../../../assets/img/Dog.jpg";
 import Button from "../../../atoms/Button/Button";
 import { UpdatePencil } from "../../../../assets/Icon/Icon";
+import Text from "../../../atoms/Text/Text";
+import {
+	Accordion,
+	AccordionBody,
+	AccordionHeader,
+	AccordionItem,
+} from "../../../molecules/Accordion/Accordion";
 
 function PetProfile() {
 	return (
@@ -26,9 +33,104 @@ function PetProfile() {
 				</div>
 			</div>
 
-			{/* PET INFORMATION */}
+			{/* PET CARD INFORMATION */}
 			<div className="pet-information-container">
-				<div className="welcome-card-container"></div>
+				<div className="pet-overview-card-container">
+					<div className="information-container">
+						<Text
+							content={"Courage"}
+							type={"h3"}
+							className={"pet-name"}
+						/>
+						<div className="sub-information">
+							<Text
+								content={"Golden Retriever"}
+								type={"subtitle"}
+								className={"pet-breed"}
+							/>
+							<span className="divine-symbol">-</span>
+							<Text
+								content={"15 years old"}
+								type={"subtitle"}
+								className={"pet-age"}
+							/>
+						</div>
+					</div>
+					<div className="medical-record-btn">
+						<Button
+							content="View Medical History"
+							variant="filled"
+							className={"btn"}
+						/>
+					</div>
+				</div>
+			</div>
+
+			{/* WELCOME TO PET PROFILE CARD */}
+			<div className="pet-profile-welcome-card-container">
+				<div className="welcome-card">
+					<div className="pet-logo-container">
+						<img
+							src={DogImg}
+							alt="Dog Logo"
+						/>
+					</div>
+					<div className="welcome-card-content">
+						<Text
+							content={`Welcome to Pet's profile`}
+							type={"h3"}
+						/>
+					</div>
+				</div>
+			</div>
+
+			{/* PET DETAILED INFORMATION */}
+			<div className="pet-detail-container">
+				<div className="pet-detail-accordion">
+					<Accordion>
+						<AccordionItem title={"Pet Information"}>
+							<div className="accordion-information-container">
+								<div className="update-information-btn">
+									<Button
+										content="Update Information"
+										variant="no-layout"
+										rightIcon={<UpdatePencil color={"#2d759f"}/>}
+									/>
+								</div>
+								<div className="accordion-information-filled">
+									<Text
+										content={"Name: "}
+										type={"subtitle"}
+									/>
+									<Text
+										content={"Courage"}
+										type={"subtitle"}
+									/>
+								</div>
+								<div className="accordion-information">
+									<Text
+										content={"Breed: "}
+										type={"subtitle"}
+									/>
+									<Text
+										content={"Golden Retriever"}
+										type={"subtitle"}
+									/>
+								</div>
+								<div className="accordion-information-filled">
+									<Text
+										content={"Age: "}
+										type={"subtitle"}
+									/>
+									<Text
+										content={"15 years old"}
+										type={"subtitle"}
+									/>
+								</div>
+							</div>
+						</AccordionItem>
+					</Accordion>
+				</div>
 			</div>
 		</div>
 	);

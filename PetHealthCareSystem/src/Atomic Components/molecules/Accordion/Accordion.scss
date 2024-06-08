@@ -1,0 +1,46 @@
+.accordion-container {
+	width: 100%;
+	height: auto;
+	background-color: var(--SAIL-BLUE);
+	padding: 16px 16px 16px 16px;
+	border-radius: 10px;
+
+	.accordion-header {
+		font-size: 18px;
+		width: 100%;
+		height: auto;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		cursor: pointer;
+
+		.icon-container.isShown {
+			transform: rotate(-90deg);
+			transition: transform 0.15s;
+		}
+
+		.icon-container.isClosed {
+			transform: rotate(0deg);
+			transition: transform 0.15s;
+		}
+
+		& > label {
+			font-size: 18px;
+			font-weight: 600;
+		}
+	}
+}
+
+.accordion-body {
+	overflow: hidden;
+	max-height: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+	transition: all 0.3s ease-in-out;
+
+	&.open {
+		margin-top: 24px;
+		margin-bottom: 2px;
+		max-height: 1000px; // Arbitrary large value to ensure content is fully visible
+	}
+}

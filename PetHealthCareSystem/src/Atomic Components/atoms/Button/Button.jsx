@@ -20,7 +20,7 @@ function Button({
 						stroke ? "stroke-enable" : "stroke-disable"
 					}`}
 					onClick={onClick}
-					style={{ borderColor: stroke }}
+					style={{ borderColor: stroke}}
 				>
 					<Text
 						cursor={"pointer"}
