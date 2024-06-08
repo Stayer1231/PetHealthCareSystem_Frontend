@@ -1,0 +1,53 @@
+.pet-profile-container {
+	padding-right: 10%;
+
+	.background-container {
+		height: 300px;
+		width: 100%;
+		position: relative;
+		background-color: var(--JELLY-BEAN);
+		clip-path: polygon(
+			50% 0%,
+			100% 0px,
+			100% 43%,
+			100% 80%,
+			80% 90%,
+			20% 90%,
+			0px 78%,
+			0% 43%,
+			0px 0px
+		);
+
+		.pet-logo {
+			position: absolute;
+			width: 120px;
+			height: 120px;
+			border-radius: 50%;
+			object-fit: cover;
+			top: 35%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+
+        .update-profile-btn {
+            position: absolute;
+            top: 40px;
+            right: 10px;
+        }
+	}
+
+	.pet-information-container {
+		height: auto;
+		width: 100%;
+
+		.welcome-card-container {
+			position: relative;
+			margin: auto;
+			width: 80%;
+			height: 150px;
+			background-color: var(--WOODSMOKE);
+            transform: translateY(-50%);
+            border-radius: 10px;
+		}
+	}
+}
