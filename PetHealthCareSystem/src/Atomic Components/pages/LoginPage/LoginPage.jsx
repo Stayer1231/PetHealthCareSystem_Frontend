@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./LoginPage.scss";
 import { useNavigate, Link } from "react-router-dom";
-import loginImg from "../../../assets/img/DogandCat.jpg";
 import Text from "../../atoms/Text/Text";
 import Button from "../../atoms/Button/Button";
 import { message, notification } from "antd";
@@ -54,8 +53,6 @@ const LoginPage = () => {
 
   return (
     <div className="login">
-      <img src={loginImg} alt="login image" className="login__img" />
-
       <form action="" className="login__form">
         <div className="login__header">
           <Text type="h1" content="Login" className="login__title" />
