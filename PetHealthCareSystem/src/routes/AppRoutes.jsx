@@ -6,6 +6,7 @@ import PetManagementPage from "../Atomic Components/pages/PetManagementPage/PetM
 import PetOverview from "../Atomic Components/organisms/PetManagement/Overview/PetOverview";
 import PetProfile from "../Atomic Components/organisms/PetManagement/PetProfile/PetProfile";
 import HomePage from "../Atomic Components/pages/HomePage/HomePage";
+import LoginPage from "../Atomic Components/pages/LoginPage/LoginPage";
 import {
 	Accordion,
 	AccordionHeader,
@@ -16,6 +17,10 @@ function AppRoutes() {
 		<>
 			<ScrollToTop>
 				<Routes>
+				<Route 
+						path="/login" 
+						element={<LoginPage />} 
+					/>
 					<Route
 						path="/"
 						element={<CommonLayout />}
