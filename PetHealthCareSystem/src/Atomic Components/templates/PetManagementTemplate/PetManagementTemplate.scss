@@ -3,8 +3,7 @@
 	grid-template-columns: 2fr 9fr;
 
 	.main-information-container {
+		min-height: 650px;
 		width: 100%;
-		padding: 0 30% 0 100px;
-		margin-top: 50px;
 	}
 }
