@@ -1,0 +1,32 @@
+[
+    {
+        "customerName": "John Doe",
+        "score": 5,
+        "message": "Excellent service! Highly recommend."
+    },
+    {
+        "customerName": "Jane Smith",
+        "score": 4,
+        "message": "Very satisfied with the product quality."
+    },
+    {
+        "customerName": "Alice Johnson",
+        "score": 3,
+        "message": "Average experience. Could be better."
+    },
+    {
+        "customerName": "Bob Johnson",
+        "score": 4,
+        "message": "Great customer support!"
+    },
+    {
+        "customerName": "Emily Brown",
+        "score": 2,
+        "message": "Disappointed with the delivery time."
+    },
+    {
+        "customerName": "Michael Williams",
+        "score": 5,
+        "message": "Impressive product features!"
+    }
+]

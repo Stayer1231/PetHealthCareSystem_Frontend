@@ -1,0 +1,32 @@
+.feedback-card-container{
+    border: rgb(8, 73, 110);
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 10px;
+    width: 80%;
+    margin: 20px 20px 20px 20px;
+
+    .feedback-card-header{
+        border-bottom: 2px solid rgb(8, 73, 110);
+        color: rgb(196, 180, 84);
+        padding: 10px;
+
+        .feedback-card-star-rating{
+            float: right;
+        }
+    }
+
+    .feedback-card-body{
+        padding: 5px 0 20px 10px;
+        max-height: 100px;
+        min-height: 100px;
+        display: flex;
+        align-items: center;
+    }
+
+    .feedback-card-footer{
+        padding: 5px 0 20px 10px;
+        max-height: 40px;
+        min-height: 40px;
+    }
+}
