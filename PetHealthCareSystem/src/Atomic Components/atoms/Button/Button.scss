@@ -11,6 +11,13 @@
 	}
 }
 
+.btn-comp.icon-no-layout {
+	background-color: transparent;
+	border: none;
+	padding: 2px;
+	cursor: pointer;
+}
+
 .btn-comp.transparent {
 	background-color: transparent;
 	color: var(--JELLY-BEAN);

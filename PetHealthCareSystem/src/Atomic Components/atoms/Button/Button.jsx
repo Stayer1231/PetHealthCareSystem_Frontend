@@ -11,16 +11,30 @@ function Button({
 	rightIcon,
 	stroke,
 	textColor,
+	onlyIcon,
+	type,
 }) {
 	return (
 		<>
-			{rightIcon ? (
+			{onlyIcon ? (
+				<button
+					className={`btn-comp ${variant} ${className} only-icon ${
+						stroke ? "stroke-enable" : "stroke-disable"
+					}`}
+					onClick={onClick}
+					style={{ borderColor: stroke }}
+					type={type}
+				>
+					{onlyIcon}
+				</button>
+			) : rightIcon ? (
 				<button
 					className={`btn-comp ${variant} ${className} right-icon ${
 						stroke ? "stroke-enable" : "stroke-disable"
 					}`}
 					onClick={onClick}
-					style={{ borderColor: stroke}}
+					style={{ borderColor: stroke }}
+					type={type}
 				>
 					<Text
 						cursor={"pointer"}
@@ -34,6 +48,7 @@ function Button({
 				<button
 					className={`btn-comp ${variant} ${className}`}
 					onClick={onClick}
+					type={type}
 				>
 					<Text
 						cursor={"pointer"}
@@ -48,7 +63,7 @@ function Button({
 
 Button.propTypes = {
 	content: PropTypes.string.isRequired,
-	variant: PropTypes.oneOf(["transparent", "filled", "underline", "no-layout"])
+	variant: PropTypes.oneOf(["transparent", "filled", "underline", "no-layout", "icon-no-layout"])
 		.isRequired,
 	onClick: PropTypes.func,
 	className: PropTypes.string,
