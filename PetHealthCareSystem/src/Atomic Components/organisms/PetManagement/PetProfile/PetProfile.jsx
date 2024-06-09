@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./PetProfile.scss";
 import CatImg from "../../../../assets/img/Cat.jpg";
 import DogImg from "../../../../assets/img/Dog.jpg";
@@ -11,8 +11,22 @@ import {
 	AccordionHeader,
 	AccordionItem,
 } from "../../../molecules/Accordion/Accordion";
+import { Modal, ModalBody, ModalHeader } from "../../../molecules/Modal/Modal";
 
 function PetProfile() {
+	const [petProfileShow, setPetProfileShow] = useState(false);
+
+	// ===PET PROFILE MODAL===
+	// OPEN
+	const openPetProfileModal = () => {
+		setPetProfileShow(true);
+	};
+
+	// CLOSE
+	const closePetProfileModal = () => {
+		setPetProfileShow(false);
+	};
+
 	return (
 		<div className="pet-profile-container">
 			{/* WELCOME BACKGROUND */}
@@ -29,6 +43,7 @@ function PetProfile() {
 						variant="transparent"
 						stroke={"#ffff"}
 						textColor={"white"}
+						onClick={openPetProfileModal}
 					/>
 				</div>
 			</div>
@@ -94,7 +109,8 @@ function PetProfile() {
 									<Button
 										content="Update Information"
 										variant="no-layout"
-										rightIcon={<UpdatePencil color={"#2d759f"}/>}
+										rightIcon={<UpdatePencil color={"#2d759f"} />}
+										onClick={openPetProfileModal}
 									/>
 								</div>
 								<div className="accordion-information-filled">
@@ -132,6 +148,35 @@ function PetProfile() {
 					</Accordion>
 				</div>
 			</div>
+
+			{/* MODAL PUT HERE */}
+			{/* PET PROFILE */}
+			<Modal
+				onHide={closePetProfileModal}
+				show={petProfileShow}
+				size={"sm"}
+			>
+				<ModalHeader />
+				<ModalBody>
+					<div className="pet-update-information-container">
+						<div className="about-pet input-div">
+							<Text content={`About "Pet Name":`} />
+							<textarea
+								name=""
+								id=""
+								className="general-input-field"
+							></textarea>
+						</div>
+						<div className="pet-first-name input-div">
+							<Text content={`What is your pet's first name?:`} />
+							<input
+								type="text"
+								className="general-input-field"
+							/>
+						</div>
+					</div>
+				</ModalBody>
+			</Modal>
 		</div>
 	);
 }
