@@ -1,0 +1,35 @@
+[
+    {
+      "serviceTitle": "Service 1",
+      "serviceDescription": "Description of service 1"
+    },
+    {
+      "serviceTitle": "Service 2",
+      "serviceDescription": "Description of service 2"
+    },
+    {
+      "serviceTitle": "Service 3",
+      "serviceDescription": "Description of service 3"
+    },
+    {
+      "serviceTitle": "Service 4",
+      "serviceDescription": "Description of service 4"
+    },
+    {
+      "serviceTitle": "Service 5",
+      "serviceDescription": "Description of service 5"
+    },
+    {
+      "serviceTitle": "Service 6",
+      "serviceDescription": "Description of service 6"
+    },
+    {
+      "serviceTitle": "Service 7",
+      "serviceDescription": "Description of service 7"
+    },
+    {
+      "serviceTitle": "Service 8",
+      "serviceDescription": "Description of service 8"
+    }
+  ]
+  
