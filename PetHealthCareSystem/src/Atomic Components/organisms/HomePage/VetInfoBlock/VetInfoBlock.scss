@@ -1,0 +1,42 @@
+.vet-info-block-container {
+    display: block;
+    width: 100%;
+    height: auto;
+
+    .vet-info-block-img {
+        display: block;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+
+    .vet-info-block-content {
+        background-image: url('https://images.ctfassets.net/8hq8guzcncfs/1Qt274F5sUhEftUClNeNd4/e88168a1c8ada2c0d5f90bff7661f9ef/insta-background.jpg?fm=webp');
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        color: white;
+
+        .vet-info-block-content-text{
+            padding: 50px 50px 50px 50px;
+
+            .vet-info-block-content-h1{
+                display: block;
+                margin: 0 0 10px 0;
+            }
+
+            .vet-info-block-content-h4{
+                display: block;
+                font-weight: 500;
+            }
+        }
+
+        .vet-info-block-content-detail{
+            padding: 40px 20% 0 20%;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+    }
+}
