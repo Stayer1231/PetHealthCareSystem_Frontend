@@ -95,6 +95,8 @@
 // Transparent with right-icon and stroke enable
 .btn-comp.transparent.right-icon.stroke-enable {
 	display: flex;
+	justify-content: center;
+	align-items: center;
 	background-color: transparent;
 	color: var(--JELLY-BEAN);
 	text-decoration: underline;
