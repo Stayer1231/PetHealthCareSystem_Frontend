@@ -102,6 +102,41 @@ $arrow-rotation-inactive: 180deg;
 				.modal-title {
 					padding-bottom: 30px;
 				}
+
+				.general-input-field {
+					padding: 10px;
+					font-size: 15px;
+					border: 1px solid var(--JELLY-BEAN); /* Ensure border is defined */
+					border-radius: 8px;
+
+					&:focus-visible {
+						border-color: var(
+							--JELLY-BEAN
+						); /* Change this to the color you want */
+						border-width: 2px; /* Increase the border width */
+						border-radius: 8px;
+						outline: none; /* Remove default outline */
+					}
+				}
+
+				.adding-information-container {
+					width: 100%;
+					display: flex;
+					flex-direction: column;
+					gap: 25px;
+
+					.input-div {
+						display: flex;
+						flex-direction: column;
+						border: none;
+					}
+
+					.field-label {
+						font-size: 16px;
+						font-weight: 500;
+						margin-bottom: 5px;
+					}
+				}
 			}
 		}
 	}

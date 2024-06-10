@@ -108,7 +108,7 @@ function Sidebar() {
 						<div className="adding-information-container">
 							{/* PET NAME */}
 							<div className="pet-name input-div">
-								<Text content={"What is your pet's name?"} />
+								<Text content={"What is your pet's name?"} className={"field-label"} />
 								<input
 									type="text"
 									className="general-input-field"
@@ -116,6 +116,50 @@ function Sidebar() {
 							</div>
 
 							{/* PET ROLE */}
+							<div className="pet-role input-div">
+								<Text content={"Assign my pet as?"} className={"field-label"} />
+								<input
+									type="text"
+									className="general-input-field"
+								/>
+							</div>
+
+							{/* PET BREED */}
+							<div className="pet-breed input-div">
+								<Text content={"What breed is your pet?"} className={"field-label"} />
+								<input
+									type="text"
+									className="general-input-field"
+								/>
+							</div>
+
+							{/* PET DOB */}
+							<div className="pet-dob input-div">
+								<Text content={"What is your pet's date of birth?*"} className={"field-label"} />
+								<input
+									type="date"
+									className="general-input-field"
+								/>
+							</div>
+
+							{/* PET GENDER */}
+							<div className="pet-gender input-div">
+								<Text content={"What is your pet's date of birth?*"} className={"field-label"} />
+								<select name="" id="" className="general-input-field">
+									<option value="male">Male</option>
+									<option value="female">Female</option>
+								</select>
+							</div>
+
+							{/* PET NEUTERED */}
+							<div className="pet-neutered input-div">
+								<Text content={"Has your pet been neutered?"} className={"field-label"} />
+								<select name="" id="" className="general-input-field">
+									<option value="yes">Yes</option>
+									<option value="no">No</option>
+								</select>
+							</div>
+
 						</div>
 					</div>
 				</ModalBody>
