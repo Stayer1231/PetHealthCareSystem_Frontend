@@ -160,6 +160,9 @@ function PetProfile() {
 			>
 				<ModalHeader />
 				<ModalBody>
+					<div className="modal-title">
+						<Text content={"Update Pet Profile"} type={"h3"} />
+					</div>
 					<div className="pet-update-information-container">
 						{/* ABOUT PET */}
 						<div className="about-pet input-div">

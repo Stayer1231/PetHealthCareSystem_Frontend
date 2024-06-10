@@ -56,6 +56,12 @@ $arrow-rotation-inactive: 180deg;
 						text-decoration: none;
 						padding: 8px;
 					}
+
+					& > label {
+						color: var(--JELLY-BEAN);
+						text-decoration: none;
+						padding: 8px;
+					}
 				}
 			}
 
@@ -86,6 +92,17 @@ $arrow-rotation-inactive: 180deg;
 	.active-sub-tab {
 		& > label {
 			font-weight: 550 !important;
+		}
+	}
+
+	.modal-container {
+		z-index: 10;
+		.modal-body {
+			.add-pet-container {
+				.modal-title {
+					padding-bottom: 30px;
+				}
+			}
 		}
 	}
 }
