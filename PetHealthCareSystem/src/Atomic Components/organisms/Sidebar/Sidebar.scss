@@ -76,4 +76,16 @@ $arrow-rotation-inactive: 180deg;
 			}
 		}
 	}
+
+	.active-tab {
+		& > label {
+			font-weight: 550 !important;
+		}
+	}
+
+	.active-sub-tab {
+		& > label {
+			font-weight: 550 !important;
+		}
+	}
 }

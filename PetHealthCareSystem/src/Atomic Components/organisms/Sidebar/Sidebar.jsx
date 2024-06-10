@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Sidebar.scss";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Text from "./../../atoms/Text/Text";
 import {
 	LeftArrowBracket,
@@ -9,6 +9,10 @@ import {
 
 function Sidebar() {
 	const [submenuActive, setSubmenuActive] = useState(false);
+	const location = useLocation();
+
+	const isActive = (path) => location.pathname === path;
+	const isSubmenuActive = (paths) => paths.some((path) => isActive(path));
 
 	// WHEN USER CLICK ON SUBMENU THEN SET THE ACTIVE TO TRUE
 	const PetProfileMenuClicked = () => {
@@ -18,20 +22,24 @@ function Sidebar() {
 	return (
 		<div className="sidebar-container">
 			<ul className="sidebar-items-list">
-				<Link to="overview">
+				<Link
+					to="overview"
+					className={`${isActive("/your-pet/overview") ? "active-tab" : ""}`}
+				>
 					<Text
 						content={"Overview"}
 						type={"subtitle"}
-						className={"item"}
+						className={`item`}
 						cursor={"pointer"}
 					/>
 				</Link>
+
 				{/* <Link to="pet-profiles"> */}
 				<div className="pet-profile-menu">
 					<div
 						className={`flex justify-between cursor-pointer profile-menu-${
 							submenuActive ? "active" : "inactive"
-						}`}
+						} ${isSubmenuActive}`}
 						onClick={PetProfileMenuClicked}
 					>
 						<Text
@@ -50,7 +58,12 @@ function Sidebar() {
 						}`}
 					>
 						<ul className="submenu-container">
-							<Link to="/your-pet/pet-profile/Id=1">
+							<Link
+								to="/your-pet/pet-profile/Id=1"
+								className={`${
+									isActive("/your-pet/pet-profile/Id=1") ? "active-sub-tab" : ""
+								}`}
+							>
 								<Text
 									content={"Courage"}
 									type={"subtitle"}
@@ -58,7 +71,12 @@ function Sidebar() {
 									cursor={"pointer"}
 								/>
 							</Link>
-							<Link to="/your-pet/pet-profile/Id=2">
+							<Link
+								to="/your-pet/pet-profile/Id=2"
+								className={`${
+									isActive("/your-pet/pet-profile/Id=2") ? "active-sub-tab" : ""
+								}`}
+							>
 								<Text
 									content={"Courage"}
 									type={"subtitle"}
