@@ -3,7 +3,7 @@ import "./LoginPage.scss";
 import { useNavigate, Link } from "react-router-dom";
 import Text from "../../atoms/Text/Text";
 import Button from "../../atoms/Button/Button";
-import { message, notification } from "antd";
+// import { message, notification } from "antd";
 
 const LoginPage = () => {
   const navigate = useNavigate();

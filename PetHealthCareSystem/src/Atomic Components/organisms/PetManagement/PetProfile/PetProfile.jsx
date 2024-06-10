@@ -12,6 +12,8 @@ import {
 	AccordionItem,
 } from "../../../molecules/Accordion/Accordion";
 import { Modal, ModalBody, ModalHeader } from "../../../molecules/Modal/Modal";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 function PetProfile() {
 	const [petProfileShow, setPetProfileShow] = useState(false);
@@ -159,20 +161,85 @@ function PetProfile() {
 				<ModalHeader />
 				<ModalBody>
 					<div className="pet-update-information-container">
+						{/* ABOUT PET */}
 						<div className="about-pet input-div">
-							<Text content={`About "Pet Name":`} />
+							<Text
+								content={`About "Pet Name":`}
+								className={"field-label"}
+							/>
 							<textarea
 								name=""
 								id=""
 								className="general-input-field"
 							></textarea>
 						</div>
-						<div className="pet-first-name input-div">
-							<Text content={`What is your pet's first name?:`} />
+
+						{/* PET NAME */}
+						<div className="pet-name input-div">
+							<Text
+								content={`What is your pet's name?`}
+								className={"field-label required-field"}
+							/>
 							<input
 								type="text"
 								className="general-input-field"
 							/>
+						</div>
+
+						{/* PET DOB */}
+						<div className="pet-dob input-div">
+							<Text
+								content={`What is your pet's date of birth?`}
+								className={"field-label required-field"}
+							/>
+							<input
+								type="date"
+								className="general-input-field"
+							/>
+						</div>
+
+						{/* PET GENDER */}
+						<div className="pet-gender input-div">
+							<Text
+								content={`What is the gender of your pet?`}
+								className={"field-label required-field"}
+							/>
+							<input
+								type="text"
+								className="general-input-field"
+							/>
+						</div>
+
+						{/* PET NEUTERED */}
+						<div className="pet-neutered input-div">
+							<Text
+								content={`Has your pet been spayed/neutered?`}
+								className={"field-label required-field"}
+							/>
+							<input
+								type="text"
+								className="general-input-field"
+							/>
+						</div>
+
+						{/* BTN CONTAINER */}
+						<div className="action-btn-container">
+							<div className="save-btn-container">
+								<Button
+									content="Save"
+									variant="filled"
+									className={"btn"}
+									onClick={closePetProfileModal}
+								/>
+							</div>
+							<div className="cancel-btn-container">
+								<Button
+									content="Cancel"
+									variant="transparent"
+									className={"btn"}
+									onClick={closePetProfileModal}
+								/>
+							</div>
 						</div>
 					</div>
 				</ModalBody>
@@ -182,3 +249,5 @@ function PetProfile() {
 }
 
 export default PetProfile;
+
+// ?sortBy=&sortOrder&findPropety&findValue&limit&skip
