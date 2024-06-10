@@ -1,0 +1,32 @@
+[
+    {
+        "vetName": "Dr. John Doe",
+        "certificate": "Vet Practitioner",
+        "message": "Excellent service and very compassionate. Dr. Doe took the time to explain everything in detail and made sure my pet was comfortable."
+    },
+    {
+        "vetName": "Dr. Jane Smith",
+        "certificate": "Vet Surgeon",
+        "message": "Highly skilled and professional. Dr. Smith performed a complex surgery on my pet with great expertise and care."
+    },
+    {
+        "vetName": "Dr. Alice Johnson",
+        "certificate": "Vet Acupuncturist",
+        "message": "Provided great care and detailed explanations. Dr. Johnson's acupuncture treatments significantly improved my pet's mobility."
+    },
+    {
+        "vetName": "Dr. Bob Brown",
+        "certificate": "Vet Dentist",
+        "message": "Very knowledgeable and friendly. Dr. Brown's dental care advice and treatments have kept my pet's teeth healthy and strong."
+    },
+    {
+        "vetName": "Dr. Emily White",
+        "certificate": "Vet Practitioner",
+        "message": "Amazing experience, will definitely return. Dr. White's attention to detail and caring nature made a huge difference."
+    },
+    {
+        "vetName": "Dr. Michael Green",
+        "certificate": "Vet Behaviorist",
+        "message": "Helped a lot with my pet's anxiety issues. Dr. Green provided excellent behavioral training techniques and support."
+    }
+]
