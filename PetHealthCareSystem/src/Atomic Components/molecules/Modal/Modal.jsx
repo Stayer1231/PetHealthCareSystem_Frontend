@@ -34,6 +34,8 @@ const Modal = ({ children, className, show, onHide, size }) => {
 
 		if (show) {
 			document.body.style.overflow = "hidden";
+			// Scroll to top when modal is opened
+			
 			document.body.addEventListener("keydown", handleKeyDown);
 		} else {
 			document.body.style.overflow = "auto";
@@ -54,9 +56,8 @@ const Modal = ({ children, className, show, onHide, size }) => {
 				onKeyDown={handleClose}
 			>
 				<div
-					className={`modal ${className} ${
-						show ? "modal-show" : "modal-closed"
-					} ${size}`}
+					className={`modal ${className} ${show ? "modal-show" : "modal-closed"
+						} ${size}`}
 					ref={modalRef}
 					onClick={handleClose}
 				>
