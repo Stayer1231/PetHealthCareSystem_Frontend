@@ -3,10 +3,12 @@ import "./Sidebar.scss";
 import { Link, useLocation } from "react-router-dom";
 import Text from "./../../atoms/Text/Text";
 import {
+	AddIcon,
 	LeftArrowBracket,
 	RightArrowBracket,
 } from "./../../../assets/Icon/Icon";
 import { Modal, ModalBody, ModalHeader } from "../../molecules/Modal/Modal";
+import Button from "../../atoms/Button/Button";
 
 function Sidebar() {
 	const [submenuActive, setSubmenuActive] = useState(false);
@@ -93,7 +95,9 @@ function Sidebar() {
 									cursor={"pointer"}
 								/>
 							</Link>
-							<Text content={"Add new pet"} className={"submenu-item"} onClick={openAddPetModal} />
+							<div className="add-pet-btn">
+								<Button content="Add Pet" onClick={openAddPetModal} variant="transparent" className={"add-btn"} rightIcon={<AddIcon />} stroke />
+							</div>
 						</ul>
 					</div>
 				</div>
