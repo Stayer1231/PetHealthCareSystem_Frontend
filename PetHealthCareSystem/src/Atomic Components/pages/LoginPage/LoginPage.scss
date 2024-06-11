@@ -1,28 +1,38 @@
 $small-font-size: 0.813rem;
 
 .login {
-  background-color: #fff;
-  width: 100%;
+  background-color: var(--LILY-WHITE);
+  position: relative;
   height: 100vh;
   display: grid;
   align-items: center;
+  overflow: hidden;
+
+  &__img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
 
   &__form {
-    background-color: hsla(0, 0%, 10%, 0.1);
-    border: 2px solid #000;
+    position: relative;
+    border: 2px solid #FFFFFF;
     margin-inline: 1.5rem;
     padding: 2.5rem 1.5rem;
     border-radius: 1rem;
-    backdrop-filter: blur(8px);
+    background-color: #FFFFFF;
   }
 
-  &__header {
-    text-align: center; // Center the text horizontally
-    margin-bottom: 2rem;
-  }
-
-  &__title {
-    color: #000;
+  &__logo {
+    text-align: center;
+    margin-bottom: 20px;
+    &-img{
+      width: 120px;
+      height: 100px;
+      border-radius: 10px;
+    }
   }
 
   &__content,
@@ -42,7 +52,7 @@ $small-font-size: 0.813rem;
   }
 
   &__input {
-    width: 100%;
+    width: 95%;
     padding-block: 0.8rem;
     background: none;
     color: #000;
@@ -62,6 +72,13 @@ $small-font-size: 0.813rem;
     }
   }
 
+  .password-toggle-btn {
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+
   &__box-input {
     position: relative;
   }
@@ -70,19 +87,14 @@ $small-font-size: 0.813rem;
     position: absolute;
     left: 0;
     top: 13px;
-    // font-weight: $font-medium;
     transition: top 0.3s, font-size 0.3s;
     color: #000;
   }
 
-  &__check,
-  &__check-group {
+  &__check{
     display: flex;
     align-items: center;
-    justify-content: space-between;
-  }
-
-  &__check {
+    justify-content: center;
     margin-bottom: 1.5rem;
   }
 
@@ -106,7 +118,7 @@ $small-font-size: 0.813rem;
   }
 
   &__forgot {
-    color: red;
+    color: var(--JELLY-BEAN);
     text-decoration: none;
 
     &:hover {
@@ -126,11 +138,11 @@ $small-font-size: 0.813rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 2px; // Adjust the gap between the text and the link if needed
+    gap: 2px;
   }
   
   .login__register-link {
-    color: red;
+    color: var(--JELLY-BEAN);
     font-size: $small-font-size;
     text-decoration: none;
   
@@ -139,6 +151,11 @@ $small-font-size: 0.813rem;
     }
   }  
   
+  .copyright{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
 }
 
 /*=============== BREAKPOINTS ===============*/
