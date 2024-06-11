@@ -71,4 +71,8 @@ Button.propTypes = {
 	stroke: PropTypes.string,
 };
 
+Button.defaultProps = {
+	variant: "filled",
+}
+
 export default Button;

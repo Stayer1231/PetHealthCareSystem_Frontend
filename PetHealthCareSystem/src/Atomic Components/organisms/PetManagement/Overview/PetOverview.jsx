@@ -138,6 +138,22 @@ function PetOverview() {
 								</select>
 							</div>
 						</div>
+
+						{/* BTN CONTAINER */}
+						<div className="action-btn-container">
+							<Button
+								content="Save"
+								variant="filled"
+								className={"btn"}
+								onClick={closeAddPetModal}
+							/>
+							<Button
+								content="Cancel"
+								variant="transparent"
+								className={"btn"}
+								onClick={closeAddPetModal}
+							/>
+						</div>
 					</div>
 				</ModalBody>
 			</Modal>
