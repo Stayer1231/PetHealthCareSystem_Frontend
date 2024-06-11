@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import "./Accordion.scss";
 import { LeftArrowBracket } from "../../../assets/Icon/Icon";
 import Text from "../../atoms/Text/Text";
+import { useLocation } from "react-router-dom";
 
 // ACCORDION MAIN
 const Accordion = ({ children, className }) => {
@@ -10,11 +11,19 @@ const Accordion = ({ children, className }) => {
 
 // // ACCORDION ITEM
 const AccordionItem = ({ title, children }) => {
+	const location = useLocation();
 	const [active, setActive] = useState(false);
 
+	// HANDLE ACCORDION CLICKED
 	const handleAccordionClicked = () => {
 		setActive(!active);
 	};
+
+	// === USEEFFCT SCOPE ===
+	// RESET ACCORDION WHEN LOCATION CHANGES
+	useEffect(() => {
+		setActive(false);
+	}, [location.pathname]);
 
 	return (
 		<div className="accordion-item">

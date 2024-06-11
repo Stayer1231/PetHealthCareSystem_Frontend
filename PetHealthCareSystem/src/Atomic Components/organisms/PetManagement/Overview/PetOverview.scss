@@ -1,4 +1,4 @@
-.pet-overview-container { 
+.pet-overview-container {
 	padding: 0 30% 0 100px;
 	margin-top: 50px;
 
@@ -18,5 +18,82 @@
 		gap: 30px;
 		margin-top: 50px;
 		width: 100%;
+	}
+
+	& > .add-pet-btn {
+		padding: 8px 8px 8px 8px;
+
+		.add-btn {
+			margin-top: 30px;
+			width: 100%;
+			text-decoration: none !important;
+
+			& > label {
+				font-size: 16px;
+			}
+
+			& > svg {
+				height: 20px;
+				width: 20px;
+			}
+
+			&:active {
+				background-color: var(--ACTIVE-COLOR) !important;
+			}
+		}
+	}
+
+	.modal-container {
+		z-index: 10;
+		.modal-body {
+			.add-pet-container {
+				.modal-title {
+					padding-bottom: 30px;
+				}
+
+				.general-input-field {
+					padding: 10px;
+					font-size: 15px;
+					border: 1px solid var(--JELLY-BEAN); /* Ensure border is defined */
+					border-radius: 8px;
+
+					&:focus-visible {
+						border-color: var(
+							--JELLY-BEAN
+						); /* Change this to the color you want */
+						border-width: 2px; /* Increase the border width */
+						border-radius: 8px;
+						outline: none; /* Remove default outline */
+					}
+				}
+
+				.adding-information-container {
+					width: 100%;
+					display: flex;
+					flex-direction: column;
+					gap: 25px;
+
+					.input-div {
+						display: flex;
+						flex-direction: column;
+						border: none;
+					}
+
+					.field-label {
+						font-size: 16px;
+						font-weight: 500;
+						margin-bottom: 5px;
+					}
+
+					.required-field {
+						&::after {
+							margin-left: 2px;
+							content: "*";
+							color: red;
+						}
+					}
+				}
+			}
+		}
 	}
 }
