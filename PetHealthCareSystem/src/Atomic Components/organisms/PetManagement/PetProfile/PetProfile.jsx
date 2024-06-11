@@ -224,26 +224,6 @@ function PetProfile() {
 								className="general-input-field"
 							/>
 						</div>
-
-						{/* BTN CONTAINER */}
-						<div className="action-btn-container">
-							<div className="save-btn-container">
-								<Button
-									content="Save"
-									variant="filled"
-									className={"btn"}
-									onClick={closePetProfileModal}
-								/>
-							</div>
-							<div className="cancel-btn-container">
-								<Button
-									content="Cancel"
-									variant="transparent"
-									className={"btn"}
-									onClick={closePetProfileModal}
-								/>
-							</div>
-						</div>
 					</div>
 				</ModalBody>
 			</Modal>
