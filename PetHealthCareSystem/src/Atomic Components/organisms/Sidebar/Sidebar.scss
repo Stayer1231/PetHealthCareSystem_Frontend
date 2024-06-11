@@ -33,7 +33,7 @@ $arrow-rotation-inactive: 180deg;
 			color: var(--JELLY-BEAN);
 			text-decoration: none;
 			border-bottom: 1px solid rgb(200, 200, 200);
-			padding: 15px 0 15px 20px;
+			padding: 15px 10px 15px 20px;
 		}
 
 		.pet-profile-menu {
@@ -41,7 +41,7 @@ $arrow-rotation-inactive: 180deg;
 			color: var(--JELLY-BEAN);
 			text-decoration: none;
 			border-bottom: 1px solid rgb(200, 200, 200);
-			padding: 15px 0 15px 20px;
+			padding: 15px 10px 15px 20px;
 
 			.pet-profile-submenu {
 				.submenu-container {
@@ -55,6 +55,34 @@ $arrow-rotation-inactive: 180deg;
 						color: var(--JELLY-BEAN);
 						text-decoration: none;
 						padding: 8px;
+					}
+
+					& > label {
+						color: var(--JELLY-BEAN);
+						text-decoration: none;
+						padding: 8px;
+					}
+
+					.add-pet-btn {
+						padding: 8px 20px 8px 8px;
+
+						.add-btn {
+							width: 100%;
+							text-decoration: none !important;
+
+							& > label {
+								font-size: 14px;
+							}
+
+							& > svg {
+								height: 20px;
+								width: 20px;
+							}
+
+							&:active {
+								background-color: var(--ACTIVE-COLOR);
+							}
+						}
 					}
 				}
 			}
@@ -73,6 +101,72 @@ $arrow-rotation-inactive: 180deg;
 
 			.pet-profile-submenu.submenu-inactive {
 				display: none;
+			}
+		}
+	}
+
+	.active-tab {
+		& > label {
+			font-weight: 550 !important;
+		}
+	}
+
+	.active-sub-tab {
+		& > label {
+			font-weight: 550 !important;
+		}
+	}
+
+	.modal-container {
+		z-index: 10;
+		.modal-body {
+			.add-pet-container {
+				.modal-title {
+					padding-bottom: 30px;
+				}
+
+				.general-input-field {
+					padding: 10px;
+					font-size: 15px;
+					border: 1px solid var(--JELLY-BEAN); /* Ensure border is defined */
+					border-radius: 8px;
+
+					&:focus-visible {
+						border-color: var(
+							--JELLY-BEAN
+						); /* Change this to the color you want */
+						border-width: 2px; /* Increase the border width */
+						border-radius: 8px;
+						outline: none; /* Remove default outline */
+					}
+				}
+
+				.adding-information-container {
+					width: 100%;
+					display: flex;
+					flex-direction: column;
+					gap: 25px;
+
+					.input-div {
+						display: flex;
+						flex-direction: column;
+						border: none;
+					}
+
+					.field-label {
+						font-size: 16px;
+						font-weight: 500;
+						margin-bottom: 5px;
+					}
+
+					.required-field {
+						&::after {
+							margin-left: 2px;
+							content: "*";
+							color: red;
+						}
+					}
+				}
 			}
 		}
 	}

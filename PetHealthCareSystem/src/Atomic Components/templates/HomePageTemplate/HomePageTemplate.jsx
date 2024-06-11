@@ -5,11 +5,12 @@ import BookAppointmentBody from "../../organisms/HomePage/BookAppointmentBody/Bo
 import HomePageBackground from "../../organisms/HomePage/HomePageBackground/HomePageBackGround";
 import HomePageServiceBlock from "../../organisms/HomePage/HomePageServiceBlock/HomePageServiceBlock";
 import CustomerFeedbackBlock from "../../organisms/HomePage/CustomerFeedbackBlock/CustomerFeedbackBlock";
+import VetInfoBlock from "../../organisms/HomePage/VetInfoBlock/VetInfoBlock";
 
 function HomePageTemplate() {
     return (
         <>
-            <HomePageBackground/>
+            {/* <HomePageBackground/> */}
             <div className="book-appointment-body">
                 <BookAppointmentBody/>
             </div>
@@ -18,6 +19,9 @@ function HomePageTemplate() {
             </div>
             <div className="customer-feedback-container">
                 <CustomerFeedbackBlock/>
+            </div>
+            <div className="home-page-vet-info-block-container">
+                <VetInfoBlock/>
             </div>
         </>
     );
