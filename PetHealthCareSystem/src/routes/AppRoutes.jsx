@@ -17,6 +17,7 @@ import {
 	ModalBody,
 	ModalHeader,
 } from "../Atomic Components/molecules/Modal/Modal";
+import MyAccount from "../Atomic Components/organisms/PetManagement/MyAccount/MyAccount";
 
 function AppRoutes() {
 	const [show, setShow] = useState(false);
@@ -52,6 +53,10 @@ function AppRoutes() {
 							<Route
 								path="overview"
 								element={<PetOverview />}
+							/>
+							<Route
+								path="my-account"
+								element={<MyAccount />}
 							/>
 							<Route
 								path="pet-profile/:petId"

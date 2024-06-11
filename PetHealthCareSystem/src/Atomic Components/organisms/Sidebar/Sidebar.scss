@@ -158,6 +158,14 @@ $arrow-rotation-inactive: 180deg;
 						font-weight: 500;
 						margin-bottom: 5px;
 					}
+
+					.required-field {
+						&::after {
+							margin-left: 2px;
+							content: "*";
+							color: red;
+						}
+					}
 				}
 			}
 		}
