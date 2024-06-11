@@ -3,13 +3,30 @@ import "./LoginPage.scss";
 import { useNavigate, Link } from "react-router-dom";
 import Text from "../../atoms/Text/Text";
 import Button from "../../atoms/Button/Button";
-import { message, notification } from "antd";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+import { IconButton} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import LoginImg from "../../../assets/img/background.jpg";
+import LoginLogo from "../../../assets/img/dog_logo.jpg";
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const [usernameOrEmail, setUsernameOrEmail] = useState("");
   const [password, setPassword] = useState("");
   const [validationMessageShown, setValidationMessageShown] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("error");
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const handleUsernameOrEmailChange = (event) => {
     setUsernameOrEmail(event.target.value);
@@ -26,9 +43,11 @@ const LoginPage = () => {
 
     if (usernameOrEmail.trim() === "" || password.trim() === "") {
       if (!validationMessageShown) {
-        message.error(
+        setSnackbarMessage(
           "Please fill in both username/email and password fields."
         );
+        setSnackbarSeverity("error");
+        setSnackbarOpen(true);
         setValidationMessageShown(true);
       }
       return;
@@ -42,20 +61,35 @@ const LoginPage = () => {
   };
 
   const loginWithEmail = (email, password) => {
-    notification.success({ message: "Login with email and password" });
-    navigate("/your-pet/overview");
+    setSnackbarMessage("Login with email and password");
+    setSnackbarSeverity("success");
+    setSnackbarOpen(true);
+    navigate("/");
   };
 
   const loginWithUsername = (username, password) => {
-    notification.success({ message: "Login with username and password" });
-    navigate("/your-pet/overview");
+    setSnackbarMessage("Login with username and password");
+    setSnackbarSeverity("success");
+    setSnackbarOpen(true);
+    navigate("/");
+  };
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackbarOpen(false);
   };
 
   return (
     <div className="login">
+
+      <img src={LoginImg} alt="login image" className="login__img" />
+
       <form action="" className="login__form">
-        <div className="login__header">
-          <Text type="h1" content="Login" className="login__title" />
+        
+        <div className="login__logo">
+          <img src={LoginLogo} alt="login image" className="login__logo-img" />
         </div>
 
         <div className="login__content">
@@ -82,7 +116,7 @@ const LoginPage = () => {
           <div className="login__box">
             <div className="login__box-input">
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 required
                 className="login__input"
                 id="login-pass"
@@ -90,34 +124,21 @@ const LoginPage = () => {
                 value={password}
                 onChange={handlePasswordChange}
               />
-              <Text 
+              <Text
                 type="label"
                 content="Password"
                 htmlFor="login-pass"
                 className="login__label"
               />
+              <IconButton
+                onClick={togglePasswordVisibility}
+                className="password-toggle-btn"
+                sx={{ width: 15, height: 15 }}
+              >
+                {showPassword ? <VisibilityOff sx={{ width: 15, height: 15 }} /> : <Visibility sx={{ width: 15, height: 15 }} />}
+              </IconButton>
             </div>
           </div>
-        </div>
-
-        <div className="login__check">
-          <div className="login__check-group">
-            <input
-              type="checkbox"
-              className="login__check-input"
-              id="login-check"
-            />
-            <Text
-              type="label"
-              content="Remember me"
-              htmlFor="login-check"
-              className="login__check-label"
-            />
-          </div>
-
-          <Link to="/forgot-password" className="login__forgot">
-            Forgot Password?
-          </Link>
         </div>
 
         <Button
@@ -127,6 +148,12 @@ const LoginPage = () => {
           className="login__button"
           textColor="var(--LILY-WHITE)"
         />
+
+        <div className="login__check">
+          <Link to="/forgot-password" className="login__forgot">
+            Forgot Password?
+          </Link>
+        </div>
 
         <div className="register-line">
           <Text
@@ -139,6 +166,20 @@ const LoginPage = () => {
           </Link>
         </div>
       </form>
+      <Text
+        type="primary"
+        className="copyright"
+        content="Copyright © Peticine 2024"
+      />
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+      >
+        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };
