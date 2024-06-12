@@ -17,6 +17,8 @@ import {
 	ModalBody,
 	ModalHeader,
 } from "../Atomic Components/molecules/Modal/Modal";
+import ServicesPage from "../Atomic Components/pages/ServicesPage/ServicesPage";
+import BookingPage from "../Atomic Components/pages/BookingPage/BookingPage";
 
 function AppRoutes() {
 	const [show, setShow] = useState(false);
@@ -45,6 +47,16 @@ function AppRoutes() {
 							path=""
 							element={<HomePage />}
 						></Route>
+						<Route
+							path="/services"
+							element={<ServicesPage />}
+						>
+						</Route>
+						<Route
+							path="/booking"
+							element={<BookingPage />}
+						>
+						</Route>
 						<Route
 							path="/your-pet"
 							element={<PetManagementPage />}
