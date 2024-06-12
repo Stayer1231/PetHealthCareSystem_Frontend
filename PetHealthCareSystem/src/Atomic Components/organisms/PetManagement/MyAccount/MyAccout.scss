@@ -1,0 +1,107 @@
+.my-account-container {
+	padding: 0 100px 0 100px;
+	margin-top: 50px;
+
+	.personal-details-container {
+		border-radius: 10px;
+		box-shadow: 0 0 12px 2px rgba(0, 0, 0, 0.1);
+		padding: 16px;
+		margin: auto;
+		width: 70%;
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+
+		.title-container {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+
+			.btn-comp {
+				&:active {
+					background-color: var(--ACTIVE-COLOR);
+				}
+			}
+		}
+
+		.info-container {
+			> :nth-child(1),
+			:nth-child(3),
+			:nth-child(5) {
+				background-color: var(--GRAY-BG-COLOR);
+			}
+
+			.info-div {
+				border-radius: 10px;
+				padding: 16px;
+				display: flex;
+				flex-direction: column;
+
+				.info-content {
+					font-weight: 400;
+					font-size: 14px;
+				}
+			}
+		}
+
+		.modal-container {
+			.modal-body {
+				.update-user-profile-container {
+					.modal-title {
+						margin-bottom: 30px;
+					}
+
+					.info-input-container {
+						width: 100%;
+						display: flex;
+						flex-direction: column;
+						gap: 25px;
+
+						.general-input-field {
+							padding: 10px;
+							font-size: 15px;
+							border: 1px solid var(--JELLY-BEAN); /* Ensure border is defined */
+							border-radius: 8px;
+
+							&:focus-visible {
+								border-color: var(
+									--JELLY-BEAN
+								); /* Change this to the color you want */
+								border-width: 2px; /* Increase the border width */
+								border-radius: 8px;
+								outline: none; /* Remove default outline */
+							}
+						}
+
+						.input-div {
+							display: flex;
+							flex-direction: column;
+							border: none;
+						}
+
+						.field-label {
+							font-size: 16px;
+							font-weight: 500;
+							margin-bottom: 5px;
+						}
+
+						.required-field {
+							&::after {
+								margin-left: 2px;
+								content: "*";
+								color: red;
+							}
+						}
+					}
+
+					.action-btn-container {
+						margin-top: 25px;
+						display: flex;
+						flex-direction: column;
+						gap: 5px;
+					}
+				}
+			}
+		}
+	}
+}

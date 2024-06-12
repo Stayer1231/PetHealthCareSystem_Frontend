@@ -17,6 +17,7 @@ import {
 	ModalBody,
 	ModalHeader,
 } from "../Atomic Components/molecules/Modal/Modal";
+import MyAccount from "../Atomic Components/organisms/PetManagement/MyAccount/MyAccount";
 import ServicesPage from "../Atomic Components/pages/ServicesPage/ServicesPage";
 import BookingPage from "../Atomic Components/pages/BookingPage/BookingPage";
 
@@ -64,6 +65,10 @@ function AppRoutes() {
 							<Route
 								path="overview"
 								element={<PetOverview />}
+							/>
+							<Route
+								path="my-account"
+								element={<MyAccount />}
 							/>
 							<Route
 								path="pet-profile/:petId"

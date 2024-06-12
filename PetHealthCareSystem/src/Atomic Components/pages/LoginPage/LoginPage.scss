@@ -1,144 +1,24 @@
-$small-font-size: 0.813rem;
-
 .login {
-  background-color: #fff;
-  width: 100%;
+  background-color: var(--LILY-WHITE);
+  position: relative;
   height: 100vh;
   display: grid;
   align-items: center;
+  overflow: hidden;
 
-  &__form {
-    background-color: hsla(0, 0%, 10%, 0.1);
-    border: 2px solid #000;
-    margin-inline: 1.5rem;
-    padding: 2.5rem 1.5rem;
-    border-radius: 1rem;
-    backdrop-filter: blur(8px);
-  }
-
-  &__header {
-    text-align: center; // Center the text horizontally
-    margin-bottom: 2rem;
-  }
-
-  &__title {
-    color: #000;
-  }
-
-  &__content,
-  &__box {
-    display: grid;
-  }
-
-  &__content {
-    row-gap: 1.75rem;
-    margin-bottom: 1.5rem;
-  }
-
-  &__box {
-    grid-template-columns: 1fr;
-    align-items: center;
-    border-bottom: 2px solid #000;
-  }
-
-  &__input {
-    width: 100%;
-    padding-block: 0.8rem;
-    background: none;
-    color: #000;
-    position: relative;
-    border: none;
-    outline: none;
-    z-index: 1;
-
-    &:focus + .login__label {
-      top: -12px;
-      font-size: $small-font-size;
-    }
-
-    &:not(:placeholder-shown).login__input:not(:focus) + .login__label {
-      top: -12px;
-      font-size: $small-font-size;
-    }
-  }
-
-  &__box-input {
-    position: relative;
-  }
-
-  &__label {
+  &__img {
     position: absolute;
-    left: 0;
-    top: 13px;
-    // font-weight: $font-medium;
-    transition: top 0.3s, font-size 0.3s;
-    color: #000;
-  }
-
-  &__check,
-  &__check-group {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  &__check {
-    margin-bottom: 1.5rem;
-  }
-
-  &__check-label {
-    color: #000;
-  }
-
-  &__check-label,
-  &__forgot,
-  &__register {
-    font-size: $small-font-size;
-  }
-
-  &__check-group {
-    column-gap: 0.5rem;
-  }
-
-  &__check-input {
-    width: 16px;
-    height: 16px;
-  }
-
-  &__forgot {
-    color: red;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-
-  &__button {
     width: 100%;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    margin-bottom: 2rem;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
   }
 
-  .register-line {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 2px; // Adjust the gap between the text and the link if needed
+  .copyright {
+    position: absolute;
+    bottom: 0;
+    right: 0;
   }
-  
-  .login__register-link {
-    color: red;
-    font-size: $small-font-size;
-    text-decoration: none;
-  
-    &:hover {
-      text-decoration: underline;
-    }
-  }  
-  
 }
 
 /*=============== BREAKPOINTS ===============*/
@@ -146,15 +26,5 @@ $small-font-size: 0.813rem;
 @media screen and (min-width: 576px) {
   .login {
     justify-content: center;
-
-    &__form {
-      width: 432px;
-      padding: 4rem 3rem 3.5rem;
-      border-radius: 1.5rem;
-    }
-
-    &__title {
-      font-size: 2rem;
-    }
   }
 }
