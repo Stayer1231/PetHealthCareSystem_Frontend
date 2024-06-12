@@ -18,127 +18,50 @@ import {
 	ModalHeader,
 } from "../Atomic Components/molecules/Modal/Modal";
 import MyAccount from "../Atomic Components/organisms/PetManagement/MyAccount/MyAccount";
+import RequireAuth from "../Atomic Components/templates/RequireAuth";
+import PersistLogin from "../config/provider/PersistLogin";
 
 function AppRoutes() {
-	const [show, setShow] = useState(false);
-
-	const handleShowModal = () => {
-		setShow(true);
-	};
-
-	const handleHideModal = () => {
-		setShow(false);
-	};
-
 	return (
 		<>
 			<ScrollToTop>
 				<Routes>
-					<Route
-						path="/login"
-						element={<LoginPage />}
-					/>
-					<Route
-						path="/"
-						element={<CommonLayout />}
-					>
-						<Route
-							path=""
-							element={<HomePage />}
-						></Route>
-						<Route
-							path="/your-pet"
-							element={<PetManagementPage />}
-						>
+					{/* AUTHENTICATED ROUTES */}
+					<Route element={<PersistLogin />}>
+						<Route element={<RequireAuth />}>
 							<Route
-								path="overview"
-								element={<PetOverview />}
-							/>
-							<Route
-								path="my-account"
-								element={<MyAccount />}
-							/>
-							<Route
-								path="pet-profile/:petId"
-								element={<PetProfile />}
-							/>
+								path="/"
+								element={<CommonLayout />}
+							>
+								<Route
+									path=""
+									element={<HomePage />}
+								></Route>
+								<Route
+									path="/your-pet"
+									element={<PetManagementPage />}
+								>
+									<Route
+										path="overview"
+										element={<PetOverview />}
+									/>
+									<Route
+										path="my-account"
+										element={<MyAccount />}
+									/>
+									<Route
+										path="pet-profile/:petId"
+										element={<PetProfile />}
+									/>
+								</Route>
+							</Route>
 						</Route>
 					</Route>
 
-					{/* TEST COMPONENT ROUTES */}
+					{/* UNAUTHENTICATED ROUTES */}
 					<Route
-						path="/accordion"
-						element={
-							<>
-								<Accordion>
-									<AccordionItem title="Section 1">
-										<p>This is the content of Section 1.</p>
-										<p>This is the content of Section 1.</p>
-										<p>This is the content of Section 1.</p>
-										<p>This is the content of Section 1.</p>
-										<p>This is the content of Section 1.</p>
-										<p>This is the content of Section 1.</p>
-										<p>This is the content of Section 1.</p>
-										<p>This is the content of Section 1.</p>
-										<p>This is the content of Section 1.</p>
-										<p>This is the content of Section 1.</p>
-										<p>This is the content of Section 1.</p>
-										<p>This is the content of Section 1.</p>
-									</AccordionItem>
-								</Accordion>
-							</>
-						}
-					/>
-					<Route
-						path="/modal"
-						element={
-							<>
-								<button onClick={handleShowModal}>Show Modal</button>
-								<Modal
-									show={show}
-									onHide={handleHideModal}
-								>
-									<ModalHeader />
-									<ModalBody>
-										<h1>h1</h1>
-										<h1>h1</h1>
-										<h1>h1</h1>
-										<h1>h1</h1>
-										<h1>h1</h1>
-										<h1>h1</h1>
-										<h1>h1</h1>
-										<h1>h1</h1>
-										<h1>h1</h1>
-										<h1>h1</h1>
-										<h1>h1</h1>
-										<h1>h1</h1>
-										<h1>h1</h1>
-										<h1>h1</h1>
-										<h1>h1</h1>
-										<h1>h1</h1>
-										<h1>h1</h1>
-										<h1>h1</h1>
-										<h1>h1</h1>
-										<h1>h1</h1>
-										<h1>h1</h1>
-										<h1>h1</h1>
-										<h1>h1</h1>
-										<h1>h1</h1>
-										<h1>h1</h1>
-										<h1>h1</h1>
-										<h1>h1</h1>
-										<h1>h1</h1>
-										<h1>h1</h1>
-										<h1>h1</h1>
-										<h1>h1</h1>
-										<h1>h1</h1>
-										<h1>h1</h1>
-										<h1>h1</h1>
-										<h1>h1</h1>
-									</ModalBody>
-								</Modal>
-							</>
-						}
+						path="/login"
+						element={<LoginPage />}
 					/>
 				</Routes>
 			</ScrollToTop>

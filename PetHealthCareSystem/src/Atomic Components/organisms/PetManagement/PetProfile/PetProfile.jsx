@@ -12,8 +12,6 @@ import {
 	AccordionItem,
 } from "../../../molecules/Accordion/Accordion";
 import { Modal, ModalBody, ModalHeader } from "../../../molecules/Modal/Modal";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 function PetProfile() {
 	const [petProfileShow, setPetProfileShow] = useState(false);
