@@ -13,6 +13,14 @@ import Button from "../../atoms/Button/Button";
 function Sidebar() {
 	const [submenuActive, setSubmenuActive] = useState(false);
 	const location = useLocation();
+	const [petData, setPetData] = useState({
+		name: "",
+		species: "",
+		breed: "",
+		dateOfBirth: "",
+		isNeutered: false,
+	});
+
 	// OPENING ADD PET MODAL
 	const [showAddPetModal, setShowAddPetModal] = useState(false);
 
@@ -65,9 +73,8 @@ function Sidebar() {
 				{/* <Link to="pet-profiles"> */}
 				<div className="pet-profile-menu">
 					<div
-						className={`flex justify-between cursor-pointer profile-menu-${
-							submenuActive ? "active" : "inactive"
-						} ${isSubmenuActive}`}
+						className={`flex justify-between cursor-pointer profile-menu-${submenuActive ? "active" : "inactive"
+							} ${isSubmenuActive}`}
 						onClick={PetProfileMenuClicked}
 					>
 						<Text
@@ -81,16 +88,14 @@ function Sidebar() {
 					</div>
 
 					<div
-						className={`pet-profile-submenu submenu-${
-							submenuActive ? "active" : "inactive"
-						}`}
+						className={`pet-profile-submenu submenu-${submenuActive ? "active" : "inactive"
+							}`}
 					>
 						<ul className="submenu-container">
 							<Link
 								to="/your-pet/pet-profile/Id=1"
-								className={`${
-									isActive("/your-pet/pet-profile/Id=1") ? "active-sub-tab" : ""
-								} submenu-item`}
+								className={`${isActive("/your-pet/pet-profile/Id=1") ? "active-sub-tab" : ""
+									} submenu-item`}
 							>
 								<Text
 									content={"Courage"}
@@ -101,9 +106,8 @@ function Sidebar() {
 							</Link>
 							<Link
 								to="/your-pet/pet-profile/Id=2"
-								className={`${
-									isActive("/your-pet/pet-profile/Id=2") ? "active-sub-tab" : ""
-								} submenu-item`}
+								className={`${isActive("/your-pet/pet-profile/Id=2") ? "active-sub-tab" : ""
+									} submenu-item`}
 							>
 								<Text
 									content={"Courage"}
@@ -152,6 +156,8 @@ function Sidebar() {
 								<input
 									type="text"
 									className="general-input-field"
+									value={petData.name}
+									onChange={(e) => setPetData(prev => ({ ...prev, name: e.target.value }))}
 								/>
 							</div>
 
@@ -160,6 +166,7 @@ function Sidebar() {
 								<Text
 									content={"Assign my pet as?"}
 									className={"field-label required-field"}
+									onChange={(e) => setPetData(prev => ({ ...prev, species: e.target.value }))}
 								/>
 								<input
 									type="text"
@@ -176,6 +183,7 @@ function Sidebar() {
 								<input
 									type="text"
 									className="general-input-field"
+									onChange={(e) => setPetData(prev => ({ ...prev, breed: e.target.value }))}
 								/>
 							</div>
 
@@ -188,6 +196,7 @@ function Sidebar() {
 								<input
 									type="date"
 									className="general-input-field"
+									onChange={(e) => setPetData(prev => ({ ...prev, dateOfBirth: e.target.value }))}
 								/>
 							</div>
 
