@@ -11,7 +11,7 @@ function PetCard({ data }) {
 	const navigate = useNavigate();
 
 	const HandleViewPetProfile = (petId) => {
-		navigate(`/your-pet/pet-profile/Id=${petId}`);
+		navigate(`/your-pet/pet-profile/${petId}`);
 	};
 
 	return (
@@ -57,7 +57,7 @@ function PetCard({ data }) {
 							content="View Pet Profile"
 							rightIcon={<RightArrowBracket color={"#ffffff"} />}
 							className={"button-item"}
-							onClick={() => HandleViewPetProfile("1")}
+							onClick={() => HandleViewPetProfile(data.id)}
 						/>
 					</div>
 				</div>
