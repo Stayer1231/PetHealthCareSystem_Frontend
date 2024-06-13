@@ -16,7 +16,7 @@ $arrow-rotation-inactive: 180deg;
 .sidebar-container {
 	width: $common-width;
 	min-height: 100vh;
-	height: 800px;
+	height: 900px;
 	box-shadow: rgba(0, 0, 0, 0.12) 5px 0px 5px;
 
 	.sidebar-items-list {
@@ -152,6 +152,22 @@ $arrow-rotation-inactive: 180deg;
 						display: flex;
 						flex-direction: column;
 						border: none;
+
+						.radio-container {
+							display: flex;
+							gap: 150px;
+
+							.radio-option {
+								display: flex;
+								align-items: center;
+								gap: 5px;
+
+								.radio-label {
+									font-size: 16px;
+									font-weight: 400;
+								}
+							}
+						}
 					}
 
 					.field-label {
