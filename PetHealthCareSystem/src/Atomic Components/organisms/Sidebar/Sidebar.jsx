@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Sidebar.scss";
 import { Link, useLocation } from "react-router-dom";
 import Text from "./../../atoms/Text/Text";
@@ -12,8 +12,10 @@ import Button from "../../atoms/Button/Button";
 import APIInUse from "./../../../config/axios/AxiosInUse";
 
 function Sidebar() {
+	const [isLoading, setIsLoading] = useState(false);
 	const [submenuActive, setSubmenuActive] = useState(false);
 	const location = useLocation();
+	const [petList, setPetList] = useState(null);
 	const [petData, setPetData] = useState({
 		name: "",
 		species: "",
@@ -52,6 +54,24 @@ function Sidebar() {
 	const closeAddPetModal = () => {
 		setShowAddPetModal(false);
 	};
+
+	// USE EFFECT SCOPE
+	// GET PET LIST
+	useEffect(() => {
+		setIsLoading(true);
+		const getPetList = async () => {
+			try {
+				const response = await APIInUse.get("Pet/GetAllPetsForCustomer");
+				setPetList(response.data.data);
+			} catch (error) {
+				console.log(error);
+			} finally {
+				setIsLoading(false);
+			}
+		};
+
+		getPetList();
+	}, []);
 
 	return (
 		<div className="sidebar-container">
@@ -106,32 +126,25 @@ function Sidebar() {
 						}`}
 					>
 						<ul className="submenu-container">
-							<Link
-								to="/your-pet/pet-profile/Id=1"
-								className={`${
-									isActive("/your-pet/pet-profile/Id=1") ? "active-sub-tab" : ""
-								} submenu-item`}
-							>
-								<Text
-									content={"Courage"}
-									type={"subtitle"}
-									className={"item"}
-									cursor={"pointer"}
-								/>
-							</Link>
-							<Link
-								to="/your-pet/pet-profile/Id=2"
-								className={`${
-									isActive("/your-pet/pet-profile/Id=2") ? "active-sub-tab" : ""
-								} submenu-item`}
-							>
-								<Text
-									content={"Courage"}
-									type={"subtitle"}
-									className={"item"}
-									cursor={"pointer"}
-								/>
-							</Link>
+							{petList?.length > 0
+								? petList.map((pet) => (
+										<Link
+											to={`/your-pet/pet-profile/${pet?.id}`}
+											className={`${
+												isActive(`/your-pet/pet-profile/${pet?.id}`)
+													? "active-sub-tab"
+													: ""
+											} submenu-item`}
+										>
+											<Text
+												content={pet?.name}
+												type={"subtitle"}
+												className={"item"}
+												cursor={"pointer"}
+											/>
+										</Link>
+								  ))
+								: null}
 							<div className="add-pet-btn">
 								<Button
 									content="Add Pet"

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./PetProfile.scss";
 import CatImg from "../../../../assets/img/Cat.jpg";
 import DogImg from "../../../../assets/img/Dog.jpg";
@@ -12,9 +12,15 @@ import {
 	AccordionItem,
 } from "../../../molecules/Accordion/Accordion";
 import { Modal, ModalBody, ModalHeader } from "../../../molecules/Modal/Modal";
+import { useLocation, useParams } from "react-router-dom";
+import APIInUse from "./../../../../config/axios/AxiosInUse";
 
 function PetProfile() {
+	const [isLoading, setIsLoading] = useState(false);
+	const { petId } = useParams();
+	console.log(petId);
 	const [petProfileShow, setPetProfileShow] = useState(false);
+	const [pet, setPet] = useState(null);
 
 	// ===PET PROFILE MODAL===
 	// OPEN
@@ -26,6 +32,23 @@ function PetProfile() {
 	const closePetProfileModal = () => {
 		setPetProfileShow(false);
 	};
+
+	// USE EFFECT SCOPE
+	useEffect(() => {
+		setIsLoading(true);
+		const getPet = async () => {
+			try {
+				const response = await APIInUse.get(`Pet/GetPetForCustomer/${petId}`);
+				setPet(response.data.data);
+			} catch (error) {
+				console.log(error);
+			} finally {
+				setIsLoading(false);
+			}
+		};
+
+		getPet();
+	}, [petId]);
 
 	return (
 		<div className="pet-profile-container">
@@ -53,19 +76,19 @@ function PetProfile() {
 				<div className="pet-overview-card-container">
 					<div className="information-container">
 						<Text
-							content={"Courage"}
+							content={pet?.name}
 							type={"h3"}
 							className={"pet-name"}
 						/>
 						<div className="sub-information">
 							<Text
-								content={"Golden Retriever"}
+								content={pet?.breed}
 								type={"subtitle"}
 								className={"pet-breed"}
 							/>
 							<span className="divine-symbol">-</span>
 							<Text
-								content={"15 years old"}
+								content={pet?.dateOfBirth}
 								type={"subtitle"}
 								className={"pet-age"}
 							/>
@@ -119,7 +142,7 @@ function PetProfile() {
 										type={"subtitle"}
 									/>
 									<Text
-										content={"Courage"}
+										content={pet?.name}
 										type={"subtitle"}
 									/>
 								</div>
@@ -129,7 +152,7 @@ function PetProfile() {
 										type={"subtitle"}
 									/>
 									<Text
-										content={"Golden Retriever"}
+										content={pet?.breed}
 										type={"subtitle"}
 									/>
 								</div>
@@ -139,7 +162,27 @@ function PetProfile() {
 										type={"subtitle"}
 									/>
 									<Text
-										content={"15 years old"}
+										content={pet?.dateOfBirth}
+										type={"subtitle"}
+									/>
+								</div>
+								<div className="accordion-information-filled">
+									<Text
+										content={"Gender: "}
+										type={"subtitle"}
+									/>
+									<Text
+										content={pet?.gender}
+										type={"subtitle"}
+									/>
+								</div>
+								<div className="accordion-information-filled">
+									<Text
+										content={"Neuter Status: "}
+										type={"subtitle"}
+									/>
+									<Text
+										content={pet?.isNeutered ? "Yes" : "No"}
 										type={"subtitle"}
 									/>
 								</div>
@@ -159,7 +202,10 @@ function PetProfile() {
 				<ModalHeader />
 				<ModalBody>
 					<div className="modal-title">
-						<Text content={"Update Pet Profile"} type={"h3"} />
+						<Text
+							content={"Update Pet Profile"}
+							type={"h3"}
+						/>
 					</div>
 					<div className="pet-update-information-container">
 						{/* ABOUT PET */}
@@ -230,5 +276,3 @@ function PetProfile() {
 }
 
 export default PetProfile;
-
-// ?sortBy=&sortOrder&findPropety&findValue&limit&skip
