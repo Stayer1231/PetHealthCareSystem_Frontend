@@ -1,11 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import './VetInfoBlock.scss';
 import Text from "../../../atoms/Text/Text";
-import vetInfoData from '../../../../TestData/VetInfoData/vetInfoData.json'
 import VetInfoCard from "../../../molecules/VetInfoCard/VetInfoCard";
+import APIInUse from "../../../../config/axios/AxiosInUse";
 
 function VetInfoBlock() {
-    const displayVet = vetInfoData.slice(0,3);
+    const [vets, setVets] = useState([]);
+    const displayVet = vets.slice(0,3);
+
+    const handleLoadVets = async () => {
+        try {
+            const response = await APIInUse.get('Vet/list');
+            setVets(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    React.useEffect(() => {
+        handleLoadVets();
+        console.log(vets);
+    }, []);
 
     return (
         <div className="vet-info-block-container">
