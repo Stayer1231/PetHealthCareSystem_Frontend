@@ -55,6 +55,19 @@
 		.profile-go-btn {
 			margin-left: auto;
 			margin-top: auto;
+
+			.button-layout {
+				display: flex;
+				gap: 10px;
+
+				.delete-btn {
+					background-color: #F26764;
+
+					&:active {
+						background-color: rgb(211, 91, 89);
+					}
+				}
+			}
 		}
 	}
 }
