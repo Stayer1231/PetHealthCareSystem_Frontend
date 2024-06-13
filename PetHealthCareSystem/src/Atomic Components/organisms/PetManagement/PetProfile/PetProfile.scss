@@ -172,7 +172,7 @@
 					flex-direction: column;
 					gap: 10px;
 
-					:nth-child(2n + 0) {
+					> :nth-child(2n + 0) {
 						background-color: rgb(247, 247, 247);
 						border-radius: 10px;
 					}
@@ -250,6 +250,17 @@
 	.modal-body {
 		.modal-title {
 			margin-bottom: 30px;
+		}
+	}
+
+	.modal-container {
+		.modal-body {
+			.action-btn-container {
+				margin-top: 25px;
+				display: flex;
+				flex-direction: column;
+				gap: 5px;
+			}
 		}
 	}
 }

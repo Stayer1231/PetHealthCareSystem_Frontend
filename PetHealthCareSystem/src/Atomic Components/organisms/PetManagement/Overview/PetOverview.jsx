@@ -6,9 +6,11 @@ import Button from "../../../atoms/Button/Button";
 import { AddIcon } from "../../../../assets/Icon/Icon";
 import { Modal, ModalBody, ModalHeader } from "../../../molecules/Modal/Modal";
 import APIInUse from "./../../../../config/axios/AxiosInUse";
+import useAuth from "../../../../config/provider/useAuth";
 
 function PetOverview() {
 	const [isLoading, setIsLoading] = useState(false);
+	const { auth } = useAuth();
 	const [showAddPetModal, setShowAddPetModal] = useState(false);
 	const [petList, setPetList] = useState(null);
 	const [petData, setPetData] = useState({
@@ -16,6 +18,7 @@ function PetOverview() {
 		species: "",
 		breed: "",
 		dateOfBirth: "",
+		gender: "",
 		isNeutered: null,
 	});
 
@@ -29,9 +32,15 @@ function PetOverview() {
 	};
 
 	// HANDLE SUBMIT ADD PET FORM
-	const handleAddPet = (e) => {
+	const handleAddPet = async (e) => {
 		e.preventDefault();
-		console.log(petData);
+		try {
+			await APIInUse.post("Pet/AddPet", petData);
+			window.location.reload();
+
+		} catch (error) {
+			console.log(error.response.data.message);
+		}
 	};
 
 	// USE EFFECT SCOPE
@@ -56,7 +65,7 @@ function PetOverview() {
 		<div className="pet-overview-container">
 			<div className="greeting-container">
 				<Text
-					content={`Welcome Back, ${"Username"}`}
+					content={`Welcome Back, ${auth?.fullName}`}
 					type={"h3"}
 					className={"greeting-content"}
 				/>
@@ -183,10 +192,19 @@ function PetOverview() {
 								{/* PET GENDER */}
 								<div className="pet-gender input-div">
 									<Text
-										content={"What is your pet's date of birth?"}
+										content={"What is your pet's gender?"}
 										className={"field-label required-field"}
 									/>
-									<select className="general-input-field">
+									<select
+										className="general-input-field"
+										value={petData.gender}
+										onChange={(e) =>
+											setPetData((prev) => ({
+												...prev,
+												gender: e.target.value,
+											}))
+										}
+									>
 										<option
 											value=""
 											disabled
@@ -237,6 +255,7 @@ function PetOverview() {
 									variant="filled"
 									className={"btn"}
 									onClick={closeAddPetModal}
+									type={"submit"}
 								/>
 								<Button
 									content="Cancel"

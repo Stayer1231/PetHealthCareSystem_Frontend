@@ -18,19 +18,49 @@ import APIInUse from "./../../../../config/axios/AxiosInUse";
 function PetProfile() {
 	const [isLoading, setIsLoading] = useState(false);
 	const { petId } = useParams();
-	console.log(petId);
-	const [petProfileShow, setPetProfileShow] = useState(false);
+	const [petUpdateProfileShow, setPetUpdateProfileShow] = useState(false);
 	const [pet, setPet] = useState(null);
+	const [petUpdateData, setPetUpdateData] = useState({
+		id: 0,
+		name: "",
+		species: "",
+		breed: "",
+		gender: "",
+		dateOfBirth: "",
+		isNeutered: null,
+	})
 
 	// ===PET PROFILE MODAL===
 	// OPEN
-	const openPetProfileModal = () => {
-		setPetProfileShow(true);
+	const openPetUpdateProfileModal = () => {
+		setPetUpdateProfileShow(true);
 	};
 
 	// CLOSE
-	const closePetProfileModal = () => {
-		setPetProfileShow(false);
+	const closePetUpdateProfileModal = () => {
+		setPetUpdateProfileShow(false);
+	};
+
+	// HANDLE UPDATE PET
+	const handleUpdatePet = async (e) => {
+		e.preventDefault();
+
+		try {
+			setIsLoading(true);
+			await APIInUse.put(`Pet/UpdatePet`, petUpdateData);
+			window.location.reload();
+
+		} catch (error) {
+			console.log(error);
+		} finally {
+			setIsLoading(false);
+		}
+	}
+
+	// CONVERT DATE TO INPUT DATE
+	const convertDateToInput = (dateString) => {
+		const [day, month, year] = dateString.split("/");
+		return `${year}-${month}-${day}`;
 	};
 
 	// USE EFFECT SCOPE
@@ -40,6 +70,16 @@ function PetProfile() {
 			try {
 				const response = await APIInUse.get(`Pet/GetPetForCustomer/${petId}`);
 				setPet(response.data.data);
+				setPetUpdateData({
+					id: response.data.data.id,
+					name: response.data.data.name,
+					species: response.data.data.species,
+					breed: response.data.data.breed,
+					gender: response.data.data.gender,
+					dateOfBirth: response.data.data.dateOfBirth,
+					isNeutered: response.data.data.isNeutered,
+				});
+
 			} catch (error) {
 				console.log(error);
 			} finally {
@@ -66,7 +106,7 @@ function PetProfile() {
 						variant="transparent"
 						stroke={"#ffff"}
 						textColor={"white"}
-						onClick={openPetProfileModal}
+						onClick={openPetUpdateProfileModal}
 					/>
 				</div>
 			</div>
@@ -133,7 +173,7 @@ function PetProfile() {
 										content="Update Information"
 										variant="no-layout"
 										rightIcon={<UpdatePencil color={"#2d759f"} />}
-										onClick={openPetProfileModal}
+										onClick={openPetUpdateProfileModal}
 									/>
 								</div>
 								<div className="accordion-information-filled">
@@ -195,80 +235,178 @@ function PetProfile() {
 			{/* MODAL PUT HERE */}
 			{/* PET PROFILE */}
 			<Modal
-				onHide={closePetProfileModal}
-				show={petProfileShow}
+				onHide={closePetUpdateProfileModal}
+				show={petUpdateProfileShow}
 				size={"sm"}
 			>
 				<ModalHeader />
 				<ModalBody>
-					<div className="modal-title">
-						<Text
-							content={"Update Pet Profile"}
-							type={"h3"}
-						/>
-					</div>
-					<div className="pet-update-information-container">
-						{/* ABOUT PET */}
-						<div className="about-pet input-div">
+					<form onSubmit={handleUpdatePet}>
+						<div className="modal-title">
 							<Text
-								content={`About "Pet Name":`}
-								className={"field-label"}
+								content={"Update Pet Profile"}
+								type={"h3"}
 							/>
-							<textarea
-								name=""
-								id=""
-								className="general-input-field"
-							></textarea>
+						</div>
+						<div className="pet-update-information-container">
+							{/* PET NAME */}
+							<div className="pet-name input-div">
+								<Text
+									content={`What is your pet's name?`}
+									className={"field-label required-field"}
+								/>
+								<input
+									type="text"
+									className="general-input-field"
+									value={petUpdateData?.name}
+									onChange={(e) =>
+										setPetUpdateData((prev) => ({
+											...prev,
+											name: e.target.value,
+										}))
+									}
+								/>
+							</div>
+
+							{/* PET SPECIES */}
+							<div className="pet-name input-div">
+								<Text
+									content={`Assign my pet as?`}
+									className={"field-label required-field"}
+								/>
+								<select
+									className="general-input-field"
+									value={petUpdateData?.species}
+									onChange={(e) =>
+										setPetUpdateData((prev) => ({
+											...prev,
+											species: e.target.value,
+										}))
+									}
+								>
+									<option
+										value=""
+										disabled
+									>
+										Select role of your pet
+									</option>
+									<option value="dog">Dog</option>
+									<option value="cat">Cat</option>
+								</select>
+							</div>
+
+							{/* PET BREED */}
+							<div className="pet-dob input-div">
+								<Text
+									content={`What breed is your pet?`}
+									className={"field-label required-field"}
+								/>
+								<input
+									type="text"
+									className="general-input-field"
+									value={petUpdateData?.breed}
+									placeholder="Enter your pet's breed"
+									onChange={(e) =>
+										setPetUpdateData((prev) => ({ ...prev, breed: e.target.value }))
+									}
+								/>
+							</div>
+
+							{/* PET DOB */}
+							<div className="pet-gender input-div">
+								<Text
+									content={`What is your pet's date of birth?`}
+									className={"field-label required-field"}
+								/>
+								<input
+									type="date"
+									className="general-input-field"
+									value={convertDateToInput(petUpdateData?.dateOfBirth)}
+									onChange={(e) =>
+										setPetUpdateData((prev) => ({
+											...prev,
+											dateOfBirth: e.target.value,
+										}))
+									}
+								/>
+							</div>
+
+							{/* PET GENDER */}
+							<div className="pet-neutered input-div">
+								<Text
+									content={`What is your pet's gender?`}
+									className={"field-label required-field"}
+								/>
+								<select
+									className="general-input-field"
+									value={petUpdateData?.gender}
+									onChange={(e) =>
+										setPetUpdateData((prev) => ({
+											...prev,
+											gender: e.target.value,
+										}))
+									}
+								>
+									<option
+										value=""
+										disabled
+									>
+										What is your pet gender
+									</option>
+									<option value="male">Male</option>
+									<option value="female">Female</option>
+								</select>
+							</div>
+
+							{/* PET NEUTERED */}
+							<div className="pet-neutered input-div">
+								<Text
+									content={"Has your pet been neutered?"}
+									className={"field-label required-field"}
+								/>
+								<select
+									name=""
+									id=""
+									className="general-input-field"
+									value={
+										petUpdateData?.isNeutered === null ? "" : petUpdateData?.isNeutered
+									}
+									onChange={(e) =>
+										setPetUpdateData((prev) => ({
+											...prev,
+											isNeutered: JSON.parse(e.target.value),
+										}))
+									}
+								>
+									<option
+										value=""
+										disabled
+									>
+										Is your pet neutered
+									</option>
+									<option value={true}>Yes</option>
+									<option value={false}>No</option>
+								</select>
+							</div>
 						</div>
 
-						{/* PET NAME */}
-						<div className="pet-name input-div">
-							<Text
-								content={`What is your pet's name?`}
-								className={"field-label required-field"}
+						{/* BUTTON CONTAINER */}
+						<div className="action-btn-container">
+							<Button
+								content="Save"
+								variant="filled"
+								className={"btn"}
+								onClick={closePetUpdateProfileModal}
+								type={"submit"}
 							/>
-							<input
-								type="text"
-								className="general-input-field"
-							/>
-						</div>
-
-						{/* PET DOB */}
-						<div className="pet-dob input-div">
-							<Text
-								content={`What is your pet's date of birth?`}
-								className={"field-label required-field"}
-							/>
-							<input
-								type="date"
-								className="general-input-field"
+							<Button
+								content="Cancel"
+								variant="transparent"
+								className={"btn"}
+								type={"submit"}
 							/>
 						</div>
-
-						{/* PET GENDER */}
-						<div className="pet-gender input-div">
-							<Text
-								content={`What is the gender of your pet?`}
-								className={"field-label required-field"}
-							/>
-							<input
-								type="text"
-								className="general-input-field"
-							/>
-						</div>
-
-						{/* PET NEUTERED */}
-						<div className="pet-neutered input-div">
-							<Text
-								content={`Has your pet been spayed/neutered?`}
-								className={"field-label required-field"}
-							/>
-							<input
-								type="text"
-								className="general-input-field"
-							/>
-						</div>
-					</div>
+					</form>
 				</ModalBody>
 			</Modal>
 		</div>

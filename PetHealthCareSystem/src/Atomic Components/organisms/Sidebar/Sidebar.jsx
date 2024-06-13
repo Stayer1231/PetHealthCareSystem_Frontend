@@ -40,7 +40,9 @@ function Sidebar() {
 	const handleAddPet = async (e) => {
 		e.preventDefault();
 		try {
-			const response = await APIInUse.post("AddPet", petData);
+			await APIInUse.post("Pet/AddPet", petData);
+			window.location.reload();
+
 		} catch (error) {
 			console.log(error.response.data.message);
 		}
@@ -105,9 +107,8 @@ function Sidebar() {
 				{/* <Link to="pet-profiles"> */}
 				<div className="pet-profile-menu">
 					<div
-						className={`flex justify-between cursor-pointer profile-menu-${
-							submenuActive ? "active" : "inactive"
-						} ${isSubmenuActive}`}
+						className={`flex justify-between cursor-pointer profile-menu-${submenuActive ? "active" : "inactive"
+							} ${isSubmenuActive}`}
 						onClick={PetProfileMenuClicked}
 					>
 						<Text
@@ -121,29 +122,27 @@ function Sidebar() {
 					</div>
 
 					<div
-						className={`pet-profile-submenu submenu-${
-							submenuActive ? "active" : "inactive"
-						}`}
+						className={`pet-profile-submenu submenu-${submenuActive ? "active" : "inactive"
+							}`}
 					>
 						<ul className="submenu-container">
 							{petList?.length > 0
 								? petList.map((pet) => (
-										<Link
-											to={`/your-pet/pet-profile/${pet?.id}`}
-											className={`${
-												isActive(`/your-pet/pet-profile/${pet?.id}`)
-													? "active-sub-tab"
-													: ""
+									<Link
+										to={`/your-pet/pet-profile/${pet?.id}`}
+										className={`${isActive(`/your-pet/pet-profile/${pet?.id}`)
+											? "active-sub-tab"
+											: ""
 											} submenu-item`}
-										>
-											<Text
-												content={pet?.name}
-												type={"subtitle"}
-												className={"item"}
-												cursor={"pointer"}
-											/>
-										</Link>
-								  ))
+									>
+										<Text
+											content={pet?.name}
+											type={"subtitle"}
+											className={"item"}
+											cursor={"pointer"}
+										/>
+									</Link>
+								))
 								: null}
 							<div className="add-pet-btn">
 								<Button

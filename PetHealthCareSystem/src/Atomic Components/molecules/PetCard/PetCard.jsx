@@ -1,18 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import "./PetCard.scss";
 import CatImg from "../../../assets/img/Cat.jpg";
 import DogImg from "../../../assets/img/Dog.jpg";
 import Text from "../../atoms/Text/Text";
 import Button from "../../atoms/Button/Button";
-import { RightArrowBracket } from "../../../assets/Icon/Icon";
+import { DeleteIcon, RightArrowBracket } from "../../../assets/Icon/Icon";
 import { useNavigate } from "react-router-dom";
+import APIInUse from "../../../config/axios/AxiosInUse";
 
-function PetCard({ data }) {
+function PetCard({ data, deletable }) {
+	const [isLoading, setIsLoading] = useState(false);
 	const navigate = useNavigate();
 
-	const HandleViewPetProfile = (petId) => {
+	// HANDLE VIEW PET PROFILE
+	const handleViewPetProfile = (petId) => {
 		navigate(`/your-pet/pet-profile/${petId}`);
 	};
+
+	// HANDLE DELETE PET
+	const handleDeletePet = async (petId) => {
+		try {
+			setIsLoading(true);
+			await APIInUse.delete(`Pet/RemovePet/${petId}`)
+			window.location.reload();
+		} catch (error) {
+			console.log(error);
+		} finally {
+			setIsLoading(false);
+		}
+	}
 
 	return (
 		<>
@@ -53,12 +69,21 @@ function PetCard({ data }) {
 
 					{/* Go to pet profile button */}
 					<div className="profile-go-btn">
-						<Button
-							content="View Pet Profile"
-							rightIcon={<RightArrowBracket color={"#ffffff"} />}
-							className={"button-item"}
-							onClick={() => HandleViewPetProfile(data.id)}
-						/>
+						<div className="button-layout">
+							<Button
+								content="Delete Pet"
+								rightIcon={<DeleteIcon color={"white"} />}
+								variant="filled"
+								className={"delete-btn"}
+								onClick={() => handleDeletePet(data.id)}
+							/>
+							<Button
+								content="View Pet Profile"
+								rightIcon={<RightArrowBracket color={"#ffffff"} />}
+								className={"view-profile-btn"}
+								onClick={() => handleViewPetProfile(data.id)}
+							/>
+						</div>
 					</div>
 				</div>
 			</div>
