@@ -1,0 +1,177 @@
+.booking-form-container {
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 2px;
+    margin: 30px 20% 30px 20%;
+    border-color: var(--JELLY-BEAN);
+    padding: 20px 10px 20px 10px;
+
+    .booking-form-header {
+        margin-bottom: 10px;
+
+        .booking-form-header-title {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .booking-form-header-description {
+            display: block;
+        }
+    }
+
+    .booking-form-body {
+
+        .booking-form-body-add-pet {
+            margin-bottom: 10px;
+            display: grid;
+            grid-template-columns: 1fr 4fr;
+
+            .add-pet-lable {
+                font-weight: 500;
+            }
+
+            .add-pet-input {
+                padding-left: 10px;
+                height: 30px;
+                border-radius: 5px;
+                border-style: solid;
+                border-width: 1px;
+            }
+        }
+
+        .added-pets-block {
+            margin-bottom: 10px;
+        }
+
+        .booking-form-body-select-vet {
+            margin-bottom: 10px;
+            display: grid;
+            grid-template-columns: 1fr 4fr;
+
+            .select-vet-lable {
+                font-weight: 500;
+            }
+
+            .select-vet-input {
+                padding-left: 10px;
+                height: 30px;
+                border-radius: 5px;
+                border-style: solid;
+                border-width: 1px;
+            }
+        }
+
+        .select-vet-block {
+            margin-bottom: 10px;
+            display: flex;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 10px 0;
+
+            .vet-info-card {
+                min-width: 200px;
+                max-width: 200px;
+                margin-right: 10px;
+
+                .vet-card-container {
+                    border-radius: 5px;
+                    border-style: solid;
+                    border-width: 1px;
+                    border-color: #ccc;
+                    padding: 10px;
+                    min-height: 0px;
+
+                    .vet-card-name {
+                        font-size: 14px;
+                        font-weight: 500;
+                    }
+
+                    .vet-certification-text {
+                        font-size: 12px;
+                    }
+                }
+                
+            }
+
+            #selected-vet-card {
+                background-color: aquamarine;
+                border-radius: 10px;
+            }
+        }
+
+        .booking-form-select-date {
+            margin-bottom: 10px;
+
+            .select-date-lable {
+                font-weight: 500;
+                display: block;
+            }
+
+            .select-date-block-container {
+                display: flex;
+                overflow-x: auto;
+                white-space: nowrap;
+                padding: 10px 0;
+
+                .select-date-block {
+                    min-width: 120px;
+                    padding: 0 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    margin-right: 10px;
+
+                    .select-date-block-text {
+                        font-size: 14px;
+                        white-space: nowrap;
+                    }
+                }
+
+                #selected-date-block {
+                    background-color: aquamarine;
+                    border-radius: 5px;
+                }
+            }
+        }
+
+        .booking-form-select-time-slot {
+            margin-bottom: 10px;
+        }
+
+        .booking-form-note-input {
+            margin-bottom: 10px;
+            display: grid;
+            grid-template-columns: 1fr 4fr;
+
+            .note-input-lable {
+                font-weight: 500;
+            }
+
+            .note-input {
+                height: 200px;
+                border-radius: 5px;
+                border-style: solid;
+                border-width: 1px;
+                padding: 10px;
+                box-sizing: border-box;
+                transition: border-color 0.3s ease;
+            }
+        }
+
+        .booking-form-buttons-group {
+            display: flex;
+            justify-content: space-between;
+
+            .cancel-button {
+                margin-right: 10px;
+                width: 100px;
+                background-color: red;
+            }
+
+            .confirm-button {
+                margin-left: 10px;
+                width: 100px;
+                background-color: green;
+            }
+        }
+    }
+}

@@ -29,82 +29,26 @@ function AppRoutes() {
 			<ScrollToTop>
 				<Routes>
 					{/* AUTHENTICATED ROUTES */}
-					<Route element={<PersistLogin />}>
-						<Route element={<RequireAuth />}>
-							<Route
-								path="/"
-								element={<CommonLayout />}
-							>
-								<Route
-									path=""
-									element={<HomePage />}
-								></Route>
-								<Route
-									path="/your-pet"
-									element={<PetManagementPage />}
-								>
-									<Route
-										path="overview"
-										element={<PetOverview />}
-									/>
-									<Route
-										path="my-account"
-										element={<MyAccount />}
-									/>
-									<Route
-										path="pet-profile/:petId"
-										element={<PetProfile />}
-									/>
+					{/* <Route element={<PersistLogin />}>
+						<Route element={<RequireAuth />}> */}
+							<Route path="/" element={<CommonLayout />}>
+								<Route index element={<HomePage />} />
+								<Route path="your-pet" element={<PetManagementPage />}>
+									<Route path="overview" element={<PetOverview />} />
+									<Route path="my-account" element={<MyAccount />} />
+									<Route path="pet-profile/:petId" element={<PetProfile />} />
 								</Route>
+								<Route path="services" element={<ServicesPage />} />
+								<Route path="booking" element={<BookingPage />} />
 							</Route>
-					<Route
-						path="/login"
-						element={<LoginPage />}
-					/>
-					<Route
-						path="/"
-						element={<CommonLayout />}
-					>
-						<Route
-							path=""
-							element={<HomePage />}
-						></Route>
-						<Route
-							path="/services"
-							element={<ServicesPage />}
-						>
-						</Route>
-						<Route
-							path="/booking"
-							element={<BookingPage />}
-						>
-						</Route>
-						<Route
-							path="/your-pet"
-							element={<PetManagementPage />}
-						>
-							<Route
-								path="overview"
-								element={<PetOverview />}
-							/>
-							<Route
-								path="my-account"
-								element={<MyAccount />}
-							/>
-							<Route
-								path="pet-profile/:petId"
-								element={<PetProfile />}
-							/>
-						</Route>
-					</Route>
+						{/* </Route>
+					</Route> */}
 
 					{/* UNAUTHENTICATED ROUTES */}
-					<Route
-						path="/login"
-						element={<LoginPage />}
-					/>
+					{/* <Route path="/login" element={<LoginPage />} /> */}
 				</Routes>
 			</ScrollToTop>
+
 		</>
 	);
 }
