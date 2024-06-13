@@ -23,11 +23,15 @@ function BookingForm() {
     const handleLoadVet = async () => {
         try {
             const response = await APIInUse.get('Vet/list');
-            useDispatch(setVets(response.data));
+            dispatch(setVets(response.data));
         } catch (error) {
             console.log(error);
         }
     }
+
+    React.useEffect(() => {
+        handleLoadVet();
+    }, []);
 
     return (
         <>
@@ -60,6 +64,43 @@ function BookingForm() {
 
                     </div>
 
+                    <div className="booking-form-select-date">
+                        <Text className={'select-date-lable'} content={'Chọn ngày đặt lịch'} type={'p'} />
+
+                        <div className="select-date-block-container">
+                            {
+                                dates?.map((date, index) => {
+                                    return (<>
+                                        {selectedDate !== date.toLocaleDateString("en-GB") ?
+                                            <>
+                                                <div
+                                                    className="select-date-block"
+                                                    key={index}
+                                                    onClick={() => dispatch(setSelectedDate(date.toLocaleDateString("en-GB")))}
+                                                >
+                                                    <Text className={'select-date-block-text'} content={date.toLocaleDateString("en-GB")} type={'p'} />
+                                                </div>
+                                            </>
+                                            :
+                                            <>
+                                                <div className="select-date-block"
+                                                    key={index}
+                                                    id="selected-date-block">
+                                                    <Text className={'select-date-block-text'} content={date.toLocaleDateString("en-GB")} type={'p'} />
+                                                </div>
+                                            </>
+                                        }
+                                    </>
+                                    );
+                                })
+                            }
+                        </div>
+                    </div>
+
+                    <div className="booking-form-select-time-slot">
+
+                    </div>
+
                     <div className="booking-form-body-select-vet">
                         <Text className={'select-vet-lable'} content={'Chọn bác sĩ'} type={'p'} />
                         <input className={'select-vet-input'} type={'text'} placeholder="Tìm theo tên bác sĩ" />
@@ -69,7 +110,7 @@ function BookingForm() {
                         {vets?.map((vet, index) => {
                             return (
                                 <>
-                                    {selectedVet?.vetName === vet?.vetName ?
+                                    {selectedVet?.id === vet?.id ?
                                         <>
                                             <div className={'vet-info-card'} id="selected-vet-card">
                                                 <VetInfoCard
@@ -96,43 +137,6 @@ function BookingForm() {
                                 </>
                             );
                         })}
-                    </div>
-
-                    <div className="booking-form-select-date">
-                        <Text className={'select-date-lable'} content={'Chọn ngày đặt lịch'} type={'p'} />
-
-                        <div className="select-date-block-container">
-                            {
-                                dates?.map((date, index) => {
-                                    return (<>
-                                        {selectedDate !== date.toLocaleDateString() ?
-                                            <>
-                                                <div
-                                                    className="select-date-block"
-                                                    key={index}
-                                                    onClick={() => dispatch(setSelectedDate(date.toLocaleDateString()))}
-                                                >
-                                                    <Text className={'select-date-block-text'} content={date.toLocaleDateString()} type={'p'} />
-                                                </div>
-                                            </>
-                                            :
-                                            <>
-                                                <div className="select-date-block"
-                                                    key={index}
-                                                    id="selected-date-block">
-                                                    <Text className={'select-date-block-text'} content={date.toLocaleDateString()} type={'p'} />
-                                                </div>
-                                            </>
-                                        }
-                                    </>
-                                    );
-                                })
-                            }
-                        </div>
-                    </div>
-
-                    <div className="booking-form-select-time-slot">
-
                     </div>
 
                     <div className="booking-form-note-input">
