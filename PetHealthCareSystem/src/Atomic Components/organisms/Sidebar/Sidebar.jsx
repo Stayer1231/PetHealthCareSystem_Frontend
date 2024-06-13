@@ -9,6 +9,7 @@ import {
 } from "./../../../assets/Icon/Icon";
 import { Modal, ModalBody, ModalHeader } from "../../molecules/Modal/Modal";
 import Button from "../../atoms/Button/Button";
+import APIInUse from "./../../../config/axios/AxiosInUse";
 
 function Sidebar() {
 	const [submenuActive, setSubmenuActive] = useState(false);
@@ -17,6 +18,7 @@ function Sidebar() {
 		name: "",
 		species: "",
 		breed: "",
+		gender: "",
 		dateOfBirth: "",
 		isNeutered: null,
 	});
@@ -33,10 +35,14 @@ function Sidebar() {
 	};
 
 	// HANDLE SUBMIT ADD PET FORM
-	const handleAddPet = (e) => {
+	const handleAddPet = async (e) => {
 		e.preventDefault();
-		console.log(petData);
-	}
+		try {
+			const response = await APIInUse.post("AddPet", petData);
+		} catch (error) {
+			console.log(error.response.data.message);
+		}
+	};
 
 	// === PET MODAL ===
 	const openAddPetModal = () => {
@@ -79,8 +85,9 @@ function Sidebar() {
 				{/* <Link to="pet-profiles"> */}
 				<div className="pet-profile-menu">
 					<div
-						className={`flex justify-between cursor-pointer profile-menu-${submenuActive ? "active" : "inactive"
-							} ${isSubmenuActive}`}
+						className={`flex justify-between cursor-pointer profile-menu-${
+							submenuActive ? "active" : "inactive"
+						} ${isSubmenuActive}`}
 						onClick={PetProfileMenuClicked}
 					>
 						<Text
@@ -94,14 +101,16 @@ function Sidebar() {
 					</div>
 
 					<div
-						className={`pet-profile-submenu submenu-${submenuActive ? "active" : "inactive"
-							}`}
+						className={`pet-profile-submenu submenu-${
+							submenuActive ? "active" : "inactive"
+						}`}
 					>
 						<ul className="submenu-container">
 							<Link
 								to="/your-pet/pet-profile/Id=1"
-								className={`${isActive("/your-pet/pet-profile/Id=1") ? "active-sub-tab" : ""
-									} submenu-item`}
+								className={`${
+									isActive("/your-pet/pet-profile/Id=1") ? "active-sub-tab" : ""
+								} submenu-item`}
 							>
 								<Text
 									content={"Courage"}
@@ -112,8 +121,9 @@ function Sidebar() {
 							</Link>
 							<Link
 								to="/your-pet/pet-profile/Id=2"
-								className={`${isActive("/your-pet/pet-profile/Id=2") ? "active-sub-tab" : ""
-									} submenu-item`}
+								className={`${
+									isActive("/your-pet/pet-profile/Id=2") ? "active-sub-tab" : ""
+								} submenu-item`}
 							>
 								<Text
 									content={"Courage"}
@@ -165,7 +175,9 @@ function Sidebar() {
 										className="general-input-field"
 										value={petData.name}
 										placeholder="Enter your pet's name"
-										onChange={(e) => setPetData(prev => ({ ...prev, name: e.target.value }))}
+										onChange={(e) =>
+											setPetData((prev) => ({ ...prev, name: e.target.value }))
+										}
 									/>
 								</div>
 
@@ -178,9 +190,19 @@ function Sidebar() {
 									<select
 										className="general-input-field"
 										value={petData.species}
-										onChange={(e) => setPetData(prev => ({ ...prev, species: e.target.value }))}
+										onChange={(e) =>
+											setPetData((prev) => ({
+												...prev,
+												species: e.target.value,
+											}))
+										}
 									>
-										<option value="" disabled>Select role of your pet</option>
+										<option
+											value=""
+											disabled
+										>
+											Select role of your pet
+										</option>
 										<option value="dog">Dog</option>
 										<option value="cat">Cat</option>
 									</select>
@@ -197,7 +219,9 @@ function Sidebar() {
 										className="general-input-field"
 										value={petData.breed}
 										placeholder="Enter your pet's breed"
-										onChange={(e) => setPetData(prev => ({ ...prev, breed: e.target.value }))}
+										onChange={(e) =>
+											setPetData((prev) => ({ ...prev, breed: e.target.value }))
+										}
 									/>
 								</div>
 
@@ -211,20 +235,37 @@ function Sidebar() {
 										type="date"
 										className="general-input-field"
 										value={petData.dateOfBirth}
-										onChange={(e) => setPetData(prev => ({ ...prev, dateOfBirth: e.target.value }))}
+										onChange={(e) =>
+											setPetData((prev) => ({
+												...prev,
+												dateOfBirth: e.target.value,
+											}))
+										}
 									/>
 								</div>
 
 								{/* PET GENDER */}
 								<div className="pet-gender input-div">
 									<Text
-										content={"What is your pet's date of birth?"}
+										content={"What is your pet's gender?"}
 										className={"field-label required-field"}
 									/>
 									<select
 										className="general-input-field"
+										value={petData.gender}
+										onChange={(e) =>
+											setPetData((prev) => ({
+												...prev,
+												gender: e.target.value,
+											}))
+										}
 									>
-										<option value="" disabled>What is your pet gender</option>
+										<option
+											value=""
+											disabled
+										>
+											What is your pet gender
+										</option>
 										<option value="male">Male</option>
 										<option value="female">Female</option>
 									</select>
@@ -240,10 +281,22 @@ function Sidebar() {
 										name=""
 										id=""
 										className="general-input-field"
-										value={petData.isNeutered === null ? "" : petData.isNeutered}
-										onChange={(e) => setPetData(prev => ({ ...prev, isNeutered: JSON.parse(e.target.value) }))}
+										value={
+											petData.isNeutered === null ? "" : petData.isNeutered
+										}
+										onChange={(e) =>
+											setPetData((prev) => ({
+												...prev,
+												isNeutered: JSON.parse(e.target.value),
+											}))
+										}
 									>
-										<option value="" disabled>Is your pet neutered</option>
+										<option
+											value=""
+											disabled
+										>
+											Is your pet neutered
+										</option>
 										<option value={true}>Yes</option>
 										<option value={false}>No</option>
 									</select>
@@ -268,9 +321,9 @@ function Sidebar() {
 							</div>
 						</form>
 					</div>
-				</ModalBody >
-			</Modal >
-		</div >
+				</ModalBody>
+			</Modal>
+		</div>
 	);
 }
 

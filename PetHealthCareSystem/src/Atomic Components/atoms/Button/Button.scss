@@ -126,3 +126,19 @@
 		background-color: var(--ACTIVE-COLOR);
 	}
 }
+
+// Filled with right-icon and stroke disable
+.btn-comp.filled.right-icon.stroke-disable {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: white;
+	gap: 5px;
+	padding: 8px 8px 8px 8px;
+	cursor: pointer;
+	border-radius: 5px;
+
+	&:active {
+		background-color: var(--JELLY-BEAN-DARK);
+	}
+}

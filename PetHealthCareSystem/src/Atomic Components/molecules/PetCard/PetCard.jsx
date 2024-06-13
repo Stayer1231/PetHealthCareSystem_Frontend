@@ -31,20 +31,20 @@ function PetCard({ data }) {
 					<div className="pet-details-container">
 						<div className="pet-name">
 							<Text
-								content={"Courage"}
+								content={`${data.name}`}
 								type={"h4"}
 								className={"pet-name-content"}
 							/>
 						</div>
 						<div className="pet-sub-information">
 							<Text
-								content={"3 months"}
+								content={`${data.dateOfBirth}`}
 								type={"subtitle"}
 								className={"pet-age-content information-content"}
 							/>
 							<span> - </span>
 							<Text
-								content={"Courage"}
+								content={`${data.breed}`}
 								type={"subtitle"}
 								className={"pet-breed-content information-content"}
 							/>
@@ -55,8 +55,7 @@ function PetCard({ data }) {
 					<div className="profile-go-btn">
 						<Button
 							content="View Pet Profile"
-							variant="underlined"
-							rightIcon={<RightArrowBracket />}
+							rightIcon={<RightArrowBracket color={"#ffffff"} />}
 							className={"button-item"}
 							onClick={() => HandleViewPetProfile("1")}
 						/>
