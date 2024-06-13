@@ -2,12 +2,18 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     selectedVet: {
-        vetName: "",
-        certificate: "",
-        message: ""
+        id: -1,
+        userName: "",
+        email: "",
+        fullName: "",
+        address: "",
+        avatar: "",
+        role: "",
+        birthDate: ""
     },
     selectedPets: [],
-    selectedDate: ""
+    selectedDate: "",
+    vets: []
 };
 
 const bookingFormSlice = createSlice({
@@ -16,9 +22,14 @@ const bookingFormSlice = createSlice({
     reducers: {
         setSelectedVet: (state, action) => {
             state.selectedVet = {
-                vetName: action.payload.vetName ?? "",
-                certificate: action.payload.certificate ?? "",
-                message: action.payload.message ?? ""
+                id: action.payload.id,
+                userName: action.payload.userName,
+                email: action.payload.email,
+                fullName: action.payload.fullName,
+                address: action.payload.address,
+                avatar: action.payload.avatar,
+                role: action.payload.role,
+                birthDate: action.payload.birthDate
             }
         },
 
@@ -28,6 +39,10 @@ const bookingFormSlice = createSlice({
 
         setSelectedDate: (state, action) => {
             state.selectedDate = action.payload
+        },
+
+        setVets: (state, action) => {
+            state.vets = action.payload
         }
     }
 });
@@ -35,7 +50,8 @@ const bookingFormSlice = createSlice({
 export const {
     setSelectedVet,
     setSelectedPets,
-    setSelectedDate
+    setSelectedDate,
+    setVets
 } = bookingFormSlice.actions;
 
 export default bookingFormSlice.reducer;

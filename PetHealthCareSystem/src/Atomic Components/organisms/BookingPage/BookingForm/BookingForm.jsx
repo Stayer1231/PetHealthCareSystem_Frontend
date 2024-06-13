@@ -5,11 +5,12 @@ import { useSelector, useDispatch } from "react-redux";
 import {
     setSelectedVet,
     setSelectedPets,
-    setSelectedDate
+    setSelectedDate,
+    setVets
 } from "../../../../config/store/BookingForm/bookingForm";
 import Button from "../../../atoms/Button/Button";
-import vetInfoData from '../../../../TestData/VetInfoData/vetInfoData.json';
 import VetInfoCard from "../../../molecules/VetInfoCard/VetInfoCard";
+import APIInUse from "../../../../config/axios/AxiosInUse";
 
 function BookingForm() {
     const dispatch = useDispatch();
@@ -17,7 +18,16 @@ function BookingForm() {
     const selectedPets = useSelector((state) => state.bookingForm.selectedPets);
     const selectedDate = useSelector((state) => state.bookingForm.selectedDate);
     const dates = generateDates();
-    const vets = vetInfoData;
+    const vets = useSelector((state) => state.bookingForm.vets);
+
+    const handleLoadVet = async () => {
+        try {
+            const response = await APIInUse.get('Vet/list');
+            useDispatch(setVets(response.data));
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <>

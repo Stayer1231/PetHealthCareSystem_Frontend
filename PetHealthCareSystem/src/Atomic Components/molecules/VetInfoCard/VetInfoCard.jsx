@@ -11,10 +11,10 @@ function VetInfoCard({ data, displayMessage }) {
                     className="vet-img"
                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwdIVSqaMsmZyDbr9mDPk06Nss404fosHjLg&s" alt="" />
                 <div className="vet-card-name">
-                    <Text className={'vet-name-text'} type={'p'} content={data.vetName} />
+                    <Text className={'vet-name-text'} type={'p'} content={data.fullName} />
                 </div>
                 <div className="vet-card-certification">
-                    <Text className={'vet-certification-text'} type={'p'} content={data.certificate} />
+                    <Text className={'vet-certification-text'} type={'p'} content={data.email} />
                 </div>
                 {!displayMessage ?
                     <>
@@ -22,7 +22,7 @@ function VetInfoCard({ data, displayMessage }) {
                     :
                     <>
                         <div className="vet-card-message">
-                            <Text className={'vet-message-text'} type={'p'} content={data.message} />
+                            <Text className={'vet-message-text'} type={'p'} content={data.address} />
                         </div>
                     </>
                 }

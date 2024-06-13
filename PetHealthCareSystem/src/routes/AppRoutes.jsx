@@ -29,8 +29,8 @@ function AppRoutes() {
 			<ScrollToTop>
 				<Routes>
 					{/* AUTHENTICATED ROUTES */}
-					{/* <Route element={<PersistLogin />}>
-						<Route element={<RequireAuth />}> */}
+					<Route element={<PersistLogin />}>
+						<Route element={<RequireAuth />}>
 							<Route path="/" element={<CommonLayout />}>
 								<Route index element={<HomePage />} />
 								<Route path="your-pet" element={<PetManagementPage />}>
@@ -41,11 +41,11 @@ function AppRoutes() {
 								<Route path="services" element={<ServicesPage />} />
 								<Route path="booking" element={<BookingPage />} />
 							</Route>
-						{/* </Route>
-					</Route> */}
+						</Route>
+					</Route> 
 
-					{/* UNAUTHENTICATED ROUTES */}
-					{/* <Route path="/login" element={<LoginPage />} /> */}
+					 {/* UNAUTHENTICATED ROUTES */}
+					 <Route path="/login" element={<LoginPage />} /> 
 				</Routes>
 			</ScrollToTop>
 
