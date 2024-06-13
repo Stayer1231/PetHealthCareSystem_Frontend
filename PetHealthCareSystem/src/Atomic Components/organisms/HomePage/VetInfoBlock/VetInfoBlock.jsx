@@ -24,7 +24,7 @@ function VetInfoBlock() {
                 </div>
                 <div className="vet-info-block-content-detail">
                     {displayVet.map((vet,index) =>
-                        <VetInfoCard key={index} data={vet}/>)
+                        <VetInfoCard key={index} data={vet} displayMessage={true}/>)
                     }
                 </div>
             </div>

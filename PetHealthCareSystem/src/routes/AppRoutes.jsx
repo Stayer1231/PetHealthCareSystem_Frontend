@@ -20,6 +20,8 @@ import {
 import MyAccount from "../Atomic Components/organisms/PetManagement/MyAccount/MyAccount";
 import RequireAuth from "../Atomic Components/templates/RequireAuth";
 import PersistLogin from "../config/provider/PersistLogin";
+import ServicesPage from "../Atomic Components/pages/ServicesPage/ServicesPage";
+import BookingPage from "../Atomic Components/pages/BookingPage/BookingPage";
 
 function AppRoutes() {
 	return (
@@ -27,44 +29,26 @@ function AppRoutes() {
 			<ScrollToTop>
 				<Routes>
 					{/* AUTHENTICATED ROUTES */}
-					<Route element={<PersistLogin />}>
-						<Route element={<RequireAuth />}>
-							<Route
-								path="/"
-								element={<CommonLayout />}
-							>
-								<Route
-									path=""
-									element={<HomePage />}
-								></Route>
-								<Route
-									path="/your-pet"
-									element={<PetManagementPage />}
-								>
-									<Route
-										path="overview"
-										element={<PetOverview />}
-									/>
-									<Route
-										path="my-account"
-										element={<MyAccount />}
-									/>
-									<Route
-										path="pet-profile/:petId"
-										element={<PetProfile />}
-									/>
+					{/* <Route element={<PersistLogin />}>
+						<Route element={<RequireAuth />}> */}
+							<Route path="/" element={<CommonLayout />}>
+								<Route index element={<HomePage />} />
+								<Route path="your-pet" element={<PetManagementPage />}>
+									<Route path="overview" element={<PetOverview />} />
+									<Route path="my-account" element={<MyAccount />} />
+									<Route path="pet-profile/:petId" element={<PetProfile />} />
 								</Route>
+								<Route path="services" element={<ServicesPage />} />
+								<Route path="booking" element={<BookingPage />} />
 							</Route>
-						</Route>
-					</Route>
+						{/* </Route>
+					</Route> */}
 
 					{/* UNAUTHENTICATED ROUTES */}
-					<Route
-						path="/login"
-						element={<LoginPage />}
-					/>
+					{/* <Route path="/login" element={<LoginPage />} /> */}
 				</Routes>
 			</ScrollToTop>
+
 		</>
 	);
 }
