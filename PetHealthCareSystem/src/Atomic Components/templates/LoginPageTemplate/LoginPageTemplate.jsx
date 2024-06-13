@@ -83,7 +83,7 @@ const LoginPageTemplate = () => {
       let userName = response?.data?.userName;
       let refToken = response?.data?.refreshToken;
 
-      Cookies.set("token", accessToken);
+      Cookies.set("accessToken", accessToken);
       Cookies.set("fullName", fullName);
       Cookies.set("username", userName);
       Cookies.set("refToken", refToken);
