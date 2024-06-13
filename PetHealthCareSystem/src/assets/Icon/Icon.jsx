@@ -1,4 +1,4 @@
-export const RightArrowBracket = ({ props }) => (
+export const RightArrowBracket = ({ props, color }) => (
 	<svg
 		width="24px"
 		height="24px"
@@ -16,14 +16,14 @@ export const RightArrowBracket = ({ props }) => (
 			stroke-linejoin="round"
 		></g>
 		<g id="SVGRepo_iconCarrier">
+			{" "}
 			<path
 				d="M10 7L15 12L10 17"
-				stroke="#2d759f"
+				stroke={color ? color : "#2d759f"}
 				stroke-width="1.5"
 				stroke-linecap="round"
 				stroke-linejoin="round"
-				fill="currentIcon"
-			/>
+			></path>{" "}
 		</g>
 	</svg>
 );
@@ -133,5 +133,37 @@ export const CancelIcon = ({ props, color }) => (
 );
 
 export const AddIcon = ({ props, color }) => (
-	<svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle cx="12" cy="12" r="10" stroke="#2d759f" stroke-width="1.5"></circle> <path d="M15 12L12 12M12 12L9 12M12 12L12 9M12 12L12 15" stroke="#2d759f" stroke-width="1.5" stroke-linecap="round"></path> </g></svg>
-)
+	<svg
+		width="24px"
+		height="24px"
+		viewBox="0 0 24 24"
+		fill="none"
+		xmlns="http://www.w3.org/2000/svg"
+	>
+		<g
+			id="SVGRepo_bgCarrier"
+			stroke-width="0"
+		></g>
+		<g
+			id="SVGRepo_tracerCarrier"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+		></g>
+		<g id="SVGRepo_iconCarrier">
+			{" "}
+			<circle
+				cx="12"
+				cy="12"
+				r="10"
+				stroke="#2d759f"
+				stroke-width="1.5"
+			></circle>{" "}
+			<path
+				d="M15 12L12 12M12 12L9 12M12 12L12 9M12 12L12 15"
+				stroke="#2d759f"
+				stroke-width="1.5"
+				stroke-linecap="round"
+			></path>{" "}
+		</g>
+	</svg>
+);

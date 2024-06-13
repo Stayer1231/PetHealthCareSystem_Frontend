@@ -31,24 +31,50 @@ function AppRoutes() {
 					{/* AUTHENTICATED ROUTES */}
 					<Route element={<PersistLogin />}>
 						<Route element={<RequireAuth />}>
-							<Route path="/" element={<CommonLayout />}>
-								<Route index element={<HomePage />} />
-								<Route path="your-pet" element={<PetManagementPage />}>
-									<Route path="overview" element={<PetOverview />} />
-									<Route path="my-account" element={<MyAccount />} />
-									<Route path="pet-profile/:petId" element={<PetProfile />} />
+							<Route
+								path="/"
+								element={<CommonLayout />}
+							>
+								<Route
+									index
+									element={<HomePage />}
+								/>
+								<Route
+									path="your-pet"
+									element={<PetManagementPage />}
+								>
+									<Route
+										path="overview"
+										element={<PetOverview />}
+									/>
+									<Route
+										path="my-account"
+										element={<MyAccount />}
+									/>
+									<Route
+										path="pet-profile/:petId"
+										element={<PetProfile />}
+									/>
 								</Route>
-								<Route path="services" element={<ServicesPage />} />
-								<Route path="booking" element={<BookingPage />} />
+								<Route
+									path="services"
+									element={<ServicesPage />}
+								/>
+								<Route
+									path="booking"
+									element={<BookingPage />}
+								/>
 							</Route>
 						</Route>
-					</Route> 
+					</Route>
 
-					 {/* UNAUTHENTICATED ROUTES */}
-					 <Route path="/login" element={<LoginPage />} /> 
+					{/* UNAUTHENTICATED ROUTES */}
+					<Route
+						path="/login"
+						element={<LoginPage />}
+					/>
 				</Routes>
 			</ScrollToTop>
-
 		</>
 	);
 }

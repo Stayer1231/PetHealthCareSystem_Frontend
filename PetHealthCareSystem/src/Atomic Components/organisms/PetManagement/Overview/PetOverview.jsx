@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./PetOverview.scss";
 import Text from "../../../atoms/Text/Text";
 import PetCard from "../../../molecules/PetCard/PetCard";
 import Button from "../../../atoms/Button/Button";
 import { AddIcon } from "../../../../assets/Icon/Icon";
 import { Modal, ModalBody, ModalHeader } from "../../../molecules/Modal/Modal";
+import APIInUse from "./../../../../config/axios/AxiosInUse";
 
 function PetOverview() {
+	const [isLoading, setIsLoading] = useState(false);
 	const [showAddPetModal, setShowAddPetModal] = useState(false);
+	const [petList, setPetList] = useState(null);
 	const [petData, setPetData] = useState({
 		name: "",
 		species: "",
@@ -29,7 +32,25 @@ function PetOverview() {
 	const handleAddPet = (e) => {
 		e.preventDefault();
 		console.log(petData);
-	}
+	};
+
+	// USE EFFECT SCOPE
+	// GET PET LIST
+	useEffect(() => {
+		setIsLoading(true);
+		const getPetList = async () => {
+			try {
+				const response = await APIInUse.get("Pet/GetAllPetsForCustomer");
+				setPetList(response.data.data);
+			} catch (error) {
+				console.log(error);
+			} finally {
+				setIsLoading(false);
+			}
+		};
+
+		getPetList();
+	}, []);
 
 	return (
 		<div className="pet-overview-container">
@@ -41,8 +62,15 @@ function PetOverview() {
 				/>
 			</div>
 			<div className="pet-list-container">
-				<PetCard data={""} />
-				<PetCard data={""} />
+				{petList?.length > 0 ? (
+					petList.map((pet) => <PetCard data={pet} />)
+				) : (
+					<Text
+						content={"You don't have any pets yet. Add a pet to get started!"}
+						type={"subtitle"}
+						className={"no-pet-content"}
+					/>
+				)}
 			</div>
 			<div className="add-pet-btn">
 				<Button
@@ -71,7 +99,6 @@ function PetOverview() {
 							/>
 						</div>
 						<form onSubmit={handleAddPet}>
-
 							<div className="adding-information-container">
 								{/* PET NAME */}
 								<div className="pet-name input-div">
@@ -84,7 +111,9 @@ function PetOverview() {
 										className="general-input-field"
 										value={petData.name}
 										placeholder="Enter your pet's name"
-										onChange={(e) => setPetData(prev => ({ ...prev, name: e.target.value }))}
+										onChange={(e) =>
+											setPetData((prev) => ({ ...prev, name: e.target.value }))
+										}
 									/>
 								</div>
 
@@ -97,9 +126,19 @@ function PetOverview() {
 									<select
 										className="general-input-field"
 										value={petData.species}
-										onChange={(e) => setPetData(prev => ({ ...prev, species: e.target.value }))}
+										onChange={(e) =>
+											setPetData((prev) => ({
+												...prev,
+												species: e.target.value,
+											}))
+										}
 									>
-										<option value="" disabled>Select role of your pet</option>
+										<option
+											value=""
+											disabled
+										>
+											Select role of your pet
+										</option>
 										<option value="dog">Dog</option>
 										<option value="cat">Cat</option>
 									</select>
@@ -116,7 +155,9 @@ function PetOverview() {
 										className="general-input-field"
 										value={petData.breed}
 										placeholder="Enter your pet's breed"
-										onChange={(e) => setPetData(prev => ({ ...prev, breed: e.target.value }))}
+										onChange={(e) =>
+											setPetData((prev) => ({ ...prev, breed: e.target.value }))
+										}
 									/>
 								</div>
 
@@ -130,7 +171,12 @@ function PetOverview() {
 										type="date"
 										className="general-input-field"
 										value={petData.dateOfBirth}
-										onChange={(e) => setPetData(prev => ({ ...prev, dateOfBirth: e.target.value }))}
+										onChange={(e) =>
+											setPetData((prev) => ({
+												...prev,
+												dateOfBirth: e.target.value,
+											}))
+										}
 									/>
 								</div>
 
@@ -140,10 +186,13 @@ function PetOverview() {
 										content={"What is your pet's date of birth?"}
 										className={"field-label required-field"}
 									/>
-									<select
-										className="general-input-field"
-									>
-										<option value="" disabled>What is your pet gender</option>
+									<select className="general-input-field">
+										<option
+											value=""
+											disabled
+										>
+											What is your pet gender
+										</option>
 										<option value="male">Male</option>
 										<option value="female">Female</option>
 									</select>
@@ -159,10 +208,22 @@ function PetOverview() {
 										name=""
 										id=""
 										className="general-input-field"
-										value={petData.isNeutered === null ? "" : petData.isNeutered}
-										onChange={(e) => setPetData(prev => ({ ...prev, isNeutered: JSON.parse(e.target.value) }))}
+										value={
+											petData.isNeutered === null ? "" : petData.isNeutered
+										}
+										onChange={(e) =>
+											setPetData((prev) => ({
+												...prev,
+												isNeutered: JSON.parse(e.target.value),
+											}))
+										}
 									>
-										<option value="" disabled>Is your pet neutered</option>
+										<option
+											value=""
+											disabled
+										>
+											Is your pet neutered
+										</option>
 										<option value={true}>Yes</option>
 										<option value={false}>No</option>
 									</select>
