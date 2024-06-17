@@ -1,8 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-console.log(Cookies.get("accessToken"));
-
 const config = {
 	baseURL: "http://localhost:5148/api/",
 	headers: {
