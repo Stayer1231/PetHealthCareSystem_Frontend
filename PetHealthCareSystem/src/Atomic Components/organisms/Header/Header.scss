@@ -43,6 +43,16 @@
 						transition: 0.25s background-color;
 					}
 				}
+
+				label {
+					text-decoration: none;
+					color: var(--JELLY-BEAN);
+
+					&:hover {
+						background-color: #d0e6ee;
+						transition: 0.25s background-color;
+					}
+				}
 			}
 		}
 	}

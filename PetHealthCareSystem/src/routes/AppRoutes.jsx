@@ -7,26 +7,18 @@ import PetOverview from "../Atomic Components/organisms/PetManagement/Overview/P
 import PetProfile from "../Atomic Components/organisms/PetManagement/PetProfile/PetProfile";
 import HomePage from "../Atomic Components/pages/HomePage/HomePage";
 import LoginPage from "../Atomic Components/pages/LoginPage/LoginPage";
-import {
-	Accordion,
-	AccordionHeader,
-	AccordionItem,
-} from "../Atomic Components/molecules/Accordion/Accordion";
-import {
-	Modal,
-	ModalBody,
-	ModalHeader,
-} from "../Atomic Components/molecules/Modal/Modal";
 import MyAccount from "../Atomic Components/organisms/PetManagement/MyAccount/MyAccount";
 import RequireAuth from "../Atomic Components/templates/RequireAuth";
 import PersistLogin from "../config/provider/PersistLogin";
 import ServicesPage from "../Atomic Components/pages/ServicesPage/ServicesPage";
 import BookingPage from "../Atomic Components/pages/BookingPage/BookingPage";
+import { Toaster } from "react-hot-toast";
 
 function AppRoutes() {
 	return (
 		<>
 			<ScrollToTop>
+				<Toaster position="top-right" />
 				<Routes>
 					{/* AUTHENTICATED ROUTES */}
 					<Route element={<PersistLogin />}>
@@ -35,10 +27,6 @@ function AppRoutes() {
 								path="/"
 								element={<CommonLayout />}
 							>
-								<Route
-									index
-									element={<HomePage />}
-								/>
 								<Route
 									path="your-pet"
 									element={<PetManagementPage />}
@@ -73,6 +61,16 @@ function AppRoutes() {
 						path="/login"
 						element={<LoginPage />}
 					/>
+
+					<Route
+						path="/"
+						element={<CommonLayout />}
+					>
+						<Route
+							index
+							element={<HomePage />}
+						/>
+					</Route>
 				</Routes>
 			</ScrollToTop>
 		</>
