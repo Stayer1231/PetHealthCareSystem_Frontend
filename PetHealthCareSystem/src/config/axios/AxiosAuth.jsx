@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const config = {
-    baseURL: "https://localhost:7189/api/Auth/",
+    baseURL: "http://localhost:5148/api/Auth/",
     header: {
         "Content-Type": "application/json",
     }

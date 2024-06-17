@@ -19,8 +19,8 @@ function PetCard({ data, deletable }) {
 
 	// HANDLE DELETE PET
 	const handleDeletePet = async (petId) => {
+		setIsLoading(true);
 		try {
-			setIsLoading(true);
 			await APIInUse.delete(`Pet/RemovePet/${petId}`);
 			window.location.reload();
 		} catch (error) {

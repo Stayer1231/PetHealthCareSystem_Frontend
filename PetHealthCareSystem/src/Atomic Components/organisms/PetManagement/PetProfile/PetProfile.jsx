@@ -46,9 +46,9 @@ function PetProfile() {
 	// HANDLE UPDATE PET
 	const handleUpdatePet = async (e) => {
 		e.preventDefault();
+		setIsLoading(true);
 
 		try {
-			setIsLoading(true);
 			await APIInUse.put(`Pet/UpdatePet`, petUpdateData);
 			window.location.reload();
 		} catch (error) {
@@ -60,8 +60,8 @@ function PetProfile() {
 
 	// USE EFFECT SCOPE
 	useEffect(() => {
-		setIsLoading(true);
 		const getPet = async () => {
+			setIsLoading(true);
 			try {
 				const response = await APIInUse.get(`Pet/GetPetForCustomer/${petId}`);
 				setPet(response.data.data);
