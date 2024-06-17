@@ -40,8 +40,9 @@ function Sidebar() {
 	// HANDLE SUBMIT ADD PET FORM
 	const handleAddPet = async (e) => {
 		e.preventDefault();
+		setIsLoading(true);
+
 		try {
-			setIsLoading(true);
 			await APIInUse.post("Pet/AddPet", petData);
 			window.location.reload();
 		} catch (error) {
@@ -64,8 +65,8 @@ function Sidebar() {
 	// GET PET LIST
 	useEffect(() => {
 		const getPetList = async () => {
+			setIsLoading(true);
 			try {
-				setIsLoading(true);
 				const response = await APIInUse.get("Pet/GetAllPetsForCustomer");
 				setPetList(response.data.data);
 			} catch (error) {
@@ -91,7 +92,7 @@ function Sidebar() {
 					</div>
 				</Backdrop>
 			)}
-			
+
 			<div className="sidebar-container">
 				<ul className="sidebar-items-list">
 					{/* PET OVERVIEW */}
@@ -110,9 +111,8 @@ function Sidebar() {
 					{/* USER ACCOUNT */}
 					<Link
 						to="my-account"
-						className={`${
-							isActive("/your-pet/my-account") ? "active-tab" : ""
-						}`}
+						className={`${isActive("/your-pet/my-account") ? "active-tab" : ""
+							}`}
 					>
 						<Text
 							content={"My Account"}
@@ -125,9 +125,8 @@ function Sidebar() {
 					{/* <Link to="pet-profiles"> */}
 					<div className="pet-profile-menu">
 						<div
-							className={`flex justify-between cursor-pointer profile-menu-${
-								submenuActive ? "active" : "inactive"
-							} ${isSubmenuActive}`}
+							className={`flex justify-between cursor-pointer profile-menu-${submenuActive ? "active" : "inactive"
+								} ${isSubmenuActive}`}
 							onClick={PetProfileMenuClicked}
 						>
 							<Text
@@ -141,29 +140,27 @@ function Sidebar() {
 						</div>
 
 						<div
-							className={`pet-profile-submenu submenu-${
-								submenuActive ? "active" : "inactive"
-							}`}
+							className={`pet-profile-submenu submenu-${submenuActive ? "active" : "inactive"
+								}`}
 						>
 							<ul className="submenu-container">
 								{petList?.length > 0
 									? petList.map((pet) => (
-											<Link
-												to={`/your-pet/pet-profile/${pet?.id}`}
-												className={`${
-													isActive(`/your-pet/pet-profile/${pet?.id}`)
-														? "active-sub-tab"
-														: ""
+										<Link
+											to={`/your-pet/pet-profile/${pet?.id}`}
+											className={`${isActive(`/your-pet/pet-profile/${pet?.id}`)
+												? "active-sub-tab"
+												: ""
 												} submenu-item`}
-											>
-												<Text
-													content={pet?.name}
-													type={"subtitle"}
-													className={"item"}
-													cursor={"pointer"}
-												/>
-											</Link>
-									  ))
+										>
+											<Text
+												content={pet?.name}
+												type={"subtitle"}
+												className={"item"}
+												cursor={"pointer"}
+											/>
+										</Link>
+									))
 									: null}
 								<div className="add-pet-btn">
 									<Button

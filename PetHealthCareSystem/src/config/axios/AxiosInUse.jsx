@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 console.log(Cookies.get("accessToken"));
 
 const config = {
-	baseURL: "https://localhost:7189/api/",
+	baseURL: "http://localhost:5148/api/",
 	headers: {
 		"Content-Type": "application/json",
 		Authorization: "Bearer " + Cookies.get("accessToken"),

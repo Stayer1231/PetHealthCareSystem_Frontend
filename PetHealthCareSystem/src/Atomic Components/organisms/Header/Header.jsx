@@ -10,6 +10,10 @@ import Cookies from "js-cookie";
 function Header() {
 	const { auth, setAuth } = useAuth();
 
+	const isEmptyObject = (obj) => {
+		return obj && Object.keys(obj).length === 0 && obj.constructor === Object;
+	};
+
 	const handleLogout = () => {
 		Cookies.remove("accessToken");
 		Cookies.remove("fullName");
@@ -77,7 +81,7 @@ function Header() {
 							</li>
 						</Link>
 
-						{!auth && (
+						{isEmptyObject(auth) && (
 							<Link
 								to="/login"
 								className="nav-item"
@@ -92,7 +96,7 @@ function Header() {
 							</Link>
 						)}
 
-						{auth && (
+						{!isEmptyObject(auth) && (
 							<Text
 								content={"Logout"}
 								type={"subtitle"}
