@@ -37,7 +37,7 @@ function PetOverview() {
 		e.preventDefault();
 		try {
 			setIsLoading(true);
-			await APIInUse.post("Pet/AddPet", petData);
+			await APIInUse.post("Pet/customer/add", petData);
 			window.location.reload();
 		} catch (error) {
 			console.log(error.response.data.message);
@@ -52,7 +52,7 @@ function PetOverview() {
 		const getPetList = async () => {
 			try {
 				setIsLoading(true);
-				const response = await APIInUse.get("Pet/GetAllPetsForCustomer");
+				const response = await APIInUse.get("Pet/customer/all");
 				setPetList(response.data.data);
 			} catch (error) {
 				console.log(error);

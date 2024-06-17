@@ -43,7 +43,7 @@ function Sidebar() {
 		setIsLoading(true);
 
 		try {
-			await APIInUse.post("Pet/AddPet", petData);
+			await APIInUse.post("Pet/customer/add", petData);
 			window.location.reload();
 		} catch (error) {
 			console.log(error.response.data.message);
@@ -67,7 +67,7 @@ function Sidebar() {
 		const getPetList = async () => {
 			setIsLoading(true);
 			try {
-				const response = await APIInUse.get("Pet/GetAllPetsForCustomer");
+				const response = await APIInUse.get("Pet/customer/all");
 				setPetList(response.data.data);
 			} catch (error) {
 				console.log(error);

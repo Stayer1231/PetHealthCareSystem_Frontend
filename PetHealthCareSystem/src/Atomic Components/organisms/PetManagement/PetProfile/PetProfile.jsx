@@ -16,9 +16,11 @@ import { useLocation, useParams } from "react-router-dom";
 import APIInUse from "./../../../../config/axios/AxiosInUse";
 import { Backdrop, CircularProgress } from "@mui/material";
 import { formatDate } from "../../../../config/convertDate";
+import Cookies from 'js-cookie';
 
 function PetProfile() {
 	const [isLoading, setIsLoading] = useState(false);
+	const id = Cookies.get("userId")
 	const { petId } = useParams();
 	const [petUpdateProfileShow, setPetUpdateProfileShow] = useState(false);
 	const [pet, setPet] = useState(null);
@@ -49,7 +51,7 @@ function PetProfile() {
 		setIsLoading(true);
 
 		try {
-			await APIInUse.put(`Pet/UpdatePet`, petUpdateData);
+			await APIInUse.put(`Pet/customer/update`, petUpdateData);
 			window.location.reload();
 		} catch (error) {
 			console.log(error);
@@ -63,7 +65,7 @@ function PetProfile() {
 		const getPet = async () => {
 			setIsLoading(true);
 			try {
-				const response = await APIInUse.get(`Pet/GetPetForCustomer/${petId}`);
+				const response = await APIInUse.get(`Pet/customer/${petId}`);
 				setPet(response.data.data);
 				setPetUpdateData({
 					id: response.data.data.id,
@@ -330,7 +332,7 @@ function PetProfile() {
 									<input
 										type="date"
 										className="general-input-field"
-										value={formatDate(petUpdateData?.dateOfBirth)}
+										value={petUpdateData?.dateOfBirth}
 										onChange={(e) =>
 											setPetUpdateData((prev) => ({
 												...prev,

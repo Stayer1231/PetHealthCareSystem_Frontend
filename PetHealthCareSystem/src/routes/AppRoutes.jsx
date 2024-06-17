@@ -8,21 +8,24 @@ import PetProfile from "../Atomic Components/organisms/PetManagement/PetProfile/
 import HomePage from "../Atomic Components/pages/HomePage/HomePage";
 import LoginPage from "../Atomic Components/pages/LoginPage/LoginPage";
 import MyAccount from "../Atomic Components/organisms/PetManagement/MyAccount/MyAccount";
-import RequireAuth from "../Atomic Components/templates/RequireAuth";
 import PersistLogin from "../config/provider/PersistLogin";
 import ServicesPage from "../Atomic Components/pages/ServicesPage/ServicesPage";
 import BookingPage from "../Atomic Components/pages/BookingPage/BookingPage";
 import { Toaster } from "react-hot-toast";
+import RequireAuth from "../config/provider/RequireAuth";
 
 function AppRoutes() {
 	return (
 		<>
 			<ScrollToTop>
 				<Toaster position="top-right" />
+
 				<Routes>
 					{/* AUTHENTICATED ROUTES */}
 					<Route element={<PersistLogin />}>
-						<Route element={<RequireAuth />}>
+
+						{/* ROUTES FOR CUSTOMER */}
+						<Route element={<RequireAuth allowedRoles={"Customer"} />}>
 							<Route
 								path="/"
 								element={<CommonLayout />}
@@ -53,6 +56,11 @@ function AppRoutes() {
 									element={<BookingPage />}
 								/>
 							</Route>
+						</Route>
+
+						{/* ROUTES FOR STAFF */}
+						<Route element={<RequireAuth allowedRoles={"Staff"} />}>
+
 						</Route>
 					</Route>
 

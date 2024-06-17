@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import useAuth from "../../config/provider/useAuth";
+import useAuth from "./useAuth";
 
 const RequireAuth = ({ allowedRoles }) => {
   const { auth } = useAuth();
@@ -8,7 +8,7 @@ const RequireAuth = ({ allowedRoles }) => {
 
   return (
     <>
-      {auth?.userName ? (
+      {allowedRoles?.includes(auth?.role) ? (
         <Outlet />
       ) : (
         <Navigate
