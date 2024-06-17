@@ -21,17 +21,29 @@ function PetCard({ data, deletable }) {
 	const handleDeletePet = async (petId) => {
 		try {
 			setIsLoading(true);
-			await APIInUse.delete(`Pet/RemovePet/${petId}`)
+			await APIInUse.delete(`Pet/RemovePet/${petId}`);
 			window.location.reload();
 		} catch (error) {
 			console.log(error);
 		} finally {
 			setIsLoading(false);
 		}
-	}
+	};
 
 	return (
 		<>
+			{isLoading && (
+				<Backdrop
+					sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+					open={isLoading}
+				>
+					<div className="flex flex-col justify-center items-center gap-2">
+						<CircularProgress color="inherit" />
+						<h1>Waiting</h1>
+					</div>
+				</Backdrop>
+			)}
+			
 			<div className="pet-card-container">
 				{/* Pet image */}
 				<div className="pet-image-container">
