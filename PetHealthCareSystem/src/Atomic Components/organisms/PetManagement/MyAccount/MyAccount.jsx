@@ -52,7 +52,7 @@ function MyAccount() {
 								type={"subtitle"}
 							/>
 							<Text
-								content={"21/09/2003s"}
+								content={"21/09/2003"}
 								type={"subtitle"}
 								className={"info-content"}
 							/>

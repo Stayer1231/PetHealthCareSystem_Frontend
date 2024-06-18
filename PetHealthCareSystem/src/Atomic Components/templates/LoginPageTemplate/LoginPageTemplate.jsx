@@ -1,6 +1,6 @@
 import "./LoginPageTemplate.scss";
-import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, Link, Navigate } from "react-router-dom";
 import Text from "../../atoms/Text/Text";
 import Button from "../../atoms/Button/Button";
 import Snackbar from "@mui/material/Snackbar";
@@ -25,7 +25,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 const LoginPageTemplate = () => {
-	const { setAuth } = useAuth();
+	const { auth, setAuth } = useAuth();
 	const navigate = useNavigate();
 	const [isLoading, setIsLoading] = useState(false);
 	const [usernameOrEmail, setUsernameOrEmail] = useState("");
@@ -127,6 +127,14 @@ const LoginPageTemplate = () => {
 		}
 		setSnackbarOpen(false);
 	};
+
+	// REDIRECT USER WHEN THEY ALREADY LOGGED IN
+	useEffect(() => {
+		if (auth?.role != null) {
+			navigate(from, { replace: true });
+		}
+
+	}, []);
 
 	return (
 		<>
