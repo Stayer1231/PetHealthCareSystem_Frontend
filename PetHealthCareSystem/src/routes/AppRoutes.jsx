@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import CommonLayout from "../Atomic Components/pages/CommonLayout/CommonLayout";
 import PetManagementPage from "../Atomic Components/pages/PetManagementPage/PetManagementPage";
@@ -14,6 +14,8 @@ import { Toaster } from "react-hot-toast";
 import RequireAuth from "../config/provider/RequireAuth";
 import useAuth from "../config/provider/useAuth";
 import ScrollToTop from "../others/ScrollToTop";
+import VetCommonLayout from "../Atomic Components/pages/VetRole/CommonLayout/VetCommonLayout";
+import VetHomePage from "../Atomic Components/pages/VetRole/VetHomePage/VetHomePage";
 
 function AppRoutes() {
 	const { auth } = useAuth();
@@ -93,12 +95,11 @@ function AppRoutes() {
 							<Route element={<RequireAuth allowedRoles={"Vet"} />}>
 								<Route
 									path="/"
-									element={
-										<>
-											<h1>hello</h1>
-										</>
-									}
-								/>
+									element={<VetCommonLayout />}
+								>
+									<Route index element={<VetHomePage />} />
+								</Route>
+
 								<Route
 									path="/login"
 									element={<LoginPage />}
