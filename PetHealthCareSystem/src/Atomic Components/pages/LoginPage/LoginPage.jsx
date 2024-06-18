@@ -11,7 +11,7 @@ const LoginPage = () => {
 	const navigate = useNavigate();
 
 	const handleFakeStaffLogin = () => {
-		const role = "Staff";
+		const role = "Vet";
 		Cookies.set("role", role);
 		setAuth({ role });
 
@@ -31,7 +31,7 @@ const LoginPage = () => {
 					type="button"
 					onClick={handleFakeStaffLogin}
 				>
-					Go Staff Page
+					Go Role Page
 				</button>
 			</div>
 			<LoginPageTemplate />
