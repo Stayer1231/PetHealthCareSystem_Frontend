@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import CommonLayout from "../Atomic Components/pages/CommonLayout/CommonLayout";
-import ScrollToTop from "./../Atomic Components/others/ScrollToTop";
 import PetManagementPage from "../Atomic Components/pages/PetManagementPage/PetManagementPage";
 import PetOverview from "../Atomic Components/organisms/PetManagement/Overview/PetOverview";
 import PetProfile from "../Atomic Components/organisms/PetManagement/PetProfile/PetProfile";
@@ -14,11 +13,11 @@ import BookingPage from "../Atomic Components/pages/BookingPage/BookingPage";
 import { Toaster } from "react-hot-toast";
 import RequireAuth from "../config/provider/RequireAuth";
 import useAuth from "../config/provider/useAuth";
-import Cookies from "js-cookie";
+import ScrollToTop from "../others/ScrollToTop";
 
 function AppRoutes() {
 	const { auth } = useAuth();
-	console.log("auth", auth);
+
 	return (
 		<>
 			<ScrollToTop>
@@ -42,11 +41,56 @@ function AppRoutes() {
 									element={<HomePage />}
 								/>
 							</Route>
+							<Route element={<RequireAuth />}>
+								<Route
+									path="/"
+									element={
+										<>
+											<CommonLayout />
+										</>
+									}
+								>
+									<Route
+										index
+										element={<HomePage />}
+									/>
+									<Route
+										path="your-pet"
+										element={<PetManagementPage />}
+									>
+										<Route
+											path="overview"
+											element={<PetOverview />}
+										/>
+										<Route
+											path="my-account"
+											element={<MyAccount />}
+										/>
+										<Route
+											path="pet-profile/:petId"
+											element={<PetProfile />}
+										/>
+									</Route>
+									<Route
+										path="services"
+										element={<ServicesPage />}
+									/>
+									<Route
+										path="booking"
+										element={<BookingPage />}
+									/>
+									<Route
+										path="/login"
+										element={<LoginPage />}
+									/>
+								</Route>
+							</Route>
+
 						</>
-					) : auth?.role == "Staff" ? (
+					) : auth?.role == "Vet" ? (
 						<>
 							{/* ROUTES FOR STAFF */}
-							<Route element={<RequireAuth allowedRoles={"Staff"} />}>
+							<Route element={<RequireAuth allowedRoles={"Vet"} />}>
 								<Route
 									path="/"
 									element={
