@@ -55,6 +55,10 @@ function AppRoutes() {
 										</>
 									}
 								/>
+								<Route
+									path="/login"
+									element={<LoginPage />}
+								/>
 							</Route>
 						</>
 					) : (
@@ -99,6 +103,10 @@ function AppRoutes() {
 										<Route
 											path="booking"
 											element={<BookingPage />}
+										/>
+										<Route
+											path="/login"
+											element={<LoginPage />}
 										/>
 									</Route>
 								</Route>
