@@ -13,72 +13,98 @@ import ServicesPage from "../Atomic Components/pages/ServicesPage/ServicesPage";
 import BookingPage from "../Atomic Components/pages/BookingPage/BookingPage";
 import { Toaster } from "react-hot-toast";
 import RequireAuth from "../config/provider/RequireAuth";
+import useAuth from "../config/provider/useAuth";
+import Cookies from "js-cookie";
 
 function AppRoutes() {
+	const { auth } = useAuth();
+	console.log("auth", auth);
 	return (
 		<>
 			<ScrollToTop>
 				<Toaster position="top-right" />
 
 				<Routes>
-					{/* AUTHENTICATED ROUTES */}
-					<Route element={<PersistLogin />}>
+					{!auth?.role ? (
+						<>
+							{/* UNAUTHENTICATED ROUTES */}
+							<Route
+								path="/login"
+								element={<LoginPage />}
+							/>
 
-						{/* ROUTES FOR CUSTOMER */}
-						<Route element={<RequireAuth allowedRoles={"Customer"} />}>
 							<Route
 								path="/"
 								element={<CommonLayout />}
 							>
 								<Route
-									path="your-pet"
-									element={<PetManagementPage />}
-								>
-									<Route
-										path="overview"
-										element={<PetOverview />}
-									/>
-									<Route
-										path="my-account"
-										element={<MyAccount />}
-									/>
-									<Route
-										path="pet-profile/:petId"
-										element={<PetProfile />}
-									/>
-								</Route>
-								<Route
-									path="services"
-									element={<ServicesPage />}
-								/>
-								<Route
-									path="booking"
-									element={<BookingPage />}
+									index
+									element={<HomePage />}
 								/>
 							</Route>
-						</Route>
-
-						{/* ROUTES FOR STAFF */}
-						<Route element={<RequireAuth allowedRoles={"Staff"} />}>
-
-						</Route>
-					</Route>
-
-					{/* UNAUTHENTICATED ROUTES */}
-					<Route
-						path="/login"
-						element={<LoginPage />}
-					/>
-
-					<Route
-						path="/"
-						element={<CommonLayout />}
-					>
-						<Route
-							index
-							element={<HomePage />}
-						/>
-					</Route>
+						</>
+					) : auth?.role == "Staff" ? (
+						<>
+							{/* ROUTES FOR STAFF */}
+							<Route element={<RequireAuth allowedRoles={"Staff"} />}>
+								<Route
+									path="/"
+									element={
+										<>
+											<h1>hello</h1>
+										</>
+									}
+								/>
+							</Route>
+						</>
+					) : (
+						<>
+							{/* AUTHENTICATED ROUTES */}
+							<Route element={<PersistLogin />}>
+								{/* ROUTES FOR CUSTOMER */}
+								<Route element={<RequireAuth allowedRoles={"Customer"} />}>
+									<Route
+										path="/"
+										element={
+											<>
+												<CommonLayout />
+											</>
+										}
+									>
+										<Route
+											index
+											element={<HomePage />}
+										/>
+										<Route
+											path="your-pet"
+											element={<PetManagementPage />}
+										>
+											<Route
+												path="overview"
+												element={<PetOverview />}
+											/>
+											<Route
+												path="my-account"
+												element={<MyAccount />}
+											/>
+											<Route
+												path="pet-profile/:petId"
+												element={<PetProfile />}
+											/>
+										</Route>
+										<Route
+											path="services"
+											element={<ServicesPage />}
+										/>
+										<Route
+											path="booking"
+											element={<BookingPage />}
+										/>
+									</Route>
+								</Route>
+							</Route>
+						</>
+					)}
 				</Routes>
 			</ScrollToTop>
 		</>
