@@ -16,11 +16,11 @@ import { useLocation, useParams } from "react-router-dom";
 import APIInUse from "./../../../../config/axios/AxiosInUse";
 import { Backdrop, CircularProgress } from "@mui/material";
 import { formatDate } from "../../../../config/convertDate";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 function PetProfile() {
 	const [isLoading, setIsLoading] = useState(false);
-	const id = Cookies.get("userId")
+	const id = Cookies.get("userId");
 	const { petId } = useParams();
 	const [petUpdateProfileShow, setPetUpdateProfileShow] = useState(false);
 	const [pet, setPet] = useState(null);
@@ -136,7 +136,7 @@ function PetProfile() {
 								/>
 								<span className="divine-symbol">-</span>
 								<Text
-									content={pet?.dateOfBirth}
+									content={formatDate(pet?.dateOfBirth)}
 									type={"subtitle"}
 									className={"pet-age"}
 								/>
@@ -170,7 +170,7 @@ function PetProfile() {
 					</div>
 				</div>
 
-				{/* PET DETAILED INFORMATION */}
+				{/* PET DETAILED ACCORDION */}
 				<div className="pet-detail-container">
 					<div className="pet-detail-accordion">
 						<Accordion>
@@ -210,7 +210,7 @@ function PetProfile() {
 											type={"subtitle"}
 										/>
 										<Text
-											content={pet?.dateOfBirth}
+											content={formatDate(pet?.dateOfBirth)}
 											type={"subtitle"}
 										/>
 									</div>

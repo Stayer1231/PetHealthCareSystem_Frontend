@@ -7,6 +7,7 @@ import Button from "../../atoms/Button/Button";
 import { DeleteIcon, RightArrowBracket } from "../../../assets/Icon/Icon";
 import { useNavigate } from "react-router-dom";
 import APIInUse from "../../../config/axios/AxiosInUse";
+import { formatDate } from "./../../../config/convertDate";
 
 function PetCard({ data, deletable }) {
 	const [isLoading, setIsLoading] = useState(false);
@@ -43,7 +44,7 @@ function PetCard({ data, deletable }) {
 					</div>
 				</Backdrop>
 			)}
-			
+
 			<div className="pet-card-container">
 				{/* Pet image */}
 				<div className="pet-image-container">
@@ -66,7 +67,7 @@ function PetCard({ data, deletable }) {
 						</div>
 						<div className="pet-sub-information">
 							<Text
-								content={`${data.dateOfBirth}`}
+								content={`${formatDate(data.dateOfBirth)}`}
 								type={"subtitle"}
 								className={"pet-age-content information-content"}
 							/>

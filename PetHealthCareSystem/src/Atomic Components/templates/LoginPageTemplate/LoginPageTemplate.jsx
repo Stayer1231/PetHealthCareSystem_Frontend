@@ -141,7 +141,6 @@ const LoginPageTemplate = () => {
 					</div>
 				</Backdrop>
 			)}
-			
 			<form
 				action=""
 				className="login__form"
