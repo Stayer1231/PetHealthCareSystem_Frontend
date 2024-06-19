@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import CommonLayout from "../Atomic Components/pages/CommonLayout/CommonLayout";
 import ScrollToTop from "./../Atomic Components/others/ScrollToTop";
@@ -11,78 +11,48 @@ import MyAccount from "../Atomic Components/organisms/PetManagement/MyAccount/My
 import PersistLogin from "../config/provider/PersistLogin";
 import ServicesPage from "../Atomic Components/pages/ServicesPage/ServicesPage";
 import BookingPage from "../Atomic Components/pages/BookingPage/BookingPage";
+import AdminPage from "../Atomic Components/pages/AdminPage/AdminPage"; // Make sure to import AdminPage
 import { Toaster } from "react-hot-toast";
 import RequireAuth from "../config/provider/RequireAuth";
 
 function AppRoutes() {
-	return (
-		<>
-			<ScrollToTop>
-				<Toaster position="top-right" />
+  return (
+    <>
+      <ScrollToTop>
+        <Toaster position="top-right" />
+        <Routes>
+          {/* AUTHENTICATED ROUTES */}
+          <Route element={<PersistLogin />}>
+            {/* ROUTES FOR CUSTOMER */}
+            <Route element={<RequireAuth allowedRoles={"Customer"} />}>
+              <Route path="/" element={<CommonLayout />}>
+                <Route path="your-pet" element={<PetManagementPage />}>
+                  <Route path="overview" element={<PetOverview />} />
+                  <Route path="my-account" element={<MyAccount />} />
+                  <Route path="pet-profile/:petId" element={<PetProfile />} />
+                </Route>
+                <Route path="services" element={<ServicesPage />} />
+                <Route path="booking" element={<BookingPage />} />
+              </Route>
+            </Route>
 
-				<Routes>
-					{/* AUTHENTICATED ROUTES */}
-					<Route element={<PersistLogin />}>
+            {/* ROUTES FOR STAFF */}
+            <Route element={<RequireAuth allowedRoles={"Staff"} />}>
+              {/* Add staff-specific routes here */}
+            </Route>
+          </Route>
 
-						{/* ROUTES FOR CUSTOMER */}
-						<Route element={<RequireAuth allowedRoles={"Customer"} />}>
-							<Route
-								path="/"
-								element={<CommonLayout />}
-							>
-								<Route
-									path="your-pet"
-									element={<PetManagementPage />}
-								>
-									<Route
-										path="overview"
-										element={<PetOverview />}
-									/>
-									<Route
-										path="my-account"
-										element={<MyAccount />}
-									/>
-									<Route
-										path="pet-profile/:petId"
-										element={<PetProfile />}
-									/>
-								</Route>
-								<Route
-									path="services"
-									element={<ServicesPage />}
-								/>
-								<Route
-									path="booking"
-									element={<BookingPage />}
-								/>
-							</Route>
-						</Route>
-
-						{/* ROUTES FOR STAFF */}
-						<Route element={<RequireAuth allowedRoles={"Staff"} />}>
-
-						</Route>
-					</Route>
-
-					{/* UNAUTHENTICATED ROUTES */}
-					<Route
-						path="/login"
-						element={<LoginPage />}
-					/>
-
-					<Route
-						path="/"
-						element={<CommonLayout />}
-					>
-						<Route
-							index
-							element={<HomePage />}
-						/>
-					</Route>
-				</Routes>
-			</ScrollToTop>
-		</>
-	);
+          {/* UNAUTHENTICATED ROUTES */}
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          
+          <Route path="/" element={<CommonLayout />}>
+            <Route index element={<HomePage />} />
+          </Route>
+        </Routes>
+      </ScrollToTop>
+    </>
+  );
 }
 
 export default AppRoutes;
