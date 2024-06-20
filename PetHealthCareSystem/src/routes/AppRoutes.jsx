@@ -10,7 +10,6 @@ import MyAccount from "../Atomic Components/organisms/PetManagement/MyAccount/My
 import PersistLogin from "../config/provider/PersistLogin";
 import ServicesPage from "../Atomic Components/pages/ServicesPage/ServicesPage";
 import BookingPage from "../Atomic Components/pages/BookingPage/BookingPage";
-import AdminPage from "../Atomic Components/pages/AdminPage/AdminPage"; // Make sure to import AdminPage
 import { Toaster } from "react-hot-toast";
 import RequireAuth from "../config/provider/RequireAuth";
 import useAuth from "../config/provider/useAuth";
