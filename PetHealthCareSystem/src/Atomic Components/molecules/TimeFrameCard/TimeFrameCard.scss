@@ -1,0 +1,42 @@
+.time-frame-card-container {
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    transition: transform 0.2s;
+    margin-left: 10px;
+    cursor: pointer;
+    margin-bottom: 5px;
+
+    &:hover {
+        transform: scale(1.05);
+    }
+
+    &.selected {
+        border-color: #ffc107; /* Example: Yellow border for selected */
+        background-color: #fef3d3; /* Example: Light yellow background for selected */
+    }
+
+    .time-frame-card-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 5px;
+
+        .start-time, .end-time, .separator {
+            font-size: 0.8em;
+            font-weight: normal;
+            color: #333;
+        }
+
+        .separator {
+            margin: 0 5px 0 5px;
+        }
+    }
+}
