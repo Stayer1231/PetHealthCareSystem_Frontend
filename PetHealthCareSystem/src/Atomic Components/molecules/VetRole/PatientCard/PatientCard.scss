@@ -1,9 +1,98 @@
 .patient-card-container {
+	display: flex;
+	flex-direction: column;
 	max-width: 400px;
 	max-height: 150px;
 	width: 500px;
 	height: 150px;
 	border: 1px solid black;
-	border-radius: 15px;
+	border-radius: 0 10px 10px 0;
 	box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.25);
+
+	.patient-information-container {
+		display: flex;
+		border-bottom: 1px solid black;
+		width: 100%;
+		height: 55%;
+
+		.pet-img-container {
+			position: relative;
+			width: 100px;
+			height: 100px;
+			z-index: 5;
+
+			> img {
+				position: absolute;
+				transform: translate(-50%, -0.5%);
+				width: 150%;
+				height: 150%;
+				border: 1px solid black;
+				border-radius: 50%;
+			}
+		}
+
+		.main-information-container {
+			padding: 10px 0 10px 0;
+
+			.pet-sub-information-container {
+				display: flex;
+				gap: 8px;
+				align-items: center;
+			}
+
+			.pet-name {
+				margin-bottom: 6px;
+			}
+
+			.information-headline {
+				// test
+			}
+
+			.information-text {
+				font-weight: 400;
+			}
+		}
+	}
+
+	.decoration-bg {
+		display: flex;
+		flex: 1;
+		align-items: center;
+		justify-content: center;
+		border-bottom-left-radius: 9px;
+		border-bottom-right-radius: 9px;
+		background-color: var(--JELLY-BEAN);
+		width: 100%;
+		height: 45%;
+
+		&:hover {
+			cursor: pointer;
+			background-color: var(--JELLY-BEAN-DARK);
+			transition: background-color 0.2s;
+
+			.magic-btn {
+				.magic-text,
+				svg {
+					opacity: 1;
+					transition: opacity 0.5s;
+				}
+			}
+		}
+
+		.magic-btn {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			.magic-text {
+				color: white;
+				letter-spacing: 1px;
+				opacity: 0;
+			}
+
+			svg {
+				opacity: 0;
+			}
+		}
+	}
 }
