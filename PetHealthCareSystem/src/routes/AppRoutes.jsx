@@ -16,6 +16,9 @@ import useAuth from "../config/provider/useAuth";
 import ScrollToTop from "../others/ScrollToTop";
 import VetCommonLayout from "../Atomic Components/pages/VetRole/CommonLayout/VetCommonLayout";
 import VetHomePage from "../Atomic Components/pages/VetRole/VetHomePage/VetHomePage";
+import WorkSchedulePage from "../Atomic Components/pages/VetRole/WorkSchedulePage/WorkSchedulePage";
+import MedicalRecordPage from "../Atomic Components/pages/VetRole/MedicalRecordPage/MedicalRecordPage";
+import HospitalizeRecordPage from "../Atomic Components/pages/VetRole/HospitalizeRecordPage/HospitalizeRecordPage";
 import AdminPage from "../Atomic Components/pages/AdminPage/AdminPage";
 
 function AppRoutes() {
@@ -33,6 +36,141 @@ function AppRoutes() {
               <Route path="/admin" element={<AdminPage />} />
               <Route path="/login" element={<LoginPage />} />
 
+							<Route
+								path="/"
+								element={<CommonLayout />}
+							>
+								<Route
+									index
+									element={<HomePage />}
+								/>
+							</Route>
+							<Route element={<RequireAuth />}>
+								<Route
+									path="/"
+									element={
+										<>
+											<CommonLayout />
+										</>
+									}
+								>
+									<Route
+										index
+										element={<HomePage />}
+									/>
+									<Route
+										path="your-pet"
+										element={<PetManagementPage />}
+									>
+										<Route
+											path="overview"
+											element={<PetOverview />}
+										/>
+										<Route
+											path="my-account"
+											element={<MyAccount />}
+										/>
+										<Route
+											path="pet-profile/:petId"
+											element={<PetProfile />}
+										/>
+									</Route>
+									<Route
+										path="services"
+										element={<ServicesPage />}
+									/>
+									<Route
+										path="booking"
+										element={<BookingPage />}
+									/>
+									<Route index element={<VetHomePage />} />
+									<Route path="work-schedule" element={<WorkSchedulePage />} />
+									<Route path="medical-record" element={<MedicalRecordPage />} />
+									<Route path="hospitalize-record" element={<HospitalizeRecordPage />} />
+									<Route
+										path="/login"
+										element={<LoginPage />}
+									/>
+								</Route>
+							</Route>
+
+						</>
+					) : auth?.role == "Vet" ? (
+						<>
+							{/* ROUTES FOR VET */}
+							<Route element={<RequireAuth allowedRoles={"Vet"} />}>
+								<Route
+									path="/"
+									element={<VetCommonLayout />}
+								>
+									<Route index element={<VetHomePage />} />
+									<Route path="work-schedule" element={<WorkSchedulePage />} />
+									<Route path="medical-record" element={<MedicalRecordPage />} />
+									<Route path="hospitalize-record" element={<HospitalizeRecordPage />} />
+								</Route>
+
+								<Route
+									path="/login"
+									element={<LoginPage />}
+								/>
+							</Route>
+						</>
+					) : (
+						<>
+							{/* AUTHENTICATED ROUTES */}
+							<Route element={<PersistLogin />}>
+								{/* ROUTES FOR CUSTOMER */}
+								<Route element={<RequireAuth allowedRoles={"Customer"} />}>
+									<Route
+										path="/"
+										element={
+											<>
+												<CommonLayout />
+											</>
+										}
+									>
+										<Route
+											index
+											element={<HomePage />}
+										/>
+										<Route
+											path="your-pet"
+											element={<PetManagementPage />}
+										>
+											<Route
+												path="overview"
+												element={<PetOverview />}
+											/>
+											<Route
+												path="my-account"
+												element={<MyAccount />}
+											/>
+											<Route
+												path="pet-profile/:petId"
+												element={<PetProfile />}
+											/>
+										</Route>
+										<Route
+											path="services"
+											element={<ServicesPage />}
+										/>
+										<Route
+											path="booking"
+											element={<BookingPage />}
+										/>
+										<Route
+											path="/login"
+											element={<LoginPage />}
+										/>
+									</Route>
+								</Route>
+							</Route>
+						</>
+					)}
+				</Routes>
+			</ScrollToTop>
+		</>
+	);
               <Route path="/" element={<CommonLayout />}>
                 <Route index element={<HomePage />} />
               </Route>
