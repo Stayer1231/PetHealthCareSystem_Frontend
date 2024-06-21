@@ -1,25 +1,41 @@
-.service-card-container {
-    border: rgb(8, 73, 110);
-    border-width: 2px;
-    border-style: solid;
-    border-radius: 10px;
-    width: 100%;
-    text-align: center;
-    margin: 10px;
+// .service-card-container {
+//     border: 2px solid rgb(8, 73, 110);
+//     border-radius: 10px;
+//     width: 100%;
+//     text-align: center;
+//     margin: 10px;
+//     cursor: pointer;
+//     transition: transform 0.2s;
 
-    .service-card-title-container {
-        border-bottom: 2px solid rgb(8, 73, 110);
-        background: rgb(8, 73, 110);
-        color: white;
-        padding: 10px;
-    }
+//     &:hover {
+//         transform: scale(1.05);
+//     }
 
-    .service-card-description-container {
-        padding: 5px;
-        max-height: 180px;
-        min-height: 180px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-}
+//     &.selected {
+//         border-color: #ffc107; /* Yellow border for selected */
+//         background-color: #fef3d3; /* Light yellow background for selected */
+//     }
+
+//     .service-card-title-container {
+//         border-bottom: 2px solid rgb(8, 73, 110);
+//         background: rgb(8, 73, 110);
+//         color: white;
+//         padding: 10px;
+//     }
+
+//     .service-card-description-container {
+//         padding: 10px;
+//         display: flex;
+//         flex-direction: column;
+//         align-items: center;
+//         justify-content: center;
+//         height: 180px; /* Adjust height as needed */
+//         overflow: hidden;
+//     }
+
+//     .service-card-price-text {
+//         margin-top: 5px;
+//         font-size: 1em;
+//         color: #333;
+//     }
+// }
