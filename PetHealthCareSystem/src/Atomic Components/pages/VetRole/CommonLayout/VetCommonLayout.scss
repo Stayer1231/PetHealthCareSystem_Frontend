@@ -1,4 +1,8 @@
 .vet-common-layout-container {
-    display: grid;
-    grid-template-columns: 0.2fr 1fr;
+	display: grid;
+	grid-template-columns: 0.2fr 1fr;
+
+	.vet-page-container {
+		padding: 50px 100px;
+	}
 }

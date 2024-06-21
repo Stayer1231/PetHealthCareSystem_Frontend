@@ -48,11 +48,21 @@ function PetCard({ data, deletable }) {
 			<div className="pet-card-container">
 				{/* Pet image */}
 				<div className="pet-image-container">
-					<img
-						src={DogImg}
-						alt={"Cat Logo"}
-						className="pet-image"
-					/>
+					{
+						data?.species?.toLowerCase() === "cat" ? (
+							<img
+								src={CatImg}
+								alt={"Pet Logo"}
+								className="pet-image"
+							/>
+						) : (
+							<img
+								src={DogImg}
+								alt={"Pet Logo"}
+								className="pet-image"
+							/>
+						)
+					}
 				</div>
 
 				{/* Pet details */}

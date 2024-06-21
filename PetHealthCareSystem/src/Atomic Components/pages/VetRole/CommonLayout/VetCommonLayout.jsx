@@ -6,11 +6,11 @@ import './VetCommonLayout.scss'
 function VetCommonLayout() {
     return (
         <nav className='vet-common-layout-container'>
-            <div className='sidebar-container'>
+            <div className='vet-sidebar-container'>
                 <Sidebar />
             </div>
 
-            <div className='page-container'>
+            <div className='vet-page-container'>
                 <Outlet />
             </div>
         </nav>

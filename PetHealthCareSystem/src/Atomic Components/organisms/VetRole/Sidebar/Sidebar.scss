@@ -2,7 +2,30 @@ $common-width: 100%;
 
 .vet-sidebar-container {
 	width: $common-width;
-	min-height: 1200px;
+	min-height: 1000px;
 	height: 100vh;
 	box-shadow: rgba(0, 0, 0, 0.12) 5px 0px 5px;
+
+	.item-container {
+		width: 100%;
+
+		.item {
+			a {
+				display: block;
+				padding: 10px;
+				color: var(--JELLY-BEAN);
+				text-decoration: none;
+				line-height: 45px;
+
+				> label {
+					font-weight: 450;
+				}
+
+				&:hover {
+					background-color: var(--ACTIVE-COLOR);
+					transition: background-color 0.2s;
+				}
+			}
+		}
+	}
 }

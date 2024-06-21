@@ -16,6 +16,9 @@ import useAuth from "../config/provider/useAuth";
 import ScrollToTop from "../others/ScrollToTop";
 import VetCommonLayout from "../Atomic Components/pages/VetRole/CommonLayout/VetCommonLayout";
 import VetHomePage from "../Atomic Components/pages/VetRole/VetHomePage/VetHomePage";
+import WorkSchedulePage from "../Atomic Components/pages/VetRole/WorkSchedulePage/WorkSchedulePage";
+import MedicalRecordPage from "../Atomic Components/pages/VetRole/MedicalRecordPage/MedicalRecordPage";
+import HospitalizeRecordPage from "../Atomic Components/pages/VetRole/HospitalizeRecordPage/HospitalizeRecordPage";
 
 function AppRoutes() {
 	const { auth } = useAuth();
@@ -81,6 +84,10 @@ function AppRoutes() {
 										path="booking"
 										element={<BookingPage />}
 									/>
+									<Route index element={<VetHomePage />} />
+									<Route path="work-schedule" element={<WorkSchedulePage />} />
+									<Route path="medical-record" element={<MedicalRecordPage />} />
+									<Route path="hospitalize-record" element={<HospitalizeRecordPage />} />
 									<Route
 										path="/login"
 										element={<LoginPage />}
@@ -91,13 +98,16 @@ function AppRoutes() {
 						</>
 					) : auth?.role == "Vet" ? (
 						<>
-							{/* ROUTES FOR STAFF */}
+							{/* ROUTES FOR VET */}
 							<Route element={<RequireAuth allowedRoles={"Vet"} />}>
 								<Route
 									path="/"
 									element={<VetCommonLayout />}
 								>
 									<Route index element={<VetHomePage />} />
+									<Route path="work-schedule" element={<WorkSchedulePage />} />
+									<Route path="medical-record" element={<MedicalRecordPage />} />
+									<Route path="hospitalize-record" element={<HospitalizeRecordPage />} />
 								</Route>
 
 								<Route
