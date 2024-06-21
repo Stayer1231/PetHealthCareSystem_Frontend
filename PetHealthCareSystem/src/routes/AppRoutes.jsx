@@ -20,6 +20,7 @@ import WorkSchedulePage from "../Atomic Components/pages/VetRole/WorkSchedulePag
 import MedicalRecordPage from "../Atomic Components/pages/VetRole/MedicalRecordPage/MedicalRecordPage";
 import HospitalizeRecordPage from "../Atomic Components/pages/VetRole/HospitalizeRecordPage/HospitalizeRecordPage";
 import AdminPage from "../Atomic Components/pages/AdminPage/AdminPage";
+import PatientDetailPage from "../Atomic Components/pages/VetRole/PatientDetailPage/PatientDetailPage";
 
 function AppRoutes() {
 	const { auth } = useAuth();
@@ -100,7 +101,12 @@ function AppRoutes() {
 									<Route
 										path="medical-record"
 										element={<MedicalRecordPage />}
-									/>
+									>
+										<Route
+											path="patient-detail/:patientId"
+											element={<PatientDetailPage />}
+										/>
+									</Route>
 									<Route
 										path="hospitalize-record"
 										element={<HospitalizeRecordPage />}
@@ -128,10 +134,16 @@ function AppRoutes() {
 										path="work-schedule"
 										element={<WorkSchedulePage />}
 									/>
-									<Route
-										path="medical-record"
-										element={<MedicalRecordPage />}
-									/>
+									<Route path="medical-record">
+										<Route
+											index
+											element={<MedicalRecordPage />}
+										/>
+										<Route
+											path="patient-detail/:patientId"
+											element={<PatientDetailPage />}
+										/>
+									</Route>
 									<Route
 										path="hospitalize-record"
 										element={<HospitalizeRecordPage />}
