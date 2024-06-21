@@ -13,7 +13,8 @@ const initialState = {
     },
     selectedPets: [],
     selectedDate: "",
-    vets: []
+    vets: [],
+    selectedServices: [],
 };
 
 const bookingFormSlice = createSlice({
@@ -33,6 +34,10 @@ const bookingFormSlice = createSlice({
             }
         },
 
+        clearSelectedVet: (state) => {
+            state.selectedVet = initialState.selectedVet
+        },
+
         setSelectedPets: (state, action) => {
             state.selectedPets = action.payload
         },
@@ -43,6 +48,10 @@ const bookingFormSlice = createSlice({
 
         setVets: (state, action) => {
             state.vets = action.payload
+        },
+
+        setSelectedServices: (state, action) => {
+            state.selectedServices = action.payload
         }
     }
 });
@@ -51,7 +60,9 @@ export const {
     setSelectedVet,
     setSelectedPets,
     setSelectedDate,
-    setVets
+    setVets,
+    setSelectedServices,
+    clearSelectedVet
 } = bookingFormSlice.actions;
 
 export default bookingFormSlice.reducer;
