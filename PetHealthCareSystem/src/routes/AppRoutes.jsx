@@ -21,6 +21,7 @@ import MedicalRecordPage from "../Atomic Components/pages/VetRole/MedicalRecordP
 import HospitalizeRecordPage from "../Atomic Components/pages/VetRole/HospitalizeRecordPage/HospitalizeRecordPage";
 import AdminPage from "../Atomic Components/pages/AdminPage/AdminPage";
 import PatientDetailPage from "../Atomic Components/pages/VetRole/PatientDetailPage/PatientDetailPage";
+import PatientPage from "../Atomic Components/pages/VetRole/PatientPage/PatientPage";
 
 function AppRoutes() {
 	const { auth } = useAuth();
@@ -106,6 +107,10 @@ function AppRoutes() {
 											path="patient-detail/:patientId"
 											element={<PatientDetailPage />}
 										/>
+										<Route
+											path="patient/:patientId"
+											element={<PatientPage />}
+										/>
 									</Route>
 									<Route path="hospitalize-record">
 										<Route
@@ -152,6 +157,10 @@ function AppRoutes() {
 										<Route
 											path="patient-detail/:patientId"
 											element={<PatientDetailPage />}
+										/>
+										<Route
+											path="patient/:patientId"
+											element={<PatientPage />}
 										/>
 									</Route>
 									<Route path="hospitalize-record">
