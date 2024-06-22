@@ -47,7 +47,7 @@
 		}
 
 		&::after {
-			content: "Go to detail >";
+			content: "Xem chi tiết >";
 			position: absolute;
 			padding: 8px;
 			background-color: var(--JELLY-BEAN);
@@ -78,7 +78,7 @@
 			}
 
 			&::after {
-				content: "Go to detail >";
+				content: "Xem chi tiết >";
 				position: absolute;
 				padding: 8px;
 				transform: scale(1);

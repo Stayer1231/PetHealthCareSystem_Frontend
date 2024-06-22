@@ -60,7 +60,7 @@ function PatientCard({ data }) {
 			>
 				<div className="magic-btn">
 					<Text
-						content={"Magic Button"}
+						content={"Xem hồ sơ"}
 						type={"h6"}
 						className={"magic-text"}
 						cursor={"pointer"}

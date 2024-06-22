@@ -3,10 +3,21 @@ import "./PatientMangementLayout.scss";
 import CatImg from "../../../../assets/img/Cat.jpg";
 import PatientMedicalReport from "../../../molecules/VetRole/PatientMedicalReport/PatientMedicalReport";
 import Text from "../../../atoms/Text/Text";
+import Button from "../../../atoms/Button/Button";
+import { useNavigate } from "react-router-dom";
 
 function PatientMangementLayout() {
+	const navigate = useNavigate();
+
+	const handleViewMedicalRecord = () => {
+		navigate("/medical-record/patient-medical-record/1");
+	}
+
 	return (
 		<div className="patient-management-container">
+			<div className="btn-container text-right">
+				<Button content="Xem hồ sơ bệnh" variant="filled" onClick={handleViewMedicalRecord}/>
+			</div>
 			<div className="pet-overview-container">
 				<div className="img-container">
 					<img

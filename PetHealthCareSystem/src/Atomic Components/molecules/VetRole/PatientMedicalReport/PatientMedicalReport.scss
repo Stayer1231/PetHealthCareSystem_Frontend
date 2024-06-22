@@ -19,6 +19,54 @@
 			display: flex;
 			overflow: auto;
 			padding-bottom: 20px;
+
+			.modal-body {
+				.pet-medical-record-container {
+					padding-top: 50px;
+					display: flex;
+					flex-direction: column;
+					gap: 40px;
+
+					.information-div {
+						display: grid;
+						grid-template-columns: 0.6fr 1fr;
+
+						.input-label {
+							color: var(--JELLY-BEAN);
+						}
+
+						input {
+							padding: 10px;
+							font-size: 15px;
+							border: 1px solid var(--JELLY-BEAN); /* Ensure border is defined */
+							border-radius: 8px;
+
+							&:focus-visible {
+								border-color: var(
+									--JELLY-BEAN
+								); /* Change this to the color you want */
+								border-width: 2px; /* Increase the border width */
+								border-radius: 8px;
+								outline: none; /* Remove default outline */
+							}
+
+							&::placeholder {
+								font-style: italic;
+							}
+						}
+					}
+
+					.action-btn-container {
+						display: flex;
+						flex-direction: column;
+						gap: 5px;
+
+						.btn {
+							width: 100%;
+						}
+					}
+				}
+			}
 		}
 	}
 }
