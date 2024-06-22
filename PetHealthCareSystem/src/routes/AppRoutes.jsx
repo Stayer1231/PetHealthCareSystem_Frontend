@@ -107,10 +107,20 @@ function AppRoutes() {
 											element={<PatientDetailPage />}
 										/>
 									</Route>
-									<Route
-										path="hospitalize-record"
-										element={<HospitalizeRecordPage />}
-									/>
+									<Route path="hospitalize-record">
+										<Route
+											index
+											element={<HospitalizeRecordPage />}
+										/>
+										<Route
+											path="hospitalize-info/:hospitalizeId"
+											element={
+												<>
+													<h1>hello hehe chưa có gì hết</h1>
+												</>
+											}
+										/>
+									</Route>
 									<Route
 										path="/login"
 										element={<LoginPage />}
@@ -144,10 +154,20 @@ function AppRoutes() {
 											element={<PatientDetailPage />}
 										/>
 									</Route>
-									<Route
-										path="hospitalize-record"
-										element={<HospitalizeRecordPage />}
-									/>
+									<Route path="hospitalize-record">
+										<Route
+											index
+											element={<HospitalizeRecordPage />}
+										/>
+										<Route
+											path="hospitalize-info/:hospitalizeId"
+											element={
+												<>
+													<h1>hello hehe chưa có gì hết</h1>
+												</>
+											}
+										/>
+									</Route>
 								</Route>
 
 								<Route

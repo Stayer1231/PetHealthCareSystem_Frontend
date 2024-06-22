@@ -61,7 +61,7 @@ function PatientDetailForm() {
 										className={"subtitle-content"}
 									/>
 									<Text
-										content={"Veterianian in charge: Nguyen Thanh Phong"}
+										content={"Bác sĩ phụ trách: Nguyen Thanh Phong"}
 										type={"subtitle"}
 										className={"subtitle-content"}
 									/>
@@ -87,7 +87,7 @@ function PatientDetailForm() {
 					<div className="form-body-container">
 						{/* PET INFORMATION BLOCK */}
 						<div className="pet-information information-block">
-							<HeaderDiv title={"Pet Information"} />
+							<HeaderDiv title={"Thông Tin Thú Cưng"} />
 
 							{/* PET INFORMATION BODY */}
 							<div className="information-body">
@@ -104,7 +104,7 @@ function PatientDetailForm() {
 									{/* NAME */}
 									<div className="pet-name information-div">
 										<Text
-											content={"Name: "}
+											content={"Tên: "}
 											type={"subtitle"}
 											className={"text-label"}
 										/>
@@ -118,12 +118,12 @@ function PatientDetailForm() {
 									{/* SPECIES */}
 									<div className="pet-breed information-div">
 										<Text
-											content={"Species: "}
+											content={"Loài: "}
 											type={"subtitle"}
 											className={"text-label"}
 										/>
 										<Text
-											content={" Dog"}
+											content={"Chó"}
 											type={"subtitle"}
 											className={"text-content"}
 										/>
@@ -132,7 +132,7 @@ function PatientDetailForm() {
 									{/* BREED */}
 									<div className="pet-breed information-div">
 										<Text
-											content={"Breed: "}
+											content={"Giống: "}
 											type={"subtitle"}
 											className={"text-label"}
 										/>
@@ -146,7 +146,7 @@ function PatientDetailForm() {
 									{/* DATE OF BIRTH */}
 									<div className="pet-dob information-div">
 										<Text
-											content={"Date of Birth: "}
+											content={"Ngày sinh: "}
 											type={"subtitle"}
 											className={"text-label"}
 										/>
@@ -162,14 +162,14 @@ function PatientDetailForm() {
 
 						{/* OWNER INFORMATION BLOCK */}
 						<div className="owner-info-container information-block">
-							<HeaderDiv title={"Owner's Information"} />
+							<HeaderDiv title={"Thông Tin Chủ Nhân"} />
 							<div className="information-body">
 								{/* INFO CONTAINER */}
 								<div className="info-container">
 									{/* OWNER NAME */}
 									<div className="owner-name information-div">
 										<Text
-											content={"Name: "}
+											content={"Tên: "}
 											type={"subtitle"}
 											className={"text-label"}
 										/>
@@ -183,7 +183,7 @@ function PatientDetailForm() {
 									{/* OWNER PHONE NUMBER */}
 									<div className="owner-phone information-div">
 										<Text
-											content={"Phone: "}
+											content={"Số điện thoại: "}
 											type={"subtitle"}
 											className={"text-label"}
 										/>
@@ -213,7 +213,7 @@ function PatientDetailForm() {
 
 						{/* MEDICAL HISTORY */}
 						<div className="meidcal-history-container information-block">
-							<HeaderDiv title={"Medical History"} />
+							<HeaderDiv title={"Lịch Sử Chữa Bệnh"} />
 							<TableContainer component={Paper}>
 								<Table
 									sx={{ minWidth: 650 }}
@@ -242,9 +242,9 @@ function PatientDetailForm() {
 												>
 													{row.date}
 												</TableCell>
-												<TableCell align="right">{row.name}</TableCell>
 												<TableCell align="right">{row.description}</TableCell>
 												<TableCell align="right">{row.diagnosis}</TableCell>
+												<TableCell align="right">{row.action}</TableCell>
 												<TableCell align="right">{row.status}</TableCell>
 											</TableRow>
 										))}
@@ -255,7 +255,7 @@ function PatientDetailForm() {
 
 						{/* IMMUNIZATION HISTORY */}
 						<div className="immunization-history-container information-block">
-							<HeaderDiv title={"Immunization History"} />
+							<HeaderDiv title={"Lịch Sử Tiêm Phòng"} />
 							<TableContainer component={Paper}>
 								<Table
 									sx={{ minWidth: 650 }}
