@@ -2,8 +2,8 @@
 	.form-container {
 		margin: auto;
 		width: 800px;
-		height: 800px;
-		border: 1px solid black;
+		min-height: 800px;
+		border: 1px solid rgba(0, 0, 0, 0.3);
 
 		// FORM  HEADER CSS
 		.form-header-container {
@@ -20,7 +20,7 @@
 					.header-left {
 						display: flex;
 						flex-direction: column;
-						gap: 20px;
+						gap: 10px;
 
 						.title-content,
 						.subtitle-content {
@@ -71,7 +71,7 @@
 		.form-body-container {
 			padding: 30px 30px;
 
-			// GENERAL PART
+			// ============ GENERAL PART ==============
 			.header-div {
 				display: flex;
 				align-items: center;
@@ -83,6 +83,7 @@
 				.header-title {
 					.title-content {
 						color: white;
+						font-weight: bold;
 					}
 				}
 			}
@@ -97,6 +98,7 @@
 			.information-block {
 				margin-bottom: 50px;
 			}
+			//==========================================
 
 			// PET INFORMATION BLOCK
 			.pet-information {
@@ -120,7 +122,7 @@
 						color: var(--JELLY-BEAN);
 						display: flex;
 						flex-direction: column;
-						gap: 20px;
+						gap: 15px;
 
 						.text-label {
 							font-weight: 600;
@@ -139,14 +141,13 @@
 			}
 
 			// OWNER INFORMATION BLOCK
-			.owner-info-information {
+			.owner-info-container {
 				.info-container {
 					flex: 1;
-					padding-left: 80px;
 					color: var(--JELLY-BEAN);
 					display: flex;
 					flex-direction: column;
-					gap: 20px;
+					gap: 15px;
 
 					.text-label {
 						font-weight: 600;
@@ -158,10 +159,12 @@
 
 					.information-div {
 						display: grid;
-						grid-template-columns: repeat(2, 1fr);
+						grid-template-columns: 1fr 2fr;
 					}
 				}
 			}
+
+
 		}
 	}
 }
