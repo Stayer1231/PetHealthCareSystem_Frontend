@@ -128,11 +128,6 @@ function AppRoutes() {
 											}
 										/>
 									</Route>
-
-									<Route
-										path="transaction"
-										element={<TransactionPage />}
-									/>
 								</Route>
 								<Route
 									path="/login"
