@@ -104,7 +104,7 @@ function AppRoutes() {
 										element={<MedicalRecordPage />}
 									>
 										<Route
-											path="patient-detail/:patientId"
+											path="patient-medical-record/:patientId"
 											element={<PatientDetailPage />}
 										/>
 										<Route
@@ -155,7 +155,7 @@ function AppRoutes() {
 											element={<MedicalRecordPage />}
 										/>
 										<Route
-											path="patient-detail/:patientId"
+											path="patient-medical-record/:patientId"
 											element={<PatientDetailPage />}
 										/>
 										<Route
