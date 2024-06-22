@@ -2,8 +2,8 @@ $common-width: 100%;
 
 .vet-sidebar-container {
 	width: $common-width;
-	min-height: 1100px;
-	height: 100dvh;
+	min-height: 100vh;
+	height: 100%;
 	box-shadow: rgba(0, 0, 0, 0.12) 5px 0px 5px;
 
 	.item-container {

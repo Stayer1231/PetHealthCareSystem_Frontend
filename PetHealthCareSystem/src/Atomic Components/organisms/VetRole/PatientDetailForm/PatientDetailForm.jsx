@@ -3,8 +3,42 @@ import "./PatientDetailForm.scss";
 import Text from "../../../atoms/Text/Text";
 import LogoImg from "../../../../assets/img/dog_logo.jpg";
 import DogImg from "../../../../assets/img/Dog.jpg";
+import {
+	Paper,
+	Table,
+	TableBody,
+	TableCell,
+	TableContainer,
+	TableHead,
+	TableRow,
+} from "@mui/material";
 
 function PatientDetailForm() {
+	function createData(date, description, diagnosis, action, status) {
+		return { date, description, diagnosis, action, status };
+	}
+
+	function createData2(date, name) {
+		return { date, name };
+	}
+
+	const rows = [
+		createData("21/09/2003", "Chết", "Chết luôn", "Chôn", "Hoàn thành"),
+		createData("21/09/2003", "Chết", "Chết luôn", "Chôn", "Hoàn thành"),
+		createData("21/09/2003", "Chết", "Chết luôn", "Chôn", "Hoàn thành"),
+		createData("21/09/2003", "Chết", "Chết luôn", "Chôn", "Hoàn thành"),
+		createData("21/09/2003", "Chết", "Chết luôn", "Chôn", "Hoàn thành"),
+	];
+
+	const rows2 = [
+		createData2("21/09/2003", "Chói"),
+		createData2("15/02/2020", "Rabies"),
+		createData2("10/04/2021", "Distemper"),
+		createData2("22/06/2021", "Parvovirus"),
+		createData2("18/09/2021", "Hepatitis"),
+		createData2("30/11/2021", "Leptospirosis"),
+	];
+
 	return (
 		<>
 			<div className="patient-detail-form-container">
@@ -23,6 +57,11 @@ function PatientDetailForm() {
 									/>
 									<Text
 										content={"Peticare"}
+										type={"subtitle"}
+										className={"subtitle-content"}
+									/>
+									<Text
+										content={"Veterianian in charge: Nguyen Thanh Phong"}
 										type={"subtitle"}
 										className={"subtitle-content"}
 									/>
@@ -123,7 +162,7 @@ function PatientDetailForm() {
 
 						{/* OWNER INFORMATION BLOCK */}
 						<div className="owner-info-container information-block">
-							<HeaderDiv title={"Owner Information"} />
+							<HeaderDiv title={"Owner's Information"} />
 							<div className="information-body">
 								{/* INFO CONTAINER */}
 								<div className="info-container">
@@ -171,6 +210,84 @@ function PatientDetailForm() {
 								</div>
 							</div>
 						</div>
+
+						{/* MEDICAL HISTORY */}
+						<div className="meidcal-history-container information-block">
+							<HeaderDiv title={"Medical History"} />
+							<TableContainer component={Paper}>
+								<Table
+									sx={{ minWidth: 650 }}
+									aria-label="simple table"
+								>
+									<TableHead>
+										<TableRow>
+											<TableCell>Ngày</TableCell>
+											<TableCell align="right">Mô tả</TableCell>
+											<TableCell align="right">Chẩn đoán</TableCell>
+											<TableCell align="right">Hành động</TableCell>
+											<TableCell align="right">Trạng thái</TableCell>
+										</TableRow>
+									</TableHead>
+									<TableBody>
+										{rows.map((row) => (
+											<TableRow
+												key={row.date}
+												sx={{
+													"&:last-child td, &:last-child th": { border: 0 },
+												}}
+											>
+												<TableCell
+													component="th"
+													scope="row"
+												>
+													{row.date}
+												</TableCell>
+												<TableCell align="right">{row.name}</TableCell>
+												<TableCell align="right">{row.description}</TableCell>
+												<TableCell align="right">{row.diagnosis}</TableCell>
+												<TableCell align="right">{row.status}</TableCell>
+											</TableRow>
+										))}
+									</TableBody>
+								</Table>
+							</TableContainer>
+						</div>
+
+						{/* IMMUNIZATION HISTORY */}
+						<div className="immunization-history-container information-block">
+							<HeaderDiv title={"Immunization History"} />
+							<TableContainer component={Paper}>
+								<Table
+									sx={{ minWidth: 650 }}
+									aria-label="simple table"
+								>
+									<TableHead>
+										<TableRow>
+											<TableCell>Ngày</TableCell>
+											<TableCell align="right">Bệnh cần tiêm</TableCell>
+										</TableRow>
+									</TableHead>
+									<TableBody>
+										{rows2.map((row) => (
+											<TableRow
+												key={row.date}
+												sx={{
+													"&:last-child td, &:last-child th": { border: 0 },
+												}}
+											>
+												<TableCell
+													component="th"
+													scope="row"
+												>
+													{row.date}
+												</TableCell>
+												<TableCell align="right">{row.name}</TableCell>
+											</TableRow>
+										))}
+									</TableBody>
+								</Table>
+							</TableContainer>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -187,7 +304,7 @@ export const HeaderDiv = ({ title }) => {
 				<div className="header-title">
 					<Text
 						content={title}
-						type={"h4"}
+						type={"h5"}
 						className={"title-content"}
 					/>
 				</div>
