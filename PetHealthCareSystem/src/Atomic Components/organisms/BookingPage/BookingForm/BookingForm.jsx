@@ -20,6 +20,7 @@ import { format } from "date-fns";
 import TextField from "@mui/material/TextField";
 import TimeFrameCard from "../../../molecules/TimeFrameCard/TimeFrameCard";
 import ServiceCard from "../../../molecules/ServiceCard/ServiceCard";
+import { useNavigate } from "react-router-dom";
 
 function BookingForm() {
     const dispatch = useDispatch();
@@ -34,6 +35,7 @@ function BookingForm() {
     const selectedServices = useSelector((state) => state.bookingForm.selectedServices);
     const bookingNote = useSelector((state) => state.bookingForm.bookingNote);
     const inputExceptions = useSelector((state) => state.bookingForm.inputExceptions);
+    const navigate = useNavigate();
 
     const handleLoadPets = async () => {
         try {
@@ -91,19 +93,21 @@ function BookingForm() {
             return;
         }
 
-        try {
-            const response = await APIInUse.post("Appointment/customer/book", {
-                serviceIdList: selectedServices,
-                vetId: selectedVet.id,
-                note: bookingNote,
-                timeTableId: selectedTimeFrame.id,
-                appointmentDate: selectedDate,
-                petIdList: selectedPets.map((pet) => pet.id),
-            });
-            console.log(response.data);
-        } catch (error) {
-            console.log(error);
-        }
+        navigate('/booking/transaction');
+
+        // try {
+        //     const response = await APIInUse.post("Appointment/customer/book", {
+        //         serviceIdList: selectedServices,
+        //         vetId: selectedVet.id,
+        //         note: bookingNote,
+        //         timeTableId: selectedTimeFrame.id,
+        //         appointmentDate: selectedDate,
+        //         petIdList: selectedPets.map((pet) => pet.id),
+        //     });
+        //     console.log(response.data);
+        // } catch (error) {
+        //     console.log(error);
+        // }
     };
 
     const handleLoadServices = async () => {
