@@ -1,0 +1,12 @@
+/* VetScheduler.scss */
+.vet-scheduler {
+	.fc-timegrid-slots {
+		th {
+			height: auto !important;
+		}
+
+		td {
+			height: 35px; /* Adjust the height as needed */
+		}
+	}
+}

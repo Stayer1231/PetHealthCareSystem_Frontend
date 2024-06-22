@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import CommonLayout from "../Atomic Components/pages/CommonLayout/CommonLayout";
 import PetManagementPage from "../Atomic Components/pages/PetManagementPage/PetManagementPage";
@@ -16,6 +16,12 @@ import useAuth from "../config/provider/useAuth";
 import ScrollToTop from "../others/ScrollToTop";
 import VetCommonLayout from "../Atomic Components/pages/VetRole/CommonLayout/VetCommonLayout";
 import VetHomePage from "../Atomic Components/pages/VetRole/VetHomePage/VetHomePage";
+import WorkSchedulePage from "../Atomic Components/pages/VetRole/WorkSchedulePage/WorkSchedulePage";
+import MedicalRecordPage from "../Atomic Components/pages/VetRole/MedicalRecordPage/MedicalRecordPage";
+import HospitalizeRecordPage from "../Atomic Components/pages/VetRole/HospitalizeRecordPage/HospitalizeRecordPage";
+import AdminPage from "../Atomic Components/pages/AdminPage/AdminPage";
+import PatientDetailPage from "../Atomic Components/pages/VetRole/PatientDetailPage/PatientDetailPage";
+import PatientPage from "../Atomic Components/pages/VetRole/PatientPage/PatientPage";
 import TransactionForm from "../Atomic Components/organisms/BookingPage/TransactionForm/TransactionForm";
 import BookingForm from "../Atomic Components/organisms/BookingPage/BookingForm/BookingForm";
 
@@ -31,6 +37,10 @@ function AppRoutes() {
 					{!auth?.role ? (
 						<>
 							{/* UNAUTHENTICATED ROUTES */}
+							<Route
+								path="/admin"
+								element={<AdminPage />}
+							/>
 							<Route
 								path="/login"
 								element={<LoginPage />}
@@ -82,19 +92,116 @@ function AppRoutes() {
 									<Route
 										path="booking"
 										element={<BookingPage />}
+									/>
+									<Route
+										index
+										element={<VetHomePage />}
+									/>
+									<Route
+										path="work-schedule"
+										element={<WorkSchedulePage />}
+									/>
+									<Route
+										path="medical-record"
+										element={<MedicalRecordPage />}
 									>
 										<Route
-											path="transaction"
-											element={<TransactionPage />}
+											path="patient-medical-record/:patientId"
+											element={<PatientDetailPage />}
+										/>
+										<Route
+											path="patient/:patientId"
+											element={<PatientPage />}
 										/>
 									</Route>
+									<Route path="hospitalize-record">
+										<Route
+											index
+											element={<HospitalizeRecordPage />}
+										/>
+										<Route
+											path="hospitalize-info/:hospitalizeId"
+											element={
+												<>
+													<h1>hello hehe chưa có gì hết</h1>
+												</>
+											}
+										/>
+									</Route>
+
 									<Route
-										path="/login"
-										element={<LoginPage />}
+										path="transaction"
+										element={<TransactionPage />}
 									/>
 								</Route>
+								<Route
+									path="/login"
+									element={<LoginPage />}
+								/>
 							</Route>
 
+						</>
+					) : auth?.role == "Vet" ? (
+						<>
+							{/* ROUTES FOR VET */}
+							<Route element={<RequireAuth allowedRoles={"Vet"} />}>
+								<Route
+									path="/"
+									element={<VetCommonLayout />}
+								>
+									<Route
+										index
+										element={<VetHomePage />}
+									/>
+									<Route
+										path="work-schedule"
+										element={<WorkSchedulePage />}
+									/>
+									<Route path="medical-record">
+										<Route
+											index
+											element={<MedicalRecordPage />}
+										/>
+										<Route
+											path="patient-medical-record/:patientId"
+											element={<PatientDetailPage />}
+										/>
+										<Route
+											path="patient/:patientId"
+											element={<PatientPage />}
+										/>
+									</Route>
+									<Route path="hospitalize-record">
+										<Route
+											index
+											element={<HospitalizeRecordPage />}
+										/>
+										<Route
+											path="hospitalize-info/:hospitalizeId"
+											element={
+												<>
+													<h1>hello hehe chưa có gì hết</h1>
+												</>
+											}
+										/>
+									</Route>
+								</Route>
+
+								<Route
+									path="/login"
+									element={<LoginPage />}
+								/>
+							</Route>
+						</>
+					) : auth?.role == "Admin" ? (
+						<>
+							{/* ROUTES FOR ADMIN */}
+							<Route element={<RequireAuth allowedRoles={"Admin"} />}>
+								<Route
+									path="/"
+									element={<AdminPage />}
+								/>
+							</Route>
 						</>
 					) : auth?.role == "Vet" ? (
 						<>
@@ -104,7 +211,10 @@ function AppRoutes() {
 									path="/"
 									element={<VetCommonLayout />}
 								>
-									<Route index element={<VetHomePage />} />
+									<Route
+										index
+										element={<VetHomePage />}
+									/>
 								</Route>
 
 								<Route

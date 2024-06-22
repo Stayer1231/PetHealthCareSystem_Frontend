@@ -1,0 +1,170 @@
+.patient-detail-form-container {
+	.form-container {
+		margin: auto;
+		width: 800px;
+		min-height: 800px;
+		border: 1px solid rgba(0, 0, 0, 0.3);
+
+		// FORM  HEADER CSS
+		.form-header-container {
+			.header-main {
+				padding: 20px 30px;
+				width: 100%;
+				height: 120px;
+				background-color: var(--JELLY-BEAN);
+
+				.header-content {
+					display: flex;
+					justify-content: space-between;
+
+					.header-left {
+						display: flex;
+						flex-direction: column;
+						gap: 10px;
+
+						.title-content,
+						.subtitle-content {
+							color: white;
+						}
+					}
+
+					.header-right {
+						.img-container {
+							width: 110px;
+							height: 85px;
+
+							> img {
+								width: 100%;
+								height: 100%;
+							}
+						}
+					}
+				}
+			}
+
+			.header-sub {
+				width: 102%;
+				height: 15px;
+				display: grid;
+				position: relative;
+				grid-template-columns: repeat(2, 1fr);
+
+				.color-1 {
+					position: absolute;
+					height: 15px;
+					width: 50%;
+					background-color: var(--JELLY-BEAN-DARK);
+				}
+
+				.color-2 {
+					position: absolute;
+					height: 15px;
+					width: 51%;
+					transform: translateX(92.4%);
+					background-color: var(--CHELSEA-CUCUMBER);
+					clip-path: polygon(2% 0, 100% 0, 100% 100%, 0 100%);
+				}
+			}
+		}
+
+		// FORM BODY CSS
+		.form-body-container {
+			padding: 30px 30px;
+
+			// ============ GENERAL PART ==============
+			.header-div {
+				display: flex;
+				align-items: center;
+				width: 100%;
+				height: 50px;
+				padding-left: 20px;
+				background-color: var(--CHELSEA-CUCUMBER);
+
+				.header-title {
+					.title-content {
+						color: white;
+						font-weight: bold;
+					}
+				}
+			}
+
+			.sub-header-div {
+				width: 100%;
+				height: 10px;
+				background-color: var(--JELLY-BEAN-DARK);
+				margin-bottom: 20px;
+			}
+
+			.information-block {
+				margin-bottom: 50px;
+			}
+			//==========================================
+
+			// PET INFORMATION BLOCK
+			.pet-information {
+				.information-body {
+					display: flex;
+					flex-direction: row;
+
+					.img-container {
+						width: 280px;
+						height: 200px;
+
+						> img {
+							width: 100%;
+							height: 100%;
+						}
+					}
+
+					.info-container {
+						flex: 1;
+						padding-left: 80px;
+						color: var(--JELLY-BEAN);
+						display: flex;
+						flex-direction: column;
+						gap: 15px;
+
+						.text-label {
+							font-weight: 600;
+						}
+
+						.text-content {
+							color: var(--JELLY-BEAN-DARK);
+						}
+
+						.information-div {
+							display: grid;
+							grid-template-columns: repeat(2, 1fr);
+						}
+					}
+				}
+			}
+
+			// OWNER INFORMATION BLOCK
+			.owner-info-container {
+				.info-container {
+					flex: 1;
+					color: var(--JELLY-BEAN);
+					display: flex;
+					flex-direction: column;
+					gap: 15px;
+
+					.text-label {
+						font-weight: 600;
+					}
+
+					.text-content {
+						color: var(--JELLY-BEAN-DARK);
+					}
+
+					.information-div {
+						display: grid;
+						grid-template-columns: 1fr 2fr;
+					}
+				}
+			}
+
+
+		}
+	}
+}
