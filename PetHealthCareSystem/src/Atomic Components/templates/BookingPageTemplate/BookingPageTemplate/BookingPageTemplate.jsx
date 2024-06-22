@@ -1,6 +1,6 @@
 import React from "react";
 import './BookingPageTemplate.scss';
-import BookingForm from "../../organisms/BookingPage/BookingForm/BookingForm";
+import BookingForm from "../../../organisms/BookingPage/BookingForm/BookingForm";
 
 function BookingPageTemplate() {
     return (

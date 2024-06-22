@@ -1,5 +1,5 @@
 import React from "react";
-import BookingPageTemplate from "../../templates/BookingPageTemplate/BookingPageTemplate";
+import BookingPageTemplate from "../../../templates/BookingPageTemplate/BookingPageTemplate/BookingPageTemplate";
 
 function BookingPage(){
     return <BookingPageTemplate/>
