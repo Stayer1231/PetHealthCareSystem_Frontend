@@ -1,0 +1,7 @@
+.hospitalize-pet-list-container {
+	.pet-list-container {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		row-gap: 50px;
+	}
+}

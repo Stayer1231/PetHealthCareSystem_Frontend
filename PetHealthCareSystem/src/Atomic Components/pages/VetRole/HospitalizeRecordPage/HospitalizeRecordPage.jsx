@@ -1,11 +1,8 @@
-import React from 'react'
+import React from "react";
+import HospitalizeRecordTemplate from "../../../templates/VetRole/HospitalizeRecordTemplate/HospitalizeRecordTemplate";
 
 function HospitalizeRecordPage() {
-  return (
-    <div>
-      
-    </div>
-  )
+	return <HospitalizeRecordTemplate />;
 }
 
-export default HospitalizeRecordPage
+export default HospitalizeRecordPage;
