@@ -1,7 +1,7 @@
 import React from "react";
 import "./HospitalizeCard.scss";
 import { useNavigate } from "react-router-dom";
-import CatLogo from "../../../../assets/img/Cat-NonBG.png";
+import CatLogo from "../../../../assets/img/Cat.jpg";
 import Text from "../../../atoms/Text/Text";
 
 function HospitalizeCard({ data }) {
@@ -36,6 +36,7 @@ function HospitalizeCard({ data }) {
 							alt="Pet Image"
 						/>
 					</div>
+					<div className="background-img" />
 				</div>
 			</div>
 		</>

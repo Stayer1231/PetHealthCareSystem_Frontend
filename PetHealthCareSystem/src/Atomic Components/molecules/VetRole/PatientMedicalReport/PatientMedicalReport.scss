@@ -1,0 +1,24 @@
+.patient-medical-report-container {
+	.medical-table-title {
+		padding: 12px;
+		background-color: var(--CHELSEA-CUCUMBER);
+
+		.title-content {
+			color: white;
+			font-size: 18px;
+			font-weight: 500;
+		}
+	}
+
+	.appointment-list-container {
+		padding: 6px;
+
+		.appointment-list {
+			gap: 30px;
+			padding: 10px;
+			display: flex;
+			overflow: auto;
+			padding-bottom: 20px;
+		}
+	}
+}

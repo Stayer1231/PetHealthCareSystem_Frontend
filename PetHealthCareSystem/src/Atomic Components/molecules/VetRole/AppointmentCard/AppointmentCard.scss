@@ -1,0 +1,63 @@
+.appointment-card-container {
+	max-width: 150px;
+	max-height: 100px;
+	min-width: 150px;
+	height: auto;
+	display: grid;
+	grid-template-columns: 3fr 1fr;
+	padding: 10px;
+	border-radius: 8px;
+	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25);
+	background-color: var(--GRAY-WHITE-COLOR);
+	cursor: pointer;
+	transform: scale(1);
+	transition: transform 0.1s;
+	user-select: none;
+
+	&:active {
+		transform: scale(0.95);
+		transition: transform 0.1s;
+	}
+
+	.appointment-info {
+		align-self: center;
+		display: flex;
+		flex-direction: column;
+
+		.content {
+			line-height: 18px;
+		}
+	}
+
+	.pulse-container {
+		display: flex;
+		justify-content: flex-end;
+		padding: 5px 5px 0 0;
+
+		.pulse {
+			position: relative;
+			width: 8px;
+			height: 8px;
+			background-color: var(--JELLY-BEAN);
+			border-radius: 50%;
+
+			span {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				background-color: inherit;
+				border-radius: inherit;
+				opacity: 0.8;
+				animation: pulseAnimation 4s ease-out infinite;
+				animation-delay: calc(2s * var(--i));
+			}
+		}
+	}
+}
+
+@keyframes pulseAnimation {
+	100% {
+		opacity: 0;
+		transform: scale(2.5);
+	}
+}

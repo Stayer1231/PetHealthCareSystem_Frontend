@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./PatientCard.scss";
 import CatImg from "../../../../assets/img/Cat.jpg";
 import Text from "../../../atoms/Text/Text";
@@ -9,7 +9,7 @@ function PatientCard({ data }) {
 	const navigate = useNavigate();
 
 	const handleViewPatientDetail = () => {
-		navigate("/medical-record/patient-detail/1");
+		navigate("/medical-record/patient/1");
 	};
 
 	return (

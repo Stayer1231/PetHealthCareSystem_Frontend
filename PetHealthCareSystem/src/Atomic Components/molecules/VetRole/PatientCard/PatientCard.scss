@@ -22,6 +22,7 @@
 			z-index: 5;
 
 			> img {
+				background-color: white;
 				position: absolute;
 				transform: translate(-50%, -0.5%);
 				width: 150%;
@@ -42,10 +43,6 @@
 
 			.pet-name {
 				margin-bottom: 6px;
-			}
-
-			.information-headline {
-				// test
 			}
 
 			.information-text {
@@ -94,5 +91,9 @@
 				opacity: 0;
 			}
 		}
+	}
+
+	.modal-container {
+		z-index: 6;
 	}
 }
