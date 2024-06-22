@@ -16,7 +16,8 @@ import useAuth from "../config/provider/useAuth";
 import ScrollToTop from "../others/ScrollToTop";
 import VetCommonLayout from "../Atomic Components/pages/VetRole/CommonLayout/VetCommonLayout";
 import VetHomePage from "../Atomic Components/pages/VetRole/VetHomePage/VetHomePage";
-import TransactionPage from "../Atomic Components/pages/TransactionPage/TransactionPage";
+import TransactionForm from "../Atomic Components/organisms/BookingPage/TransactionForm/TransactionForm";
+import BookingForm from "../Atomic Components/organisms/BookingPage/BookingForm/BookingForm";
 
 function AppRoutes() {
 	const { auth } = useAuth();
@@ -156,8 +157,12 @@ function AppRoutes() {
 											element={<BookingPage />}
 										>
 											<Route
+												path="form"
+												element={<BookingForm />}
+											/>
+											<Route
 												path="transaction"
-												element={<TransactionPage />}
+												element={<TransactionForm />}
 											/>
 										</Route>
 										<Route
