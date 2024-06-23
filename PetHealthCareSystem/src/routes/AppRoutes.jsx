@@ -22,6 +22,8 @@ import HospitalizeRecordPage from "../Atomic Components/pages/VetRole/Hospitaliz
 import AdminPage from "../Atomic Components/pages/AdminPage/AdminPage";
 import PatientDetailPage from "../Atomic Components/pages/VetRole/PatientDetailPage/PatientDetailPage";
 import PatientPage from "../Atomic Components/pages/VetRole/PatientPage/PatientPage";
+import TransactionForm from "../Atomic Components/organisms/BookingPage/TransactionForm/TransactionForm";
+import BookingForm from "../Atomic Components/organisms/BookingPage/BookingForm/BookingForm";
 
 function AppRoutes() {
 	const { auth } = useAuth();
@@ -126,12 +128,13 @@ function AppRoutes() {
 											}
 										/>
 									</Route>
-									<Route
-										path="/login"
-										element={<LoginPage />}
-									/>
 								</Route>
+								<Route
+									path="/login"
+									element={<LoginPage />}
+								/>
 							</Route>
+
 						</>
 					) : auth?.role == "Vet" ? (
 						<>
@@ -257,7 +260,16 @@ function AppRoutes() {
 										<Route
 											path="booking"
 											element={<BookingPage />}
-										/>
+										>
+											<Route
+												path="form"
+												element={<BookingForm />}
+											/>
+											<Route
+												path="transaction"
+												element={<TransactionForm />}
+											/>
+										</Route>
 										<Route
 											path="/login"
 											element={<LoginPage />}

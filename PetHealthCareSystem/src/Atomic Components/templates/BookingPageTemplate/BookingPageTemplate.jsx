@@ -1,6 +1,7 @@
 import React from "react";
 import './BookingPageTemplate.scss';
 import BookingForm from "../../organisms/BookingPage/BookingForm/BookingForm";
+import { Outlet } from "react-router-dom";
 
 function BookingPageTemplate() {
     return (
@@ -11,7 +12,9 @@ function BookingPageTemplate() {
                     src="https://png.pngtree.com/background/20210716/original/pngtree-simple-cute-pet-dog-background-picture-image_1375478.jpg" alt="" />
             </div>
 
-            <BookingForm />
+            <div className="main-information-container">
+                <Outlet />
+            </div>
         </>
     )
 

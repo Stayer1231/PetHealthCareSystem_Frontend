@@ -20,7 +20,7 @@ function BookAppointmentBody() {
                         className={"user-book-appointment-controller-detail-text"}
                         type={'h4'}
                     />
-                    <Link to={"/booking"}
+                    <Link to={"/booking/form"}
                         className="booking-link">
                         <Button
                             content="Book Appointment"

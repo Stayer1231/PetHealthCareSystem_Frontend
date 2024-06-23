@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { set } from "date-fns";
 
 const initialState = {
     selectedVet: {
@@ -15,6 +16,8 @@ const initialState = {
     selectedDate: "",
     vets: [],
     selectedServices: [],
+    bookingNote: "",
+    inputExceptions: [],
 };
 
 const bookingFormSlice = createSlice({
@@ -32,6 +35,10 @@ const bookingFormSlice = createSlice({
                 role: action.payload.role,
                 birthDate: action.payload.birthDate
             }
+        },
+
+        reInitialSelectedVet: (state) => {
+            state.selectedVet = initialState.selectedVet
         },
 
         clearSelectedVet: (state) => {
@@ -52,6 +59,13 @@ const bookingFormSlice = createSlice({
 
         setSelectedServices: (state, action) => {
             state.selectedServices = action.payload
+        },
+        setBookingNote: (state, action) => {
+            state.bookingNote = action.payload
+        },
+
+        setInputExceptions: (state, action) => {
+            state.inputExceptions = action.payload
         }
     }
 });
@@ -62,7 +76,10 @@ export const {
     setSelectedDate,
     setVets,
     setSelectedServices,
-    clearSelectedVet
+    clearSelectedVet,
+    setBookingNote,
+    setInputExceptions,
+    reInitialSelectedVet
 } = bookingFormSlice.actions;
 
 export default bookingFormSlice.reducer;
