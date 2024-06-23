@@ -20,6 +20,11 @@ function TransactionForm() {
     const services = useSelector((state) => state.bookingForm.servicesList);
     const [serviceQuantity, setServiceQuantity] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const selectedVet = useSelector((state) => state.bookingForm.selectedVet);
+    const bookingNote = useSelector((state) => state.bookingForm.bookingNote);
+    const selectedDate = useSelector((state) => state.bookingForm.selectedDate);
+    const selectedTimeFrame = useSelector((state) => state.bookingForm.selectedTimeFrame);
+    const selectedPets = useSelector((state) => state.bookingForm.selectedPets);
     const dispatch = useDispatch();
     const [totalPrice, setTotalPrice] = useState(0);
 
@@ -85,10 +90,29 @@ function TransactionForm() {
         handleTotalPriceCalculation();
     };
 
-    const handlePaymentSubmit = (e) => {
+
+    const handlePaymentSubmit = async (e) => {
         e.preventDefault();
-        // Handle the payment submission logic here based on the paymentMethod
-        console.log('Payment submitted for', selectedPaymentMethod);
+        
+        // try {
+        //     const response = await APIInUse.post("Appointment/customer/book", {
+        //         serviceIdList: selectedServices,
+        //         vetId: selectedVet.id,
+        //         note: bookingNote,
+        //         timeTableId: selectedTimeFrame.id,
+        //         appointmentDate: selectedDate,
+        //         petIdList: selectedPets.map((pet) => pet.id),
+        //     });
+        // } catch (error) {
+        //     console.log(error);
+        // } finally {
+        //     try{
+        //         const response = await APIInUse.get("Transaction/dropdown-data");
+
+        //     } catch(error){
+        //         console.log(error);
+        //     }
+        // }
     };
 
     return (
@@ -252,9 +276,12 @@ function TransactionForm() {
                     </div>
 
                     <div className="button-container">
-                        <button type="submit" className="submit-button">Xác nhận thanh toán</button>
+                        <button type="submit"
+                            className="submit-button">
+                            Xác nhận thanh toán
+                        </button>
                     </div>
-                    
+
                 </form>
             </div>
         </>
