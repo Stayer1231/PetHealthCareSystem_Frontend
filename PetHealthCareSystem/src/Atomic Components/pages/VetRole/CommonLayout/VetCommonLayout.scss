@@ -1,6 +1,10 @@
 .vet-common-layout-container {
 	display: grid;
 	grid-template-columns: 0.2fr 1fr !important;
+
+	.vet-sidebar-layout {
+		width: 255px;
+	}
 	
 	.vet-page-container {
 		padding: 50px 100px;
