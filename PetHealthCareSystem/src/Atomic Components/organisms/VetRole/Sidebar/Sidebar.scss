@@ -1,11 +1,13 @@
 .vet-sidebar-container {
 	width: inherit;
+	width: inherit;
 	min-height: 100vh;
 	height: 100%;
 	box-shadow: rgba(0, 0, 0, 0.12) 5px 0px 5px;
 
 	.item-container {
-		width: 16.65%;
+		height: inherit;
+		width: inherit;
 		position: fixed;
 
 		.item {
