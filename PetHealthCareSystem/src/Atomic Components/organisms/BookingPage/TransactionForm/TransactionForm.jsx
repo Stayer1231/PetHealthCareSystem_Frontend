@@ -5,6 +5,8 @@ import Text from "../../../atoms/Text/Text";
 import APIInUse from "../../../../config/axios/AxiosInUse";
 import ServiceCard from "../../../molecules/ServiceCard/ServiceCard";
 import { useSelector, useDispatch } from "react-redux";
+import SimplePetCard from "../../../molecules/SimplePetCard/SimplePetCard";
+import VetInfoCard from "../../../molecules/VetInfoCard/VetInfoCard";
 
 function TransactionForm() {
     const [paymentMethods, setPaymentMethods] = useState([]);
@@ -25,6 +27,7 @@ function TransactionForm() {
     const selectedDate = useSelector((state) => state.bookingForm.selectedDate);
     const selectedTimeFrame = useSelector((state) => state.bookingForm.selectedTimeFrame);
     const selectedPets = useSelector((state) => state.bookingForm.selectedPets);
+    const [currentAppointment, setCurrentAppointment] = useState({});
     const dispatch = useDispatch();
     const [totalPrice, setTotalPrice] = useState(0);
 
@@ -91,28 +94,33 @@ function TransactionForm() {
     };
 
 
-    const handlePaymentSubmit = async (e) => {
-        e.preventDefault();
-        
-        // try {
-        //     const response = await APIInUse.post("Appointment/customer/book", {
-        //         serviceIdList: selectedServices,
-        //         vetId: selectedVet.id,
-        //         note: bookingNote,
-        //         timeTableId: selectedTimeFrame.id,
-        //         appointmentDate: selectedDate,
-        //         petIdList: selectedPets.map((pet) => pet.id),
-        //     });
-        // } catch (error) {
-        //     console.log(error);
-        // } finally {
-        //     try{
-        //         const response = await APIInUse.get("Transaction/dropdown-data");
+    const handlePaymentSubmit = async () => {
 
-        //     } catch(error){
-        //         console.log(error);
-        //     }
-        // }
+        let appointmentId = null;
+        
+        try {
+            const response = await APIInUse.post("Appointment/customer/book", {
+                serviceIdList: selectedServices,
+                vetId: selectedVet.id,
+                note: bookingNote,
+                timeTableId: selectedTimeFrame.id,
+                appointmentDate: selectedDate,
+                petIdList: selectedPets.map((pet) => pet.id),
+            });
+            appointmentId = response.data.data.id;
+            try{
+                const anotherResponse = await APIInUse.post("Transaction/create",{
+                    appointmentId: appointmentId,
+                    paymentMethod: paymentMethods.find((paymentMethod) => paymentMethod.value === selectedPaymentMethod).id,
+                    services: serviceQuantity,
+                    status: 0
+                })
+            } catch(error){
+                console.log(error);
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
@@ -130,7 +138,7 @@ function TransactionForm() {
             )}
             <div className="payment-page">
                 <Text content="Thông tin thanh toán" type={"h2"} className={"payment-title"} />
-                <form onSubmit={handlePaymentSubmit}>
+                <form className="payment-form" onSubmit={handlePaymentSubmit}>
                     <div className="form-group">
                         <Text className={"form-label"} content="Phương thức thanh toán" />
                         <select
@@ -151,6 +159,22 @@ function TransactionForm() {
                                 </option>
                             ))}
                         </select>
+                    </div>
+
+                    <div className="form-group selected-pets-container">
+                        <Text className={"form-label"} content="Thú cưng" />
+                            {selectedPets.map((pet) => (
+                                <SimplePetCard data={pet} key={pet.id} />
+                            ))}
+                    </div>
+
+                    <div className="form-group selected-vet-container">
+                        <Text className={"form-label"} content="Bác sĩ" />
+                        <VetInfoCard data={selectedVet} />
+                    </div>
+
+                    <div className="form-group selected-date-container">
+                        <Text className={"form-label"} content={"Ngày " + selectedDate} />
                     </div>
 
                     <div className="form-group">
