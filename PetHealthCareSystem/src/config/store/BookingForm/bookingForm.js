@@ -16,6 +16,7 @@ const initialState = {
     selectedDate: "",
     vets: [],
     selectedServices: [],
+    servicesList: [],
     bookingNote: "",
     inputExceptions: [],
 };
@@ -66,6 +67,10 @@ const bookingFormSlice = createSlice({
 
         setInputExceptions: (state, action) => {
             state.inputExceptions = action.payload
+        },
+
+        setServicesList: (state, action) => {
+            state.servicesList = action.payload
         }
     }
 });
@@ -79,7 +84,8 @@ export const {
     clearSelectedVet,
     setBookingNote,
     setInputExceptions,
-    reInitialSelectedVet
+    reInitialSelectedVet,
+    setServicesList
 } = bookingFormSlice.actions;
 
 export default bookingFormSlice.reducer;

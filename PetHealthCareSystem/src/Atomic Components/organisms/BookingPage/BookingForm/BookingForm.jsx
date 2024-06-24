@@ -10,7 +10,8 @@ import {
     setSelectedServices,
     setBookingNote,
     setInputExceptions,
-    reInitialSelectedVet
+    reInitialSelectedVet,
+    setServicesList
 } from "../../../../config/store/BookingForm/bookingForm";
 import Button from "../../../atoms/Button/Button";
 import VetInfoCard from "../../../molecules/VetInfoCard/VetInfoCard";
@@ -31,7 +32,7 @@ function BookingForm() {
     const [pets, setPets] = React.useState(null);
     const [timeFrames, setTimeFrames] = React.useState(null);
     const [selectedTimeFrame, setSelectedTimeFrame] = React.useState(null);
-    const [services, setServices] = React.useState(null);
+    const services = useSelector((state) => state.bookingForm.servicesList);
     const selectedServices = useSelector((state) => state.bookingForm.selectedServices);
     const bookingNote = useSelector((state) => state.bookingForm.bookingNote);
     const inputExceptions = useSelector((state) => state.bookingForm.inputExceptions);
@@ -113,7 +114,7 @@ function BookingForm() {
     const handleLoadServices = async () => {
         try {
             const response = await APIInUse.get("Service/get-all");
-            setServices(response.data.data);
+            dispatch(setServicesList(response.data.data));
         } catch (error) {
             console.log(error);
         }

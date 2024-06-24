@@ -1,154 +1,315 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./TransactionForm.scss";
-import { useState, useEffect } from "react";
 import { CircularProgress, Backdrop } from "@mui/material";
+import Text from "../../../atoms/Text/Text";
+import APIInUse from "../../../../config/axios/AxiosInUse";
+import ServiceCard from "../../../molecules/ServiceCard/ServiceCard";
+import { useSelector, useDispatch } from "react-redux";
+import SimplePetCard from "../../../molecules/SimplePetCard/SimplePetCard";
+import VetInfoCard from "../../../molecules/VetInfoCard/VetInfoCard";
 
 function TransactionForm() {
-	const [paymentMethod, setPaymentMethod] = useState("creditCard");
-	const [cardNumber, setCardNumber] = useState("");
-	const [expiryDate, setExpiryDate] = useState("");
-	const [cvv, setCvv] = useState("");
-	const [name, setName] = useState("");
-	const [billingAddress, setBillingAddress] = useState("");
-	const [paypalEmail, setPaypalEmail] = useState("");
-	const [digitalWallet, setDigitalWallet] = useState("");
+    const [paymentMethods, setPaymentMethods] = useState([]);
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('Cash');
+    const [cardNumber, setCardNumber] = useState('');
+    const [expiryDate, setExpiryDate] = useState('');
+    const [cvv, setCvv] = useState('');
+    const [name, setName] = useState('');
+    const [billingAddress, setBillingAddress] = useState('');
+    const [paypalEmail, setPaypalEmail] = useState('');
+    const [digitalWallet, setDigitalWallet] = useState('');
+    const selectedServices = useSelector((state) => state.bookingForm.selectedServices);
+    const services = useSelector((state) => state.bookingForm.servicesList);
+    const [serviceQuantity, setServiceQuantity] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const selectedVet = useSelector((state) => state.bookingForm.selectedVet);
+    const bookingNote = useSelector((state) => state.bookingForm.bookingNote);
+    const selectedDate = useSelector((state) => state.bookingForm.selectedDate);
+    const selectedTimeFrame = useSelector((state) => state.bookingForm.selectedTimeFrame);
+    const selectedPets = useSelector((state) => state.bookingForm.selectedPets);
+    const [currentAppointment, setCurrentAppointment] = useState({});
+    const dispatch = useDispatch();
+    const [totalPrice, setTotalPrice] = useState(0);
 
-	const [isLoading, setIsLoading] = useState(false);
+    useEffect(() => {
+        const initialServiceQuantity = services
+            .filter((service) => selectedServices.includes(service.id))
+            .map((service) => ({
+                ...service,
+                quantity: 1
+            }));
+        setServiceQuantity(initialServiceQuantity);
+    }, [selectedServices, services]);
 
-	useEffect(() => {
-		setIsLoading(true);
-		setTimeout(() => {
-			setIsLoading(false);
-		}, 500);
-	}, []);
+    const loadPaymentOptions = async () => {
+        try {
+            const response = await APIInUse.get("Transaction/dropdown-data");
+            setPaymentMethods(response.data.data.paymentMethods);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
-	return (
-		<>
-			{isLoading && (
-				<Backdrop
-					sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-					open={isLoading}
-				>
-					<div className="flex flex-col justify-center items-center gap-2">
-						<CircularProgress color="inherit" />
-						<h1>Waiting</h1>
-					</div>
-				</Backdrop>
-			)}
-			<div className="payment-page">
-				<h2>Payment Information</h2>
-				<form onSubmit={handlePaymentSubmit}>
-					<div className="form-group">
-						<label htmlFor="paymentMethod">Payment Method</label>
-						<select
-							id="paymentMethod"
-							value={paymentMethod}
-							onChange={(e) => setPaymentMethod(e.target.value)}
-							required
-						>
-							<option value="creditCard">Credit/Debit Card</option>
-							<option value="paypal">PayPal</option>
-							<option value="digitalWallet">Digital Wallet</option>
-						</select>
-					</div>
+    const handleTotalPriceCalculation = () => {
+        let total = 0;
+        serviceQuantity.forEach((item) => {
+            total += item.price * item.quantity;
+        });
+        setTotalPrice(total);
+    };
 
-					{paymentMethod === "creditCard" && (
-						<>
-							<div className="form-group">
-								<label htmlFor="name">Name on Card</label>
-								<input
-									type="text"
-									id="name"
-									value={name}
-									onChange={(e) => setName(e.target.value)}
-									required
-								/>
-							</div>
-							<div className="form-group">
-								<label htmlFor="cardNumber">Card Number</label>
-								<input
-									type="text"
-									id="cardNumber"
-									value={cardNumber}
-									onChange={(e) => setCardNumber(e.target.value)}
-									required
-								/>
-							</div>
-							<div className="form-group">
-								<label htmlFor="expiryDate">Expiry Date</label>
-								<input
-									type="text"
-									id="expiryDate"
-									value={expiryDate}
-									onChange={(e) => setExpiryDate(e.target.value)}
-									required
-								/>
-							</div>
-							<div className="form-group">
-								<label htmlFor="cvv">CVV</label>
-								<input
-									type="text"
-									id="cvv"
-									value={cvv}
-									onChange={(e) => setCvv(e.target.value)}
-									required
-								/>
-							</div>
-							<div className="form-group">
-								<label htmlFor="billingAddress">Billing Address</label>
-								<input
-									type="text"
-									id="billingAddress"
-									value={billingAddress}
-									onChange={(e) => setBillingAddress(e.target.value)}
-									required
-								/>
-							</div>
-						</>
-					)}
+    useEffect(() => {
+        setIsLoading(true);
+        setTimeout(() => {
+            setIsLoading(false);
+        }, 500);
+        loadPaymentOptions();
+        handleTotalPriceCalculation();
+    }, []);
 
-					{paymentMethod === "paypal" && (
-						<div className="form-group">
-							<label htmlFor="paypalEmail">PayPal Email</label>
-							<input
-								type="email"
-								id="paypalEmail"
-								value={paypalEmail}
-								onChange={(e) => setPaypalEmail(e.target.value)}
-								required
-							/>
-						</div>
-					)}
+    useEffect(() => {
+        handleTotalPriceCalculation();
+    }, [serviceQuantity]);
 
-					{paymentMethod === "digitalWallet" && (
-						<div className="form-group">
-							<label htmlFor="digitalWallet">Digital Wallet</label>
-							<input
-								type="text"
-								id="digitalWallet"
-								value={digitalWallet}
-								onChange={(e) => setDigitalWallet(e.target.value)}
-								required
-							/>
-						</div>
-					)}
+    const handleIncreaseQuantity = (serviceId) => {
+        setServiceQuantity((prevQuantities) =>
+            prevQuantities.map((item) =>
+                item.id === serviceId && item.quantity < 10
+                    ? { ...item, quantity: item.quantity + 1 }
+                    : item
+            )
+        );
+        handleTotalPriceCalculation();
+    };
 
-					<button
-						type="submit"
-						className="submit-button"
-					>
-						Submit Payment
-					</button>
-				</form>
-				<div className="order-summary">
-					<h3>Order Summary</h3>
-					<p>Item 1: $10.00</p>
-					<p>Item 2: $20.00</p>
-					<p>Total: $30.00</p>
-				</div>
-			</div>
-		</>
-	);
+    const handleDecreaseQuantity = (serviceId) => {
+        setServiceQuantity((prevQuantities) =>
+            prevQuantities.map((item) =>
+                item.id === serviceId && item.quantity > 1
+                    ? { ...item, quantity: item.quantity - 1 }
+                    : item
+            )
+        );
+        handleTotalPriceCalculation();
+    };
+
+
+    const handlePaymentSubmit = async () => {
+
+        let appointmentId = null;
+        
+        try {
+            const response = await APIInUse.post("Appointment/customer/book", {
+                serviceIdList: selectedServices,
+                vetId: selectedVet.id,
+                note: bookingNote,
+                timeTableId: selectedTimeFrame.id,
+                appointmentDate: selectedDate,
+                petIdList: selectedPets.map((pet) => pet.id),
+            });
+            appointmentId = response.data.data.id;
+            try{
+                const anotherResponse = await APIInUse.post("Transaction/create",{
+                    appointmentId: appointmentId,
+                    paymentMethod: paymentMethods.find((paymentMethod) => paymentMethod.value === selectedPaymentMethod).id,
+                    services: serviceQuantity,
+                    status: 0
+                })
+            } catch(error){
+                console.log(error);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    return (
+        <>
+            {isLoading && (
+                <Backdrop
+                    sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                    open={isLoading}
+                >
+                    <div className="flex flex-col justify-center items-center gap-2">
+                        <CircularProgress color="inherit" />
+                        <h1>Waiting</h1>
+                    </div>
+                </Backdrop>
+            )}
+            <div className="payment-page">
+                <Text content="Thông tin thanh toán" type={"h2"} className={"payment-title"} />
+                <form className="payment-form" onSubmit={handlePaymentSubmit}>
+                    <div className="form-group">
+                        <Text className={"form-label"} content="Phương thức thanh toán" />
+                        <select
+                            id="paymentMethod"
+                            value={selectedPaymentMethod}
+                            onChange={(e) => setSelectedPaymentMethod(e.target.value)}
+                            required
+                        >
+                            {paymentMethods.map((paymentMethod) => (
+                                <option key={paymentMethod.id} value={paymentMethod.value}>
+                                    {paymentMethod.value === "Cash" ? "Tiền mặt" :
+                                        paymentMethod.value === "BankTransfer" ? "Chuyển khoảng ngân hàng" :
+                                            paymentMethod.value === "CreditCard" ? "Credit Card" :
+                                                paymentMethod.value === "DebitCard" ? "Debit Card" :
+                                                    paymentMethod.value === "PayPal" ? "PayPal" :
+                                                        paymentMethod.value
+                                    }
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className="form-group selected-pets-container">
+                        <Text className={"form-label"} content="Thú cưng" />
+                            {selectedPets.map((pet) => (
+                                <SimplePetCard data={pet} key={pet.id} />
+                            ))}
+                    </div>
+
+                    <div className="form-group selected-vet-container">
+                        <Text className={"form-label"} content="Bác sĩ" />
+                        <VetInfoCard data={selectedVet} />
+                    </div>
+
+                    <div className="form-group selected-date-container">
+                        <Text className={"form-label"} content={"Ngày " + selectedDate} />
+                    </div>
+
+                    <div className="form-group">
+                        <Text className={"form-label"} content="Dịch vụ" />
+                    </div>
+
+                    <div className="form-group services">
+                        {serviceQuantity.map((service) => (
+                            <div key={service.id} className="service-item">
+                                <ServiceCard data={service} />
+                                <div className="quantity-control">
+                                    <button
+                                        type="button"
+                                        className={"decrease-quantity" + (service.quantity <= 1 ? " disabled" : "")}
+                                        onClick={() => handleDecreaseQuantity(service.id)}
+                                        disabled={service.quantity <= 1}
+                                    >&lt;</button>
+                                    <Text content={service.quantity} />
+                                    <button
+                                        type="button"
+                                        className={"increase-quantity" + (service.quantity >= 10 ? " disabled" : "")}
+                                        onClick={() => handleIncreaseQuantity(service.id)}
+                                        disabled={service.quantity >= 10}
+                                    >&gt;</button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {(selectedPaymentMethod === 'CreditCard' || selectedPaymentMethod === 'DebitCard') && (
+                        <>
+                            <div className="form-group">
+                                <label htmlFor="name">Name on Card</label>
+                                <input
+                                    type="text"
+                                    id="name"
+                                    value={name}
+                                    onChange={(e) => {
+                                        const regex = /^[A-Za-z\s]*$/; // Regular expression for English letters and spaces
+                                        if (regex.test(e.target.value)) {
+                                            setName(e.target.value);
+                                        }
+                                    }}
+                                    pattern="[A-Za-z\s]+"
+                                    required
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="cardNumber">Card Number</label>
+                                <input
+                                    type="text"
+                                    id="cardNumber"
+                                    value={cardNumber}
+                                    onChange={(e) => setCardNumber(e.target.value)}
+                                    required
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="expiryDate">Expiry Date</label>
+                                <input
+                                    type="text"
+                                    id="expiryDate"
+                                    value={expiryDate}
+                                    onChange={(e) => setExpiryDate(e.target.value)}
+                                    required
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="cvv">CVV</label>
+                                <input
+                                    type="password"
+                                    id="cvv"
+                                    value={cvv}
+                                    maxLength={3}
+                                    minLength={3}
+                                    onChange={(e) => setCvv(e.target.value.replace(/\D/, ''))}
+                                    pattern="\d{3}"
+                                    required
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="billingAddress">Billing Address</label>
+                                <input
+                                    type="text"
+                                    id="billingAddress"
+                                    value={billingAddress}
+                                    onChange={(e) => setBillingAddress(e.target.value)}
+                                    required
+                                />
+                            </div>
+                        </>
+                    )}
+
+                    {selectedPaymentMethod === 'BankTransfer' && (
+                        <div className="form-group">
+                            <label htmlFor="paypalEmail">PayPal Email</label>
+                            <input
+                                type="email"
+                                id="paypalEmail"
+                                value={paypalEmail}
+                                onChange={(e) => setPaypalEmail(e.target.value)}
+                                required
+                            />
+                        </div>
+                    )}
+
+                    {selectedPaymentMethod === 'VNPay' && (
+                        <div className="form-group">
+                            <label htmlFor="digitalWallet">Digital Wallet</label>
+                            <input
+                                type="text"
+                                id="digitalWallet"
+                                value={digitalWallet}
+                                onChange={(e) => setDigitalWallet(e.target.value)}
+                                required
+                            />
+                        </div>
+                    )}
+
+                    <div className="form-group total-price">
+                        <Text className={"form-label"} content="Tổng tiền" />
+                        <Text className={"total-price-value"} content={totalPrice + " VND"} />
+                    </div>
+
+                    <div className="button-container">
+                        <button type="submit"
+                            className="submit-button">
+                            Xác nhận thanh toán
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </>
+    );
 }
 
 export default TransactionForm;
