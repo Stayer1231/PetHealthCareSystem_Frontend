@@ -8,8 +8,14 @@ export const AuthProvider = ({ children }) => {
 
 	useEffect(() => {
 		const role = Cookies.get("role");
+		const accessToken = Cookies.get("accessToken");
+		const fullName = Cookies.get("fullName");
+		const userName = Cookies.get("userName");
+		const refToken = Cookies.get("refToken");
+		const userId = Cookies.get("userId");
+
 		if (role) {
-			setAuth({ role });
+			setAuth({ accessToken, fullName, userName, refToken, role, userId });
 		}
 	}, []);
 

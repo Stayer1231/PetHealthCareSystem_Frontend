@@ -1,63 +1,103 @@
-import React, { useState } from 'react';
-import FullCalendar from '@fullcalendar/react';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
-import { format, startOfDay } from 'date-fns';
-import './VetScheduler.scss';
+import React, { useEffect, useState } from "react";
+import { Scheduler, Toolbar } from "@aldabil/react-scheduler";
+import APIInUse from "../../../../config/axios/AxiosInUse";
+import Cookies from "js-cookie";
+import "./VetScheduler.scss";
 
 function VetScheduler() {
-    const [selectedDate, setSelectedDate] = useState(null);
-    const [initialDate, setInitialDate] = useState(null);
+	const [isLoading, setIsLoading] = useState(false);
+	const id = Cookies.get("userId");
+	const [events, setEvents] = useState([]);
+	const [currentDate, setCurrentDate] = useState(new Date());
+	const [view, setView] = useState("week");
+	const [viewAttributes, setViewAttributes] = useState({
+		week: {
+			weekDays: [0, 1, 2, 3, 4, 5],
+			weekStartOn: 6,
+			startHour: 8,
+			endHour: 18,
+		},
+		day: {
+			dayStartOn: 6,
+			startHour: 8,
+			endHour: 18,
+		},
+	});
 
-    const handleDateClick = (arg) => {
-        const clickedDate = startOfDay(arg.date);
-        setSelectedDate(clickedDate);
-        setInitialDate(clickedDate);
-        console.log('Date Clicked:', clickedDate);
-    };
+	useEffect(() => {
+		const getWorkScheduleData = async () => {
+			try {
+				const response = await APIInUse.get(
+					`Appointment/vet/appointments/${id}?pageNumber=1&pageSize=1000000`
+				);
 
-    const events = [
-        { title: 'Check-up 1', start: '2024-06-19T09:00:00', end: '2024-06-19T10:00:00' },
-        { title: 'Check-up 2', start: '2024-06-19T11:00:00', end: '2024-06-19T12:00:00' },
-        { title: 'Check-up 3', start: '2024-06-19T13:00:00', end: '2024-06-19T14:00:00' },
-        { title: 'Check-up 4', start: '2024-06-19T15:00:00', end: '2024-06-19T16:00:00' },
-        { title: 'Check-up 5', start: '2024-06-19T17:00:00', end: '2024-06-19T18:00:00' },
-        { title: 'Surgery', start: '2024-06-20T11:00:00', end: '2024-06-20T14:00:00' },
-        { title: 'Vaccination', start: '2024-06-21T13:00:00', end: '2024-06-21T13:30:00' },
-        { title: 'Consultation', start: '2024-06-22T15:00:00', end: '2024-06-22T16:00:00' },
-        { title: 'Follow-up', start: '2024-06-23T10:00:00', end: '2024-06-23T11:00:00' },
-        { title: 'Emergency', start: '2024-06-24T08:00:00', end: '2024-06-24T08:30:00' },
-    ];
+				const formattedData = response.data.data.items.map((appointment) => ({
+					id: appointment.id,
+					title: `Dịch vụ: ${appointment.services
+						.map((service) => service.name)
+						.join(", ")}`,
+					start: new Date(
+						`${appointment.appointmentDate}T${appointment.timeTable.startTime}`
+					),
+					end: new Date(
+						`${appointment.appointmentDate}T${appointment.timeTable.endTime}`
+					),
+				}));
 
-    return (
-        <div className="vet-scheduler">
-            <FullCalendar
-                plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                initialView="timeGridWeek"
-                headerToolbar={{
-                    start: 'today,prev,next',
-                    center: 'title',
-                    end: 'timeGridWeek'
-                }}
-                slotMinTime="08:00:00"
-                slotMaxTime="17:00:00"
-                slotDuration="00:30:00"
-                allDaySlot={false}
-                height={750}
-                dateClick={handleDateClick}
-                events={events}
-                initialDate={initialDate ? initialDate : null}
-                dayCellClassNames={(arg) => {
-                    const cellDate = startOfDay(arg.date);
-                    if (selectedDate && cellDate.getTime() === selectedDate.getTime()) {
-                        return ['fc-day-selected'];
-                    }
-                    return [];
-                }}
-            />
-        </div>
-    );
+				setEvents(formattedData);
+			} catch (error) {
+				console.log("Error:", error);
+			}
+		};
+
+		getWorkScheduleData();
+	}, []);
+
+	const handleTodayClick = () => {
+		setCurrentDate(new Date());
+	};
+
+	const handleDayView = () => {
+		setView("day");
+	};
+
+	const handleWeekView = () => {
+		setView("week");
+	};
+
+	return (
+		<div className="vet-scheduler">
+			<Scheduler
+				events={events}
+				height={750}
+				view={view}
+				date={currentDate}
+				week={viewAttributes.week}
+				day={viewAttributes.day}
+				hourFormat="24"
+				translations={{
+					navigation: {
+						month: "Tháng",
+						week: "Tuần",
+						day: "Ngày",
+						today: "Hôm nay",
+						agenda: "Lịch trình",
+					},
+				}}
+				editable={false} // Disable event creation
+			>
+				{(props) => (
+					<Toolbar {...props}>
+						<div>
+							<button onClick={handleTodayClick}>Today</button>
+							<button onClick={handleDayView}>Day</button>
+							<button onClick={handleWeekView}>Week</button>
+						</div>
+					</Toolbar>
+				)}
+			</Scheduler>
+		</div>
+	);
 }
 
 export default VetScheduler;
