@@ -24,6 +24,7 @@ import PatientDetailPage from "../Atomic Components/pages/VetRole/PatientDetailP
 import PatientPage from "../Atomic Components/pages/VetRole/PatientPage/PatientPage";
 import TransactionForm from "../Atomic Components/organisms/BookingPage/TransactionForm/TransactionForm";
 import BookingForm from "../Atomic Components/organisms/BookingPage/BookingForm/BookingForm";
+import RegisterPage from "../Atomic Components/pages/RegisterPage/RegisterPage";
 
 function AppRoutes() {
 	const { auth } = useAuth();
@@ -34,18 +35,40 @@ function AppRoutes() {
 				<Toaster position="top-right" />
 
 				<Routes>
-					{!auth?.role ? (
-						<>
-							{/* UNAUTHENTICATED ROUTES */}
-							<Route
-								path="/admin"
-								element={<AdminPage />}
-							/>
-							<Route
-								path="/login"
-								element={<LoginPage />}
-							/>
+					{/* UNAUTHENTICATED ROUTES */}
+					<Route
+						path="/login"
+						element={<LoginPage />}
+					/>
 
+					{!auth?.role && (
+						<Route
+							path="/"
+							element={<CommonLayout />}
+						>
+							<Route
+								index
+								element={<HomePage />}
+							/>
+						</Route>
+					)}
+
+					{
+						auth?.role == "Vet" && (
+							<Route
+								path="/"
+								element={<VetCommonLayout />}
+							>
+								<Route
+									index
+									element={<VetHomePage />}
+								/>
+							</Route>
+						)
+					}
+
+					{
+						auth?.role == "Customer" && (
 							<Route
 								path="/"
 								element={<CommonLayout />}
@@ -55,230 +78,122 @@ function AppRoutes() {
 									element={<HomePage />}
 								/>
 							</Route>
-							<Route element={<RequireAuth />}>
+						)
+					}
+
+					{
+						auth?.role == "Admin" && (
+							<Route
+								path="/"
+								element={<AdminPage />}
+							/>
+						)
+					}
+
+					{/* AUTHENTICATED ROUTES */}
+					<Route element={<PersistLogin />}>
+						{/* ROUTES FOR VET */}
+						<Route element={<RequireAuth allowedRoles={"Vet"} />}>
+							<Route
+								path="/"
+								element={<VetCommonLayout />}
+							>
 								<Route
-									path="/"
-									element={
-										<>
-											<CommonLayout />
-										</>
-									}
-								>
+									index
+									element={<VetHomePage />}
+								/>
+								<Route
+									path="work-schedule"
+									element={<WorkSchedulePage />}
+								/>
+								<Route path="medical-record">
 									<Route
 										index
-										element={<HomePage />}
-									/>
-									<Route
-										path="your-pet"
-										element={<PetManagementPage />}
-									>
-										<Route
-											path="overview"
-											element={<PetOverview />}
-										/>
-										<Route
-											path="my-account"
-											element={<MyAccount />}
-										/>
-										<Route
-											path="pet-profile/:petId"
-											element={<PetProfile />}
-										/>
-									</Route>
-									<Route
-										path="services"
-										element={<ServicesPage />}
-									/>
-									<Route
-										path="booking"
-										element={<BookingPage />}
-									/>
-									<Route
-										index
-										element={<VetHomePage />}
-									/>
-									<Route
-										path="work-schedule"
-										element={<WorkSchedulePage />}
-									/>
-									<Route
-										path="medical-record"
 										element={<MedicalRecordPage />}
-									>
-										<Route
-											path="patient-medical-record/:patientId"
-											element={<PatientDetailPage />}
-										/>
-										<Route
-											path="patient/:patientId"
-											element={<PatientPage />}
-										/>
-									</Route>
-									<Route path="hospitalize-record">
-										<Route
-											index
-											element={<HospitalizeRecordPage />}
-										/>
-										<Route
-											path="hospitalize-info/:hospitalizeId"
-											element={
-												<>
-													<h1>hello hehe chưa có gì hết</h1>
-												</>
-											}
-										/>
-									</Route>
+									/>
+									<Route
+										path="patient-medical-record/:patientId"
+										element={<PatientDetailPage />}
+									/>
+									<Route
+										path="patient/:patientId"
+										element={<PatientPage />}
+									/>
 								</Route>
-								<Route
-									path="/login"
-									element={<LoginPage />}
-								/>
-							</Route>
-
-						</>
-					) : auth?.role == "Vet" ? (
-						<>
-							{/* ROUTES FOR VET */}
-							<Route element={<RequireAuth allowedRoles={"Vet"} />}>
-								<Route
-									path="/"
-									element={<VetCommonLayout />}
-								>
+								<Route path="hospitalize-record">
 									<Route
 										index
-										element={<VetHomePage />}
+										element={<HospitalizeRecordPage />}
 									/>
 									<Route
-										path="work-schedule"
-										element={<WorkSchedulePage />}
-									/>
-									<Route path="medical-record">
-										<Route
-											index
-											element={<MedicalRecordPage />}
-										/>
-										<Route
-											path="patient-medical-record/:patientId"
-											element={<PatientDetailPage />}
-										/>
-										<Route
-											path="patient/:patientId"
-											element={<PatientPage />}
-										/>
-									</Route>
-									<Route path="hospitalize-record">
-										<Route
-											index
-											element={<HospitalizeRecordPage />}
-										/>
-										<Route
-											path="hospitalize-info/:hospitalizeId"
-											element={
-												<>
-													<h1>hello hehe chưa có gì hết</h1>
-												</>
-											}
-										/>
-									</Route>
-								</Route>
-
-								<Route
-									path="/login"
-									element={<LoginPage />}
-								/>
-							</Route>
-						</>
-					) : auth?.role == "Admin" ? (
-						<>
-							{/* ROUTES FOR ADMIN */}
-							<Route element={<RequireAuth allowedRoles={"Admin"} />}>
-								<Route
-									path="/"
-									element={<AdminPage />}
-								/>
-							</Route>
-						</>
-					) : auth?.role == "Vet" ? (
-						<>
-							{/* ROUTES FOR STAFF */}
-							<Route element={<RequireAuth allowedRoles={"Vet"} />}>
-								<Route
-									path="/"
-									element={<VetCommonLayout />}
-								>
-									<Route
-										index
-										element={<VetHomePage />}
-									/>
-								</Route>
-
-								<Route
-									path="/login"
-									element={<LoginPage />}
-								/>
-							</Route>
-						</>
-					) : (
-						<>
-							{/* AUTHENTICATED ROUTES */}
-							<Route element={<PersistLogin />}>
-								{/* ROUTES FOR CUSTOMER */}
-								<Route element={<RequireAuth allowedRoles={"Customer"} />}>
-									<Route
-										path="/"
+										path="hospitalize-info/:hospitalizeId"
 										element={
 											<>
-												<CommonLayout />
+												<h1>hello hehe chưa có gì hết</h1>
 											</>
 										}
-									>
-										<Route
-											index
-											element={<HomePage />}
-										/>
-										<Route
-											path="your-pet"
-											element={<PetManagementPage />}
-										>
-											<Route
-												path="overview"
-												element={<PetOverview />}
-											/>
-											<Route
-												path="my-account"
-												element={<MyAccount />}
-											/>
-											<Route
-												path="pet-profile/:petId"
-												element={<PetProfile />}
-											/>
-										</Route>
-										<Route
-											path="services"
-											element={<ServicesPage />}
-										/>
-										<Route
-											path="booking"
-											element={<BookingPage />}
-										>
-											<Route
-												path="form"
-												element={<BookingForm />}
-											/>
-											<Route
-												path="transaction"
-												element={<TransactionForm />}
-											/>
-										</Route>
-										<Route
-											path="/login"
-											element={<LoginPage />}
-										/>
-									</Route>
+									/>
 								</Route>
 							</Route>
-						</>
-					)}
+						</Route>
+						{/* ROUTES FOR ADMIN */}
+						<Route element={<RequireAuth allowedRoles={"Admin"} />}>
+							<Route
+								path="/"
+								element={<AdminPage />}
+							/>
+						</Route>
+						{/* ROUTES FOR CUSTOMER */}
+						<Route element={<RequireAuth allowedRoles={"Customer"} />}>
+							<Route
+								path="/"
+								element={
+									<>
+										<CommonLayout />
+									</>
+								}
+							>
+								<Route
+									index
+									element={<HomePage />}
+								/>
+								<Route
+									path="your-pet"
+									element={<PetManagementPage />}
+								>
+									<Route
+										path="overview"
+										element={<PetOverview />}
+									/>
+									<Route
+										path="my-account"
+										element={<MyAccount />}
+									/>
+									<Route
+										path="pet-profile/:petId"
+										element={<PetProfile />}
+									/>
+								</Route>
+								<Route
+									path="services"
+									element={<ServicesPage />}
+								/>
+								<Route
+									path="booking"
+									element={<BookingPage />}
+								>
+									<Route
+										path="form"
+										element={<BookingForm />}
+									/>
+									<Route
+										path="transaction"
+										element={<TransactionForm />}
+									/>
+								</Route>
+							</Route>
+						</Route>
+					</Route>
 				</Routes>
 			</ScrollToTop>
 		</>
