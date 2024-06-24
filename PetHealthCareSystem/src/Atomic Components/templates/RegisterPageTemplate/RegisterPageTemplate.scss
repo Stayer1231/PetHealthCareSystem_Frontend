@@ -1,0 +1,105 @@
+$small-font-size: 0.813rem;
+
+.register__form {
+  position: relative;
+  border: 2px solid #FFFFFF;
+  margin-inline: 1.5rem;
+  padding: 2.5rem 1.5rem;
+  border-radius: 1rem;
+  background-color: #FFFFFF;
+
+  @media screen and (min-width: 576px) {
+    width: 432px;
+    padding: 4rem 3rem 3.5rem;
+    border-radius: 1.5rem;
+  }
+}
+
+.register__logo {
+    text-align: center;
+    margin-bottom: 20px;
+  
+    &-img {
+      width: 120px;
+      height: 100px;
+      border-radius: 10px;
+    }
+  }
+
+.register__content {
+  display: grid;
+  row-gap: 1.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.register__box {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  border-bottom: 2px solid #000;
+}
+
+.register__box-input {
+  position: relative;
+}
+
+.register__input {
+  width: 95%;
+  padding-block: 0.8rem;
+  background: none;
+  color: #000;
+  position: relative;
+  border: none;
+  outline: none;
+  z-index: 1;
+
+  &:focus + .register__label {
+    top: -12px;
+    font-size: $small-font-size;
+  }
+
+  &:not(:placeholder-shown).register__input:not(:focus) + .register__label {
+    top: -12px;
+    font-size: $small-font-size;
+  }
+}
+
+.register__label {
+  position: absolute;
+  left: 0;
+  top: 13px;
+  transition: top 0.3s, font-size 0.3s;
+  color: #000;
+}
+
+.password-toggle-btn {
+  background-color: transparent;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.register__button {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  margin-bottom: 2rem;
+}
+
+.register-line {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+}
+
+.register__login-link {
+  color: var(--JELLY-BEAN);
+  font-size: $small-font-size;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
