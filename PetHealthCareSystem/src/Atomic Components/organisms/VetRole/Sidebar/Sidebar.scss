@@ -11,9 +11,10 @@
 		position: fixed;
 
 		.item {
-			a, .nav-item {
+			a,
+			.nav-item {
 				display: block;
-				padding: 10px;
+				padding: 10px 20px;
 				color: var(--JELLY-BEAN);
 				text-decoration: none;
 				line-height: 45px;

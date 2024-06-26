@@ -27,7 +27,7 @@ function Header({ role }) {
 		Cookies.remove("role");
 		setAuth(null);
 
-		sessionStorage.setItem("successMessage", "Logout Successfully");
+		sessionStorage.setItem("successMessage", "Đăng xuất thành công");
 
 		// Fake loading when logout
 		setTimeout(() => {
@@ -44,7 +44,7 @@ function Header({ role }) {
 			Toast({
 				type: "success",
 				message: sessionStorage.getItem("successMessage"),
-				title: "Success",
+				title: "Thành công",
 			});
 			sessionStorage.removeItem("successMessage");
 		}
