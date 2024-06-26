@@ -25,6 +25,7 @@ import PatientPage from "../Atomic Components/pages/VetRole/PatientPage/PatientP
 import TransactionForm from "../Atomic Components/organisms/BookingPage/TransactionForm/TransactionForm";
 import BookingForm from "../Atomic Components/organisms/BookingPage/BookingForm/BookingForm";
 import RegisterPage from "../Atomic Components/pages/RegisterPage/RegisterPage";
+import BookingSuccess from "../Atomic Components/organisms/BookingPage/BookingSuccess/BookingSuccess";
 
 function AppRoutes() {
 	const { auth } = useAuth();
@@ -186,6 +187,10 @@ function AppRoutes() {
 									path="booking"
 									element={<BookingPage />}
 								>
+									<Route 
+										path="success"
+										element={<BookingSuccess />}
+									/>
 									<Route
 										path="form"
 										element={<BookingForm />}
