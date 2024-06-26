@@ -105,7 +105,7 @@ const LoginPageTemplate = () => {
 			Toast({
 				message: "Đăng nhập thành công!",
 				type: "success",
-				title: "Success",
+				title: "Thành công",
 			});
 		} catch (error) {
 			Toast({
