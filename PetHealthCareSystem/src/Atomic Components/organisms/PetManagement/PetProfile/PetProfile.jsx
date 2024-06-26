@@ -17,6 +17,7 @@ import APIInUse from "./../../../../config/axios/AxiosInUse";
 import { Backdrop, CircularProgress } from "@mui/material";
 import { formatDate } from "../../../../config/convertDate";
 import Cookies from "js-cookie";
+import { convertToPetAge } from "./../../../../config/convertToPetAge";
 
 function PetProfile() {
 	const [isLoading, setIsLoading] = useState(false);
@@ -109,7 +110,7 @@ function PetProfile() {
 					/>
 					<div className="update-profile-btn">
 						<Button
-							content="Update Profile"
+							content="Cập Nhật Thông Tin"
 							rightIcon={<UpdatePencil color={"#ffff"} />}
 							variant="transparent"
 							stroke={"#ffff"}
@@ -130,21 +131,21 @@ function PetProfile() {
 							/>
 							<div className="sub-information">
 								<Text
+									content={convertToPetAge(pet?.dateOfBirth)}
+									type={"subtitle"}
+									className={"pet-age"}
+								/>
+								<span className="divine-symbol"> - </span>
+								<Text
 									content={pet?.breed}
 									type={"subtitle"}
 									className={"pet-breed"}
-								/>
-								<span className="divine-symbol">-</span>
-								<Text
-									content={formatDate(pet?.dateOfBirth)}
-									type={"subtitle"}
-									className={"pet-age"}
 								/>
 							</div>
 						</div>
 						<div className="medical-record-btn">
 							<Button
-								content="View Medical History"
+								content="Xem Hồ Sơ Bệnh Án"
 								variant="filled"
 								className={"btn"}
 							/>
@@ -163,7 +164,7 @@ function PetProfile() {
 						</div>
 						<div className="welcome-card-content">
 							<Text
-								content={`Welcome to Pet's profile`}
+								content={`Chào mừng đến với hồ sơ của ${pet?.name}`}
 								type={"h3"}
 							/>
 						</div>
@@ -174,11 +175,11 @@ function PetProfile() {
 				<div className="pet-detail-container">
 					<div className="pet-detail-accordion">
 						<Accordion>
-							<AccordionItem title={"Pet Information"}>
+							<AccordionItem title={"Thông Tin Thú Cưng"}>
 								<div className="accordion-information-container">
 									<div className="update-information-btn">
 										<Button
-											content="Update Information"
+											content="Cập Nhật Thông Tin"
 											variant="no-layout"
 											rightIcon={<UpdatePencil color={"#2d759f"} />}
 											onClick={openPetUpdateProfileModal}
@@ -186,7 +187,7 @@ function PetProfile() {
 									</div>
 									<div className="accordion-information-filled">
 										<Text
-											content={"Name: "}
+											content={"Tên: "}
 											type={"subtitle"}
 										/>
 										<Text
@@ -196,7 +197,7 @@ function PetProfile() {
 									</div>
 									<div className="accordion-information">
 										<Text
-											content={"Breed: "}
+											content={"Giống: "}
 											type={"subtitle"}
 										/>
 										<Text
@@ -206,7 +207,7 @@ function PetProfile() {
 									</div>
 									<div className="accordion-information-filled">
 										<Text
-											content={"Age: "}
+											content={"Sinh nhật: "}
 											type={"subtitle"}
 										/>
 										<Text
@@ -216,7 +217,7 @@ function PetProfile() {
 									</div>
 									<div className="accordion-information-filled">
 										<Text
-											content={"Gender: "}
+											content={"Giới tính: "}
 											type={"subtitle"}
 										/>
 										<Text
@@ -226,11 +227,11 @@ function PetProfile() {
 									</div>
 									<div className="accordion-information-filled">
 										<Text
-											content={"Neuter Status: "}
+											content={"Tình trạng thiến: "}
 											type={"subtitle"}
 										/>
 										<Text
-											content={pet?.isNeutered ? "Yes" : "No"}
+											content={pet?.isNeutered ? "Đã thiến" : "Chưa thiến"}
 											type={"subtitle"}
 										/>
 									</div>
@@ -252,7 +253,7 @@ function PetProfile() {
 						<form onSubmit={handleUpdatePet}>
 							<div className="modal-title">
 								<Text
-									content={"Update Pet Profile"}
+									content={"Cập Nhật Thông Tin Thú Cưng!"}
 									type={"h3"}
 								/>
 							</div>
@@ -260,13 +261,14 @@ function PetProfile() {
 								{/* PET NAME */}
 								<div className="pet-name input-div">
 									<Text
-										content={`What is your pet's name?`}
+										content={`Tên thú cưng của bạn là gì?`}
 										className={"field-label required-field"}
 									/>
 									<input
 										type="text"
 										className="general-input-field"
 										value={petUpdateData?.name}
+										placeholder="Tên thú cưng..."
 										onChange={(e) =>
 											setPetUpdateData((prev) => ({
 												...prev,
@@ -279,7 +281,7 @@ function PetProfile() {
 								{/* PET SPECIES */}
 								<div className="pet-name input-div">
 									<Text
-										content={`Assign my pet as?`}
+										content={`Thú cưng của tôi là?`}
 										className={"field-label required-field"}
 									/>
 									<select
@@ -296,24 +298,24 @@ function PetProfile() {
 											value=""
 											disabled
 										>
-											Select role of your pet
+											--Chọn loại thú cưng--
 										</option>
-										<option value="dog">Dog</option>
-										<option value="cat">Cat</option>
+										<option value="dog">Chó</option>
+										<option value="cat">Mèo</option>
 									</select>
 								</div>
 
 								{/* PET BREED */}
 								<div className="pet-dob input-div">
 									<Text
-										content={`What breed is your pet?`}
+										content={`Giống thú cưng của bạn là gì?`}
 										className={"field-label required-field"}
 									/>
 									<input
 										type="text"
 										className="general-input-field"
 										value={petUpdateData?.breed}
-										placeholder="Enter your pet's breed"
+										placeholder="Nhập giống thú cưng của bạn..."
 										onChange={(e) =>
 											setPetUpdateData((prev) => ({
 												...prev,
@@ -326,7 +328,7 @@ function PetProfile() {
 								{/* PET DOB */}
 								<div className="pet-gender input-div">
 									<Text
-										content={`What is your pet's date of birth?`}
+										content={`Sinh nhật của thú cưng của bạn là ngày nào?`}
 										className={"field-label required-field"}
 									/>
 									<input
@@ -345,7 +347,7 @@ function PetProfile() {
 								{/* PET GENDER */}
 								<div className="pet-neutered input-div">
 									<Text
-										content={`What is your pet's gender?`}
+										content={`Chó của bạn là đực hay cái?`}
 										className={"field-label required-field"}
 									/>
 									<select
@@ -362,17 +364,17 @@ function PetProfile() {
 											value=""
 											disabled
 										>
-											What is your pet gender
+											--Chọn giới tính--
 										</option>
-										<option value="male">Male</option>
-										<option value="female">Female</option>
+										<option value="male">Đực</option>
+										<option value="female">Cái</option>
 									</select>
 								</div>
 
 								{/* PET NEUTERED */}
 								<div className="pet-neutered input-div">
 									<Text
-										content={"Has your pet been neutered?"}
+										content={"Thú cưng của bạn đã được thiến chưa?"}
 										className={"field-label required-field"}
 									/>
 									<select
@@ -395,10 +397,10 @@ function PetProfile() {
 											value=""
 											disabled
 										>
-											Is your pet neutered
+											--Chọn tình trạng thiến--
 										</option>
-										<option value={true}>Yes</option>
-										<option value={false}>No</option>
+										<option value={true}>Rồi</option>
+										<option value={false}>Chưa</option>
 									</select>
 								</div>
 							</div>
@@ -406,14 +408,14 @@ function PetProfile() {
 							{/* BUTTON CONTAINER */}
 							<div className="action-btn-container">
 								<Button
-									content="Save"
+									content="Lưu"
 									variant="filled"
 									className={"btn"}
 									onClick={closePetUpdateProfileModal}
 									type={"submit"}
 								/>
 								<Button
-									content="Cancel"
+									content="Huỷ"
 									variant="transparent"
 									className={"btn"}
 									type={"submit"}

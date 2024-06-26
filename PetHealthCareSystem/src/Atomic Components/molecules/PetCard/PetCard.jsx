@@ -7,7 +7,7 @@ import Button from "../../atoms/Button/Button";
 import { DeleteIcon, RightArrowBracket } from "../../../assets/Icon/Icon";
 import { useNavigate } from "react-router-dom";
 import APIInUse from "../../../config/axios/AxiosInUse";
-import { formatDate } from "./../../../config/convertDate";
+import { convertToPetAge } from "../../../config/convertToPetAge";
 
 function PetCard({ data, deletable }) {
 	const [isLoading, setIsLoading] = useState(false);
@@ -48,21 +48,19 @@ function PetCard({ data, deletable }) {
 			<div className="pet-card-container">
 				{/* Pet image */}
 				<div className="pet-image-container">
-					{
-						data?.species?.toLowerCase() === "cat" ? (
-							<img
-								src={CatImg}
-								alt={"Pet Logo"}
-								className="pet-image"
-							/>
-						) : (
-							<img
-								src={DogImg}
-								alt={"Pet Logo"}
-								className="pet-image"
-							/>
-						)
-					}
+					{data?.species?.toLowerCase() === "cat" ? (
+						<img
+							src={CatImg}
+							alt={"Pet Logo"}
+							className="pet-image"
+						/>
+					) : (
+						<img
+							src={DogImg}
+							alt={"Pet Logo"}
+							className="pet-image"
+						/>
+					)}
 				</div>
 
 				{/* Pet details */}
@@ -77,7 +75,7 @@ function PetCard({ data, deletable }) {
 						</div>
 						<div className="pet-sub-information">
 							<Text
-								content={`${formatDate(data.dateOfBirth)}`}
+								content={`${convertToPetAge(data?.dateOfBirth)}`}
 								type={"subtitle"}
 								className={"pet-age-content information-content"}
 							/>
@@ -94,14 +92,14 @@ function PetCard({ data, deletable }) {
 					<div className="profile-go-btn">
 						<div className="button-layout">
 							<Button
-								content="Delete Pet"
+								content="Xoá Thú Cưng"
 								rightIcon={<DeleteIcon color={"white"} />}
 								variant="filled"
 								className={"delete-btn"}
 								onClick={() => handleDeletePet(data.id)}
 							/>
 							<Button
-								content="View Pet Profile"
+								content="Xem Thông Tin"
 								rightIcon={<RightArrowBracket color={"#ffffff"} />}
 								className={"view-profile-btn"}
 								onClick={() => handleViewPetProfile(data.id)}
