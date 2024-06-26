@@ -19,6 +19,8 @@ const initialState = {
     servicesList: [],
     bookingNote: "",
     inputExceptions: [],
+    appointmentId: -1,
+    selectedTimeFrameId: -1,
 };
 
 const bookingFormSlice = createSlice({
@@ -36,6 +38,10 @@ const bookingFormSlice = createSlice({
                 role: action.payload.role,
                 birthDate: action.payload.birthDate
             }
+        },
+
+        setAppointmentId: (state, action) => {
+            state.appointmentId = action.payload
         },
 
         reInitialSelectedVet: (state) => {
@@ -71,6 +77,10 @@ const bookingFormSlice = createSlice({
 
         setServicesList: (state, action) => {
             state.servicesList = action.payload
+        },
+        
+        setSelectedTimeFrameId: (state, action) => {
+            state.selectedTimeFrameId = action.payload
         }
     }
 });
@@ -85,7 +95,9 @@ export const {
     setBookingNote,
     setInputExceptions,
     reInitialSelectedVet,
-    setServicesList
+    setServicesList,
+    setAppointmentId,
+    setSelectedTimeFrameId
 } = bookingFormSlice.actions;
 
 export default bookingFormSlice.reducer;

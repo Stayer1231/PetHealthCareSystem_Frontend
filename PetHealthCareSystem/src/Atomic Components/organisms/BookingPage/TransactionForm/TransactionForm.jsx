@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "./TransactionForm.scss";
-import { CircularProgress, Backdrop } from "@mui/material";
+import { CircularProgress, Backdrop, Button } from "@mui/material";
 import Text from "../../../atoms/Text/Text";
 import APIInUse from "../../../../config/axios/AxiosInUse";
 import ServiceCard from "../../../molecules/ServiceCard/ServiceCard";
 import { useSelector, useDispatch } from "react-redux";
 import SimplePetCard from "../../../molecules/SimplePetCard/SimplePetCard";
 import VetInfoCard from "../../../molecules/VetInfoCard/VetInfoCard";
+import { setAppointmentId } from "../../../../config/store/BookingForm/bookingForm";
+import { useNavigate } from "react-router-dom";
 
 function TransactionForm() {
     const [paymentMethods, setPaymentMethods] = useState([]);
@@ -25,11 +27,12 @@ function TransactionForm() {
     const selectedVet = useSelector((state) => state.bookingForm.selectedVet);
     const bookingNote = useSelector((state) => state.bookingForm.bookingNote);
     const selectedDate = useSelector((state) => state.bookingForm.selectedDate);
-    const selectedTimeFrame = useSelector((state) => state.bookingForm.selectedTimeFrame);
+    const selectedTimeFrame = useSelector((state) => state.bookingForm.selectedTimeFrameId);
     const selectedPets = useSelector((state) => state.bookingForm.selectedPets);
-    const [currentAppointment, setCurrentAppointment] = useState({});
     const dispatch = useDispatch();
     const [totalPrice, setTotalPrice] = useState(0);
+    const appointmentId = useSelector((state) => state.bookingForm.appointmentId);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const initialServiceQuantity = services
@@ -65,6 +68,7 @@ function TransactionForm() {
         }, 500);
         loadPaymentOptions();
         handleTotalPriceCalculation();
+        testTransaction();
     }, []);
 
     useEffect(() => {
@@ -96,28 +100,69 @@ function TransactionForm() {
 
     const handlePaymentSubmit = async () => {
 
-        let appointmentId = null;
-        
+        handleCreateAppointment();
+        if (appointmentId > 0) {
+            handleCreateTransaction();
+            navigate('/booking/success');
+        } else {
+            console.log("Failed to create appointment");
+        }
+    };
+
+    const handleCreateAppointment = async () => {
+
         try {
             const response = await APIInUse.post("Appointment/customer/book", {
                 serviceIdList: selectedServices,
                 vetId: selectedVet.id,
                 note: bookingNote,
-                timeTableId: selectedTimeFrame.id,
+                timeTableId: selectedTimeFrame,
                 appointmentDate: selectedDate,
                 petIdList: selectedPets.map((pet) => pet.id),
-            });
-            appointmentId = response.data.data.id;
-            try{
-                const anotherResponse = await APIInUse.post("Transaction/create",{
-                    appointmentId: appointmentId,
-                    paymentMethod: paymentMethods.find((paymentMethod) => paymentMethod.value === selectedPaymentMethod).id,
-                    services: serviceQuantity,
-                    status: 0
+            })
+            dispatch(setAppointmentId(response.data.data.id));
+            console.log(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+
+    };
+
+    const handleCreateTransaction = async () => {
+        try {
+            const response = await APIInUse.post("Transaction/create", {
+                appointmentId: appointmentId,
+                paymentMethod: paymentMethods.find((paymentMethod) => paymentMethod.value === selectedPaymentMethod).id,
+                paymentDate: new Date(),
+                note: "Test Transaction",
+                status: 1,
+                services: serviceQuantity.map((service) => ({
+                    serviceId: service.id,
+                    quantity: service.quantity
                 })
-            } catch(error){
-                console.log(error);
-            }
+                )
+            });
+            console.log(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const testTransaction = async () => {
+        try {
+            const response = await APIInUse.post("Transaction/create", {
+                appointmentId: 10,
+                paymentMethods: 1,
+                paymentDate: new Date(),
+                note: "Test Transaction",
+                status: 1,
+                services: serviceQuantity.map((service) => ({
+                    serviceId: service.id,
+                    quantity: service.quantity
+                })
+                )
+            });
+            console.log(response.data);
         } catch (error) {
             console.log(error);
         }
@@ -300,6 +345,7 @@ function TransactionForm() {
                     </div>
 
                     <div className="button-container">
+
                         <button type="submit"
                             className="submit-button">
                             Xác nhận thanh toán

@@ -6,12 +6,13 @@ import {
     setSelectedVet,
     setSelectedPets,
     setSelectedDate,
-    setVets,
     setSelectedServices,
     setBookingNote,
     setInputExceptions,
     reInitialSelectedVet,
-    setServicesList
+    setServicesList,
+    setSelectedTimeFrameId,
+    setVets
 } from "../../../../config/store/BookingForm/bookingForm";
 import Button from "../../../atoms/Button/Button";
 import VetInfoCard from "../../../molecules/VetInfoCard/VetInfoCard";
@@ -159,6 +160,7 @@ function BookingForm() {
             setSelectedTimeFrame(null);
         } else {
             setSelectedTimeFrame(timeFrame);
+            dispatch(setSelectedTimeFrameId(timeFrame.id));
         }
     };
 
