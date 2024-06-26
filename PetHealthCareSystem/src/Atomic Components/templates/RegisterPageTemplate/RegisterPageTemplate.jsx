@@ -6,7 +6,7 @@ import Button from "../../atoms/Button/Button";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import { Backdrop, CircularProgress, IconButton } from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { Visibility, VisibilityOff, ArrowBack } from "@mui/icons-material";
 import AuthAPI from "../../../config/axios/AxiosAuth";
 import Toast from "../../molecules/ToasterNotification/ToasterNotification";
 import LoginLogo from "../../../assets/img/dog_logo.jpg";
@@ -31,6 +31,10 @@ const RegisterPageTemplate = () => {
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("error");
   const [isErrorDisplayed, setIsErrorDisplayed] = useState(false); // New flag to track error display
+
+  const handleLogoClick = () => {
+    navigate("/");
+  };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -72,7 +76,7 @@ const RegisterPageTemplate = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-  
+
     if (
       username.trim() === "" ||
       fullName.trim() === "" ||
@@ -91,7 +95,7 @@ const RegisterPageTemplate = () => {
       }
       return;
     }
-  
+
     try {
       setIsLoading(true);
       const response = await AuthAPI.post("register", {
@@ -102,7 +106,7 @@ const RegisterPageTemplate = () => {
         password,
         confirmPassword,
       });
-  
+
       Toast({
         message: "Registration Successful!",
         type: "success",
@@ -111,7 +115,7 @@ const RegisterPageTemplate = () => {
       navigate("/login");
     } catch (error) {
       let errorMessage = "An error occurred";
-  
+
       if (error.response?.data) {
         const responseData = error.response.data;
         if (responseData.Message) {
@@ -119,11 +123,13 @@ const RegisterPageTemplate = () => {
         } else if (responseData.errors) {
           const errorKeys = Object.keys(responseData.errors);
           if (errorKeys.length > 0) {
-            errorMessage = errorKeys.map((key) => responseData.errors[key][0]).join("\n");
+            errorMessage = errorKeys
+              .map((key) => responseData.errors[key][0])
+              .join("\n");
           }
         }
       }
-  
+
       Toast({
         message: errorMessage,
         type: "error",
@@ -133,14 +139,14 @@ const RegisterPageTemplate = () => {
       setIsLoading(false);
     }
   };
-  
+
   const handleSnackbarClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
     setSnackbarOpen(false);
     setValidationMessageShown(false);
-    setIsErrorDisplayed(false); 
+    setIsErrorDisplayed(false);
   };
 
   return (
@@ -156,12 +162,19 @@ const RegisterPageTemplate = () => {
           </div>
         </Backdrop>
       )}
+      <div className="register-line">
+      <ArrowBack className="register__login-link" style={{ color: 'white' }} />
+        <Link to="/login" className="register__login-link" style={{ color: 'white' }}>
+          Login
+        </Link>
+      </div>
       <form action="" className="register__form">
-        <div className="register__logo">
+        <div className="login__logo">
           <img
             src={LoginLogo}
-            alt="register image"
-            className="register__logo-img"
+            alt="login image"
+            className="login__logo-img"
+            onClick={handleLogoClick}
           />
         </div>
         <div className="register__content">
@@ -310,17 +323,6 @@ const RegisterPageTemplate = () => {
           className="register__button"
           textColor="var(--LILY-WHITE)"
         />
-
-        <div className="register-line">
-          <Text
-            type="p"
-            content="Already have an account?"
-            className="register__login"
-          />
-          <Link to="/login" className="register__login-link">
-            Login
-          </Link>
-        </div>
       </form>
       <Text
         type="primary"
