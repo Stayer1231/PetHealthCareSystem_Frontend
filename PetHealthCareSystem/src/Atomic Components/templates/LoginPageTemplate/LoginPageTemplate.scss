@@ -1,23 +1,23 @@
 $small-font-size: 0.813rem;
 
 .login__form {
-  position: relative;
-  border: 2px solid #FFFFFF;
-  margin-inline: 1.5rem;
-  padding: 2.5rem 1.5rem;
-  border-radius: 1rem;
-  background-color: #FFFFFF;
+	position: relative;
+	border: 2px solid #ffffff;
+	margin-inline: 1.5rem;
+	padding: 2.5rem 1.5rem;
+	border-radius: 1rem;
+	background-color: #ffffff;
 
-  @media screen and (min-width: 576px) {
-    width: 432px;
-    padding: 4rem 3rem 3.5rem;
-    border-radius: 1.5rem;
-  }
+	@media screen and (min-width: 576px) {
+		width: 432px;
+		padding: 4rem 3rem 3.5rem;
+		border-radius: 1.5rem;
+	}
 }
 
 .login__logo {
-  text-align: center;
-  margin-bottom: 20px;
+	text-align: center;
+	margin-bottom: 20px;
 
   &-img {
     width: 120px;
@@ -28,99 +28,99 @@ $small-font-size: 0.813rem;
 }
 
 .login__content {
-  display: grid;
-  row-gap: 1.75rem;
-  margin-bottom: 1.5rem;
+	display: grid;
+	row-gap: 1.75rem;
+	margin-bottom: 1.5rem;
 }
 
 .login__box {
-  display: grid;
-  grid-template-columns: 1fr;
-  align-items: center;
-  border-bottom: 2px solid #000;
+	display: grid;
+	grid-template-columns: 1fr;
+	align-items: center;
+	border-bottom: 2px solid #000;
 }
 
 .login__box-input {
-  position: relative;
+	position: relative;
 }
 
 .login__input {
-  width: 95%;
-  padding-block: 0.8rem;
-  background: none;
-  color: #000;
-  position: relative;
-  border: none;
-  outline: none;
-  z-index: 1;
+	width: 95%;
+	padding-block: 0.8rem;
+	background: none;
+	color: #000;
+	position: relative;
+	border: none;
+	outline: none;
+	z-index: 1;
 
-  &:focus + .login__label {
-    top: -12px;
-    font-size: $small-font-size;
-  }
+	&:focus + .login__label {
+		top: -12px;
+		font-size: $small-font-size;
+	}
 
-  &:not(:placeholder-shown).login__input:not(:focus) + .login__label {
-    top: -12px;
-    font-size: $small-font-size;
-  }
+	&:not(:placeholder-shown).login__input:not(:focus) + .login__label {
+		top: -12px;
+		font-size: $small-font-size;
+	}
 }
 
 .login__label {
-  position: absolute;
-  left: 0;
-  top: 13px;
-  transition: top 0.3s, font-size 0.3s;
-  color: #000;
+	position: absolute;
+	left: 0;
+	top: 13px;
+	transition: top 0.3s, font-size 0.3s;
+	color: #000;
 }
 
 .password-toggle-btn {
-  background-color: transparent;
-  margin: 0;
-  padding: 0;
-  border: none;
+	background-color: transparent;
+	margin: 0;
+	padding: 0;
+	border: none;
 }
 
 .login__check {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1.5rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 1.5rem;
 }
 
 .login__check-label {
-  color: #000;
+	color: #000;
 }
 
 .login__check-label,
 .login__forgot,
 .login__register {
-  font-size: $small-font-size;
+	font-size: $small-font-size;
 }
 
 .login__check-group {
-  column-gap: 0.5rem;
+	column-gap: 0.5rem;
 }
 
 .login__check-input {
-  width: 16px;
-  height: 16px;
+	width: 16px;
+	height: 16px;
 }
 
 .login__forgot {
-  color: var(--JELLY-BEAN);
-  text-decoration: none;
+	color: var(--JELLY-BEAN);
+	text-decoration: none;
 
-  &:hover {
-    text-decoration: underline;
-  }
+	&:hover {
+		text-decoration: underline;
+	}
 }
 
 .login__button {
-  width: 100%;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  margin-bottom: 2rem;
+	width: 100%;
+	padding: 1rem;
+	border-radius: 0.5rem;
+	cursor: pointer;
+	margin-bottom: 2rem;
 }
 
 .login-register-line {
@@ -131,11 +131,11 @@ $small-font-size: 0.813rem;
 }
 
 .login__register-link {
-  color: var(--JELLY-BEAN);
-  font-size: $small-font-size;
-  text-decoration: none;
+	color: var(--JELLY-BEAN);
+	font-size: $small-font-size;
+	text-decoration: none;
 
-  &:hover {
-    text-decoration: underline;
-  }
+	&:hover {
+		text-decoration: underline;
+	}
 }

@@ -44,27 +44,25 @@ function Header({ role }) {
 			Toast({
 				type: "success",
 				message: sessionStorage.getItem("successMessage"),
-				title: "Success"
+				title: "Success",
 			});
 			sessionStorage.removeItem("successMessage");
 		}
-	}, [])
+	}, []);
 
 	return (
 		<>
-			{
-				isLoading && (
-					<Backdrop
-						sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-						open={isLoading}
-					>
-						<div className="flex flex-col justify-center items-center gap-2">
-							<CircularProgress color="inherit" />
-							<h1>Waiting</h1>
-						</div>
-					</Backdrop>
-				)
-			}
+			{isLoading && (
+				<Backdrop
+					sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+					open={isLoading}
+				>
+					<div className="flex flex-col justify-center items-center gap-2">
+						<CircularProgress color="inherit" />
+						<h1>Waiting</h1>
+					</div>
+				</Backdrop>
+			)}
 			<header className="header-container">
 				<div className="header-layout">
 					<div className="logo-container">
@@ -84,7 +82,7 @@ function Header({ role }) {
 								<li className="nav-item">
 									<Text
 										type="subtitle"
-										content="Home"
+										content="Trang chủ"
 										cursor="pointer"
 									/>
 								</li>
@@ -97,7 +95,7 @@ function Header({ role }) {
 								<li className="nav-item">
 									<Text
 										type="subtitle"
-										content="Services"
+										content="Dịch vụ"
 										cursor="pointer"
 									/>
 								</li>
@@ -110,7 +108,7 @@ function Header({ role }) {
 								<li className="nav-item">
 									<Text
 										type="subtitle"
-										content="Your Pet"
+										content="Thú cưng"
 										cursor="pointer"
 									/>
 								</li>
@@ -124,7 +122,7 @@ function Header({ role }) {
 									<li className="nav-item">
 										<Text
 											type="subtitle"
-											content="Login"
+											content="Đăng nhập"
 											cursor="pointer"
 										/>
 									</li>
@@ -133,11 +131,11 @@ function Header({ role }) {
 
 							{!isEmptyObject(auth) && (
 								<Text
-									content={"Logout"}
-									type={"subtitle"}
-									className={"nav-item"}
+									content="Đăng xuất"
+									type="subtitle"
+									className="nav-item"
 									onClick={handleLogout}
-									cursor={"pointer"}
+									cursor="pointer"
 								/>
 							)}
 						</ul>

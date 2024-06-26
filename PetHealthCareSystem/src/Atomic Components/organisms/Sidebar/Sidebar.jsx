@@ -101,7 +101,7 @@ function Sidebar() {
 						className={`${isActive("/your-pet/overview") ? "active-tab" : ""}`}
 					>
 						<Text
-							content={"Overview"}
+							content={"Tổng Quan"}
 							type={"subtitle"}
 							className={`item`}
 							cursor={"pointer"}
@@ -115,7 +115,7 @@ function Sidebar() {
 							}`}
 					>
 						<Text
-							content={"My Account"}
+							content={"Tài Khoản Của Tôi"}
 							type={"subtitle"}
 							className={`item`}
 							cursor={"pointer"}
@@ -130,7 +130,7 @@ function Sidebar() {
 							onClick={PetProfileMenuClicked}
 						>
 							<Text
-								content={"Pet Profiles"}
+								content={"Hồ Sơ Thú Cưng"}
 								type={"subtitle"}
 								className={"item"}
 								cursor={"pointer"}
@@ -164,7 +164,7 @@ function Sidebar() {
 									: null}
 								<div className="add-pet-btn">
 									<Button
-										content="Add Pet"
+										content="Thêm Thú Cưng"
 										onClick={openAddPetModal}
 										variant="transparent"
 										className={"add-btn"}
@@ -188,7 +188,7 @@ function Sidebar() {
 						<div className="add-pet-container">
 							<div className="modal-title">
 								<Text
-									content={"Lets Get Started!"}
+									content={"Bắt Đầu Thêm Thú Cưng!"}
 									type={"h3"}
 								/>
 							</div>
@@ -197,14 +197,14 @@ function Sidebar() {
 									{/* PET NAME */}
 									<div className="pet-name input-div">
 										<Text
-											content={"What is your pet's name?"}
+											content={"Tên thú cưng của bạn là gì?"}
 											className={"field-label required-field"}
 										/>
 										<input
 											type="text"
 											className="general-input-field"
 											value={petData.name}
-											placeholder="Enter your pet's name"
+											placeholder="Tên thú cưng..."
 											onChange={(e) =>
 												setPetData((prev) => ({
 													...prev,
@@ -217,7 +217,7 @@ function Sidebar() {
 									{/* PET SPECIES */}
 									<div className="pet-role input-div">
 										<Text
-											content={"Assign my pet as?"}
+											content={"Thú cưng của tôi là?"}
 											className={"field-label required-field"}
 										/>
 										<select
@@ -234,24 +234,24 @@ function Sidebar() {
 												value=""
 												disabled
 											>
-												Select role of your pet
+												--Chọn loại thú cưng--
 											</option>
-											<option value="dog">Dog</option>
-											<option value="cat">Cat</option>
+											<option value="dog">Chó</option>
+											<option value="cat">Mèo</option>
 										</select>
 									</div>
 
 									{/* PET BREED */}
 									<div className="pet-breed input-div">
 										<Text
-											content={"What breed is your pet?"}
+											content={"Giống thú cưng của bạn là gì?"}
 											className={"field-label required-field"}
 										/>
 										<input
 											type="text"
 											className="general-input-field"
 											value={petData.breed}
-											placeholder="Enter your pet's breed"
+											placeholder="Nhập giống thú cưng của bạn..."
 											onChange={(e) =>
 												setPetData((prev) => ({
 													...prev,
@@ -264,7 +264,7 @@ function Sidebar() {
 									{/* PET DOB */}
 									<div className="pet-dob input-div">
 										<Text
-											content={"What is your pet's date of birth?"}
+											content={"Sinh nhật của thú cưng của bạn là ngày nào?"}
 											className={"field-label required-field"}
 										/>
 										<input
@@ -283,7 +283,7 @@ function Sidebar() {
 									{/* PET GENDER */}
 									<div className="pet-gender input-div">
 										<Text
-											content={"What is your pet's gender?"}
+											content={"Chó của bạn là đực hay cái?"}
 											className={"field-label required-field"}
 										/>
 										<select
@@ -300,17 +300,17 @@ function Sidebar() {
 												value=""
 												disabled
 											>
-												What is your pet gender
+												--Chọn giới tính--
 											</option>
-											<option value="male">Male</option>
-											<option value="female">Female</option>
+											<option value="male">Đực</option>
+											<option value="female">Cái</option>
 										</select>
 									</div>
 
 									{/* PET NEUTERED */}
 									<div className="pet-neutered input-div">
 										<Text
-											content={"Has your pet been neutered?"}
+											content={"Thú cưng của bạn đã được thiến chưa?"}
 											className={"field-label required-field"}
 										/>
 										<select
@@ -331,10 +331,10 @@ function Sidebar() {
 												value=""
 												disabled
 											>
-												Is your pet neutered
+												--Chọn tình trạng thiến--
 											</option>
-											<option value={true}>Yes</option>
-											<option value={false}>No</option>
+											<option value={true}>Rồi</option>
+											<option value={false}>Chưa</option>
 										</select>
 									</div>
 								</div>

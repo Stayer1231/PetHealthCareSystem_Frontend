@@ -4,9 +4,11 @@ import Text from "./../../../atoms/Text/Text";
 import Button from "./../../../atoms/Button/Button";
 import { AddIcon } from "../../../../assets/Icon/Icon";
 import { Modal, ModalBody, ModalHeader } from "../../../molecules/Modal/Modal";
+import useAuth from "./../../../../config/provider/useAuth";
 
 function MyAccount() {
 	const [showUpdateUserProfile, setShowUpdateUserProfile] = useState(false);
+	const { auth } = useAuth();
 
 	// USER MODAL PROFILE
 	const openUpdateUserProfile = () => {
@@ -41,7 +43,7 @@ function MyAccount() {
 								type={"subtitle"}
 							/>
 							<Text
-								content={"Nguyen Van A"}
+								content={auth?.fullName}
 								type={"subtitle"}
 								className={"info-content"}
 							/>
@@ -52,7 +54,7 @@ function MyAccount() {
 								type={"subtitle"}
 							/>
 							<Text
-								content={"21/09/2003"}
+								content={auth?.dob}
 								type={"subtitle"}
 								className={"info-content"}
 							/>
@@ -63,7 +65,7 @@ function MyAccount() {
 								type={"subtitle"}
 							/>
 							<Text
-								content={"sampleemail@gmail.com"}
+								content={auth?.email}
 								type={"subtitle"}
 								className={"info-content"}
 							/>
@@ -74,7 +76,7 @@ function MyAccount() {
 								type={"subtitle"}
 							/>
 							<Text
-								content={"Disctrict 1, Ho Chi Minh City"}
+								content={auth?.address}
 								type={"subtitle"}
 								className={"info-content"}
 							/>
@@ -85,7 +87,7 @@ function MyAccount() {
 								type={"subtitle"}
 							/>
 							<Text
-								content={"0938555758"}
+								content={auth?.phone}
 								type={"subtitle"}
 								className={"info-content"}
 							/>

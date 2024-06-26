@@ -8,6 +8,7 @@ import { Modal, ModalBody, ModalHeader } from "../../../molecules/Modal/Modal";
 import APIInUse from "./../../../../config/axios/AxiosInUse";
 import useAuth from "../../../../config/provider/useAuth";
 import { Backdrop, CircularProgress } from "@mui/material";
+import Cookies from "js-cookie";
 
 function PetOverview() {
 	const [isLoading, setIsLoading] = useState(false);
@@ -81,7 +82,7 @@ function PetOverview() {
 			<div className="pet-overview-container">
 				<div className="greeting-container">
 					<Text
-						content={`Welcome Back, ${auth?.fullName}`}
+						content={`Chào mừng trở lại, ${auth?.fullName}`}
 						type={"h3"}
 						className={"greeting-content"}
 					/>
@@ -99,7 +100,7 @@ function PetOverview() {
 				</div>
 				<div className="add-pet-btn">
 					<Button
-						content="Add Pet"
+						content="Thêm Thú Cưng"
 						onClick={openAddPetModal}
 						variant="transparent"
 						className={"add-btn"}
@@ -119,7 +120,7 @@ function PetOverview() {
 						<div className="add-pet-container">
 							<div className="modal-title">
 								<Text
-									content={"Lets Get Started!"}
+									content={"Bắt Đầu Thêm Thú Cưng!"}
 									type={"h3"}
 								/>
 							</div>
@@ -128,14 +129,14 @@ function PetOverview() {
 									{/* PET NAME */}
 									<div className="pet-name input-div">
 										<Text
-											content={"What is your pet's name?"}
+											content={"Tên thú cưng của bạn là gì?"}
 											className={"field-label required-field"}
 										/>
 										<input
 											type="text"
 											className="general-input-field"
 											value={petData.name}
-											placeholder="Enter your pet's name"
+											placeholder="Tên thú cưng..."
 											onChange={(e) =>
 												setPetData((prev) => ({
 													...prev,
@@ -148,7 +149,7 @@ function PetOverview() {
 									{/* PET SPECIES */}
 									<div className="pet-role input-div">
 										<Text
-											content={"Assign my pet as?"}
+											content={"Thú cưng của tôi là?"}
 											className={"field-label required-field"}
 										/>
 										<select
@@ -165,24 +166,24 @@ function PetOverview() {
 												value=""
 												disabled
 											>
-												Select role of your pet
+												--Chọn loại thú cưng--
 											</option>
-											<option value="dog">Dog</option>
-											<option value="cat">Cat</option>
+											<option value="dog">Chó</option>
+											<option value="cat">Mèo</option>
 										</select>
 									</div>
 
 									{/* PET BREED */}
 									<div className="pet-breed input-div">
 										<Text
-											content={"What breed is your pet?"}
+											content={"Giống thú cưng của bạn là gì?"}
 											className={"field-label required-field"}
 										/>
 										<input
 											type="text"
 											className="general-input-field"
 											value={petData.breed}
-											placeholder="Enter your pet's breed"
+											placeholder="Nhập giống thú cưng của bạn..."
 											onChange={(e) =>
 												setPetData((prev) => ({
 													...prev,
@@ -195,7 +196,7 @@ function PetOverview() {
 									{/* PET DOB */}
 									<div className="pet-dob input-div">
 										<Text
-											content={"What is your pet's date of birth?"}
+											content={"Sinh nhật của thú cưng của bạn là ngày nào?"}
 											className={"field-label required-field"}
 										/>
 										<input
@@ -214,7 +215,7 @@ function PetOverview() {
 									{/* PET GENDER */}
 									<div className="pet-gender input-div">
 										<Text
-											content={"What is your pet's gender?"}
+											content={"Chó của bạn là đực hay cái?"}
 											className={"field-label required-field"}
 										/>
 										<select
@@ -231,17 +232,17 @@ function PetOverview() {
 												value=""
 												disabled
 											>
-												What is your pet gender
+												--Chọn giới tính--
 											</option>
-											<option value="male">Male</option>
-											<option value="female">Female</option>
+											<option value="male">Đực</option>
+											<option value="female">Cái</option>
 										</select>
 									</div>
 
 									{/* PET NEUTERED */}
 									<div className="pet-neutered input-div">
 										<Text
-											content={"Has your pet been neutered?"}
+											content={"Thú cưng của bạn đã được thiến chưa?"}
 											className={"field-label required-field"}
 										/>
 										<select
@@ -262,10 +263,10 @@ function PetOverview() {
 												value=""
 												disabled
 											>
-												Is your pet neutered
+												--Chọn tình trạng thiến--
 											</option>
-											<option value={true}>Yes</option>
-											<option value={false}>No</option>
+											<option value={true}>Rồi</option>
+											<option value={false}>Chưa</option>
 										</select>
 									</div>
 								</div>
@@ -273,14 +274,14 @@ function PetOverview() {
 								{/* BTN CONTAINER */}
 								<div className="action-btn-container">
 									<Button
-										content="Save"
+										content="Lưu"
 										variant="filled"
 										className={"btn"}
 										onClick={closeAddPetModal}
 										type={"submit"}
 									/>
 									<Button
-										content="Cancel"
+										content="Huỷ"
 										variant="transparent"
 										className={"btn"}
 										onClick={closeAddPetModal}
