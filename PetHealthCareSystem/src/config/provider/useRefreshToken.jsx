@@ -10,22 +10,31 @@ const useRefreshToken = () => {
 	const role = Cookies.get("role");
 
 	const refresh = async () => {
-		const response = await AuthAPI.post(`refresh-token`, {
-			token: refToken,
-		});
+		var response;
+		try {
+			response = await AuthAPI.post(`refresh-token`, {
+				token: refToken,
+			});
+			console.log("line 2: ", refToken);
 
-		setAuth((prevAuth) => {
-			return {
-				...prevAuth,
-				fullName: fullName,
-				userName: userName,
-				refToken: refToken,
-				role: role,
-				accessToken: response.data.data.token,
-			};
-		});
+			setAuth((prevAuth) => {
+				return {
+					...prevAuth,
+					fullName: fullName,
+					userName: userName,
+					refToken: refToken,
+					role: role,
+					accessToken: response.data.data.token,
+				};
+			});
 
-		Cookies.set("accessToken", response.data.data.token);
+			console.log(response.data.data.refreshToken);
+			Cookies.set("accessToken", response.data.data.token);
+			Cookies.remove("refToken");
+			Cookies.set("refToken", response.data.data.refreshToken);
+		} catch (error) {
+			console.log(error);
+		}
 
 		return response.data.data.token;
 	};

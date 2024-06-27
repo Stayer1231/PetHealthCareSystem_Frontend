@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./PatientCard.scss";
 import CatImg from "../../../../assets/img/Cat.jpg";
+import DogImg from "../../../../assets/img/Dog.jpg";
 import Text from "../../../atoms/Text/Text";
 import { RightArrowBracket } from "../../../../assets/Icon/Icon";
 import { useNavigate } from "react-router-dom";
@@ -19,7 +20,7 @@ function PatientCard({ data }) {
 				{/* PET IMG */}
 				<div className="pet-img-container">
 					<img
-						src={CatImg}
+						src={data?.breed?.toLowerCase() == "cat" ? CatImg : DogImg}
 						alt="Pet Image"
 					/>
 				</div>
@@ -28,7 +29,7 @@ function PatientCard({ data }) {
 				<div className="main-information-container">
 					<div className="pet-name">
 						<Text
-							content={"Oggy"}
+							content={data?.name}
 							type={"h3"}
 							className={"information-headline"}
 						/>
