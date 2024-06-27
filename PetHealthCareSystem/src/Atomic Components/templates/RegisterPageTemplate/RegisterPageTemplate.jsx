@@ -39,6 +39,10 @@ const RegisterPageTemplate = () => {
 	const [snackbarSeverity, setSnackbarSeverity] = useState("error");
 	const [isErrorDisplayed, setIsErrorDisplayed] = useState(false); // New flag to track error display
 
+	const handleLogoClick = () => {
+		navigate('/'); // Navigate to the home page URL ("/")
+	};
+
 	const togglePasswordVisibility = () => {
 		setShowPassword(!showPassword);
 	};
@@ -169,7 +173,7 @@ const RegisterPageTemplate = () => {
 				action=""
 				className="register__form"
 			>
-				<div className="register__logo">
+				<div className="register__logo" onClick={handleLogoClick}>
 					<img
 						src={LoginLogo}
 						alt="register image"
@@ -323,7 +327,7 @@ const RegisterPageTemplate = () => {
 					textColor="var(--LILY-WHITE)"
 				/>
 
-				<div className="register-line">
+				<div className="register-register-line">
 					<Text
 						type="p"
 						content="Bạn đã có tài khoản?"

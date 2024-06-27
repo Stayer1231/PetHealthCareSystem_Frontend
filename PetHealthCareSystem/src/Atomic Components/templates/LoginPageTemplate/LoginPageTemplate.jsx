@@ -29,7 +29,7 @@ const LoginPageTemplate = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("error");
-
+  
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -102,21 +102,21 @@ const LoginPageTemplate = () => {
       setAuth({ accessToken, fullName, userName, refToken, role, userId });
       navigate(from, { replace: true });
 
-			Toast({
-				message: "Đăng nhập thành công!",
-				type: "success",
-				title: "Thành công",
-			});
-		} catch (error) {
-			Toast({
-				message: error.response.data.message,
-				type: "error",
-				title: "Error",
-			});
-		} finally {
-			setIsLoading(false);
-		}
-	};
+      Toast({
+        message: "Đăng nhập thành công!",
+        type: "success",
+        title: "Thành công",
+      });
+    } catch (error) {
+      Toast({
+        message: error.response.data.message,
+        type: "error",
+        title: "Error",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleSnackbarClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -125,141 +125,126 @@ const LoginPageTemplate = () => {
     setSnackbarOpen(false);
   };
 
-	// REDIRECT USER WHEN THEY ALREADY LOGGED IN
-	useEffect(() => {
-		if (auth?.role != null) {
-			navigate(from, { replace: true });
-		}
-	}, []);
+  // REDIRECT USER WHEN THEY ALREADY LOGGED IN
+  useEffect(() => {
+    if (auth?.role != null) {
+      navigate(from, { replace: true });
+    }
+  }, []);
 
-	return (
-		<>
-			{isLoading && (
-				<Backdrop
-					sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-					open={isLoading}
-				>
-					<div className="flex flex-col justify-center items-center gap-2">
-						<CircularProgress color="inherit" />
-						<h1>Waiting</h1>
-					</div>
-				</Backdrop>
-			)}
-			<form
-				action=""
-				className="login__form"
-			>
-				<div className="login__logo">
-					<img
-						src={LoginLogo}
-						alt="login image"
-						className="login__logo-img"
-					/>
-				</div>
+  return (
+    <>
+      {isLoading && (
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={isLoading}
+        >
+          <div className="flex flex-col justify-center items-center gap-2">
+            <CircularProgress color="inherit" />
+            <h1>Waiting</h1>
+          </div>
+        </Backdrop>
+      )}
+      <form action="" className="login__form">
 
-				<div className="login__content">
-					<div className="login__box">
-						<div className="login__box-input">
-							<input
-								type="text"
-								required
-								className="login__input"
-								id="login-email"
-								placeholder=""
-								value={usernameOrEmail}
-								onChange={handleUsernameOrEmailChange}
-							/>
-							<Text
-								type="label"
-								content="Tên đăng nhập hoặc Email"
-								htmlFor="login-email"
-								className="login__label"
-							/>
-						</div>
-					</div>
+        <div className="login__logo" onClick={handleLogoClick}>
+          <img src={LoginLogo} alt="login image" className="login__logo-img" />
+        </div>
 
-					<div className="login__box">
-						<div className="login__box-input">
-							<input
-								type={showPassword ? "text" : "password"}
-								required
-								className="login__input"
-								id="login-pass"
-								placeholder=" "
-								value={password}
-								onChange={handlePasswordChange}
-							/>
-							<Text
-								type="label"
-								content="Mật khẩu"
-								htmlFor="login-pass"
-								className="login__label"
-							/>
-							<IconButton
-								onClick={togglePasswordVisibility}
-								className="password-toggle-btn"
-								sx={{ width: 15, height: 15 }}
-							>
-								{showPassword ? (
-									<VisibilityOff sx={{ width: 15, height: 15 }} />
-								) : (
-									<Visibility sx={{ width: 15, height: 15 }} />
-								)}
-							</IconButton>
-						</div>
-					</div>
-				</div>
+        <div className="login__content">
+          <div className="login__box">
+            <div className="login__box-input">
+              <input
+                type="text"
+                required
+                className="login__input"
+                id="login-email"
+                placeholder=""
+                value={usernameOrEmail}
+                onChange={handleUsernameOrEmailChange}
+              />
+              <Text
+                type="label"
+                content="Tên đăng nhập hoặc Email"
+                htmlFor="login-email"
+                className="login__label"
+              />
+            </div>
+          </div>
 
-				<Button
-					content="Đăng nhập"
-					variant="filled"
-					onClick={handleLogin}
-					className="login__button"
-					textColor="var(--LILY-WHITE)"
-				/>
+          <div className="login__box">
+            <div className="login__box-input">
+              <input
+                type={showPassword ? "text" : "password"}
+                required
+                className="login__input"
+                id="login-pass"
+                placeholder=" "
+                value={password}
+                onChange={handlePasswordChange}
+              />
+              <Text
+                type="label"
+                content="Mật khẩu"
+                htmlFor="login-pass"
+                className="login__label"
+              />
+              <IconButton
+                onClick={togglePasswordVisibility}
+                className="password-toggle-btn"
+                sx={{ width: 15, height: 15 }}
+              >
+                {showPassword ? (
+                  <VisibilityOff sx={{ width: 15, height: 15 }} />
+                ) : (
+                  <Visibility sx={{ width: 15, height: 15 }} />
+                )}
+              </IconButton>
+            </div>
+          </div>
+        </div>
 
-				<div className="login__check">
-					<Link
-						to="/forgot-password"
-						className="login__forgot"
-					>
-						Quên mật khẩu?
-					</Link>
-				</div>
+        <Button
+          content="Đăng nhập"
+          variant="filled"
+          onClick={handleLogin}
+          className="login__button"
+          textColor="var(--LILY-WHITE)"
+        />
 
-				<div className="register-line">
-					<Text
-						type="p"
-						content="Bạn chưa có tài khoản?"
-						className="login__register"
-					/>
-					<Link
-						to="/register"
-						className="login__register-link"
-					>
-						Đăng ký
-					</Link>
-				</div>
-			</form>
-			<Text
-				type="primary"
-				className="copyright"
-				content="Copyright © Peticine 2024"
-			/>
-			<Snackbar
-				open={snackbarOpen}
-				autoHideDuration={6000}
-				onClose={handleSnackbarClose}
-			>
-				<Alert
-					onClose={handleSnackbarClose}
-					severity={snackbarSeverity}
-				>
-					{snackbarMessage}
-				</Alert>
-			</Snackbar>
-		</>
-	);
+        <div className="login__check">
+          <Link to="/forgot-password" className="login__forgot">
+            Quên mật khẩu?
+          </Link>
+        </div>
+
+        <div className="login-register-line">
+          <Text
+            type="p"
+            content="Bạn chưa có tài khoản?"
+            className="login__register"
+          />
+          <Link to="/register" className="login__register-link">
+            Đăng ký
+          </Link>
+        </div>
+      </form>
+      <Text
+        type="primary"
+        className="copyright"
+        content="Copyright © Peticine 2024"
+      />
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+      >
+        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
+    </>
+  );
 };
 
 export default LoginPageTemplate;
