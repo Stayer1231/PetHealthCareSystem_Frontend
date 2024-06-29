@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./AffiliatedPetList.scss";
-import PetCard from "../../../molecules/PetCard/PetCard";
 import PatientCard from "../../../molecules/VetRole/PatientCard/PatientCard";
 import { Backdrop, CircularProgress } from "@mui/material";
 import APIInUse from "../../../../config/axios/AxiosInUse";

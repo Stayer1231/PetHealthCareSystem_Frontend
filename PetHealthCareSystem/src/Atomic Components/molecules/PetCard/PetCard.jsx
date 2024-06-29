@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./PetCard.scss";
 import CatImg from "../../../assets/img/Cat.jpg";
 import DogImg from "../../../assets/img/Dog.jpg";
@@ -8,10 +8,14 @@ import { DeleteIcon, RightArrowBracket } from "../../../assets/Icon/Icon";
 import { useNavigate } from "react-router-dom";
 import APIInUse from "../../../config/axios/AxiosInUse";
 import { convertToPetAge } from "../../../config/convertToPetAge";
+import ConfirmBox from "../ConfirmBox/ConfirmBox";
+import Toast from "../ToasterNotification/ToasterNotification";
 
 function PetCard({ data, deletable }) {
 	const [isLoading, setIsLoading] = useState(false);
 	const navigate = useNavigate();
+	const [deletePetConfirmationShow, setDeletePetConfirmationShow] =
+		useState(false);
 
 	// HANDLE VIEW PET PROFILE
 	const handleViewPetProfile = (petId) => {
@@ -23,6 +27,7 @@ function PetCard({ data, deletable }) {
 		setIsLoading(true);
 		try {
 			await APIInUse.delete(`Pet/customer/remove/${petId}`);
+			sessionStorage.setItem("successMessage", "Xoá thú cưng thành công");
 			window.location.reload();
 		} catch (error) {
 			console.log(error);
@@ -30,6 +35,26 @@ function PetCard({ data, deletable }) {
 			setIsLoading(false);
 		}
 	};
+
+	// DELETE PET CONFIRMATION MODAL MANAGEMENT
+	const handleOpenDeletePetConfirmation = () => {
+		setDeletePetConfirmationShow(true);
+	};
+
+	const handleCloseDeletePetConfirmation = () => {
+		setDeletePetConfirmationShow(false);
+	};
+
+	// TOAST SUCCESS MESSAGE WHEN PET IS DELETED
+	useEffect(() => {
+		if (sessionStorage.getItem("successMessage")) {
+			Toast({
+				type: "Success",
+				title: "Thành công",
+				message: sessionStorage.getItem("successMessage"),
+			});
+		}
+	}, []);
 
 	return (
 		<>
@@ -96,7 +121,7 @@ function PetCard({ data, deletable }) {
 								rightIcon={<DeleteIcon color={"white"} />}
 								variant="filled"
 								className={"delete-btn"}
-								onClick={() => handleDeletePet(data.id)}
+								onClick={handleOpenDeletePetConfirmation}
 							/>
 							<Button
 								content="Xem Thông Tin"
@@ -107,6 +132,21 @@ function PetCard({ data, deletable }) {
 						</div>
 					</div>
 				</div>
+
+				<ConfirmBox
+					onHide={handleCloseDeletePetConfirmation}
+					show={deletePetConfirmationShow}
+					content={"Bạn có chắc chắn muốn xoá thú cưng này không?"}
+					onCancel={handleCloseDeletePetConfirmation}
+					onConfirm={() => handleDeletePet(data.id)}
+				>
+					<div className="confirmation-content">
+						<Text
+							content={"Bạn có chắc muốn xoá thú cưng này không?"}
+							type={"subtitle"}
+						/>
+					</div>
+				</ConfirmBox>
 			</div>
 		</>
 	);

@@ -14,3 +14,48 @@ export const LoginValidation = (data) => {
 
 	return errors;
 };
+
+export const CreatePetValidation = (data) => {
+	errors = {};
+	if (data.name == "") {
+		errors.name = "Tên thú cưng không được bỏ trống";
+	}
+
+	if (data.species == "") {
+		errors.species = "Loại thú cưng không được bỏ trống";
+	}
+
+	if (data.breed == "") {
+		errors.breed = "Giống thú cưng không được bỏ trống";
+	}
+
+	if (data.dateOfBirth == "") {
+		errors.dateOfBirth = "Ngày sinh không được bỏ trống";
+	}
+
+	if (data.gender == "") {
+		errors.gender = "Giới tính không được bỏ trống";
+	}
+
+	if (data.isNeutered == null) {
+		errors.isNeutered = "Thông tin thiến của thú ý không được bỏ trống";
+	}
+	return errors;
+};
+
+export const UpdatePetValidation = (data) => {
+	errors = {};
+	if (data.name == "") {
+		errors.name = "Tên thú cưng không được bỏ trống";
+	}
+
+	if (data.breed == "") {
+		errors.breed = "Giống thú cưng không được bỏ trống";
+	}
+
+	if (data.dateOfBirth == "") {
+		errors.dateOfBirth = "Ngày sinh không được bỏ trống";
+	}
+
+	return errors;
+};

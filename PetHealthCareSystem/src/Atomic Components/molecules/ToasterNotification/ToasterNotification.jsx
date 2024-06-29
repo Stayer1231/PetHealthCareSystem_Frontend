@@ -24,22 +24,22 @@ function Toast({ type, title, message }) {
 					onClick={() => toast.dismiss(t.id)}
 				>
 					<div className="header-line" />
-					{type === "success" && <SuccessIcon />}
-					{type === "error" && <ErrorIcon />}
-					{type === "warning" && <WarningIcon />}
-					{type === "info" && <InfoIcon />}
+					{type.toLowerCase() === "success" && <SuccessIcon />}
+					{type.toLowerCase() === "error" && <ErrorIcon />}
+					{type.toLowerCase() === "warning" && <WarningIcon />}
+					{type.toLowerCase() === "info" && <InfoIcon />}
 					<div className="toast-text-container">
 						<Text
 							content={title}
 							type={"h5"}
 							className={"toast-title"}
-							pointer
+							cursor={"pointer"}
 						/>
 						<Text
 							content={message}
 							type={"subtitle"}
 							className={"toast-content"}
-							pointer
+							cursor={"pointer"}
 						/>
 					</div>
 				</div>

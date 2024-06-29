@@ -58,42 +58,36 @@ function AppRoutes() {
 						</Route>
 					)}
 
-					{
-						auth?.role == "Vet" && (
+					{auth?.role == "Vet" && (
+						<Route
+							path="/"
+							element={<VetCommonLayout />}
+						>
 							<Route
-								path="/"
-								element={<VetCommonLayout />}
-							>
-								<Route
-									index
-									element={<VetHomePage />}
-								/>
-							</Route>
-						)
-					}
-
-					{
-						auth?.role == "Customer" && (
-							<Route
-								path="/"
-								element={<CommonLayout />}
-							>
-								<Route
-									index
-									element={<HomePage />}
-								/>
-							</Route>
-						)
-					}
-
-					{
-						auth?.role == "Admin" && (
-							<Route
-								path="/"
-								element={<AdminPage />}
+								index
+								element={<VetHomePage />}
 							/>
-						)
-					}
+						</Route>
+					)}
+
+					{auth?.role == "Customer" && (
+						<Route
+							path="/"
+							element={<CommonLayout />}
+						>
+							<Route
+								index
+								element={<HomePage />}
+							/>
+						</Route>
+					)}
+
+					{auth?.role == "Admin" && (
+						<Route
+							path="/"
+							element={<AdminPage />}
+						/>
+					)}
 
 					{/* AUTHENTICATED ROUTES */}
 					<Route element={<PersistLogin />}>
@@ -187,7 +181,7 @@ function AppRoutes() {
 									path="booking"
 									element={<BookingPage />}
 								>
-									<Route 
+									<Route
 										path="success"
 										element={<BookingSuccess />}
 									/>
