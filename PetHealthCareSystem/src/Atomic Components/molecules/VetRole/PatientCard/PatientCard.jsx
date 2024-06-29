@@ -9,8 +9,8 @@ import { useNavigate } from "react-router-dom";
 function PatientCard({ data }) {
 	const navigate = useNavigate();
 
-	const handleViewPatientDetail = () => {
-		navigate("/medical-record/patient/1");
+	const handleViewPatientDetail = (petId) => {
+		navigate(`/medical-record/patient/${petId}`);
 	};
 
 	return (
@@ -57,7 +57,7 @@ function PatientCard({ data }) {
 			{/* SECOND PART */}
 			<div
 				className="decoration-bg"
-				onClick={handleViewPatientDetail}
+				onClick={() => handleViewPatientDetail(data?.id)}
 			>
 				<div className="magic-btn">
 					<Text

@@ -24,6 +24,8 @@ function AffiliatedPetList() {
 					appointment.pets?.map((pet) => pet)
 				);
 
+				console.log(petList);
+
 				setPetList(petList);
 			} catch (error) {
 				console.log(error);

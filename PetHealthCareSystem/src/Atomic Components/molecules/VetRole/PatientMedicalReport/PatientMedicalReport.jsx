@@ -3,11 +3,17 @@ import Text from "../../../atoms/Text/Text";
 import "./PatientMedicalReport.scss";
 import AppointmentCard from "../AppointmentCard/AppointmentCard";
 import CustomTooltip from "../../Tooltip/Tooltip";
-import Button from "../../../atoms/Button/Button";
+import Cookies from "js-cookie";
+import APIInUse from "../../../../config/axios/AxiosInUse";
+import { useParams } from "react-router-dom";
 
 function PatientMedicalReport() {
-	const [events, setEvents] = useState([]);
+	const id = Cookies.get("userId");
+	const { patientId } = useParams();
+	const [workingSchedule, setWorkingSchedule] = useState([]);
+	const [petList, setPetList] = useState([]);
 
+	// GET WORKING SCHEDULE
 	useEffect(() => {
 		const getWorkScheduleData = async () => {
 			try {
@@ -15,20 +21,8 @@ function PatientMedicalReport() {
 					`Appointment/vet/appointments/${id}?pageNumber=1&pageSize=1000000`
 				);
 
-				const formattedData = response.data.data.items.map((appointment) => ({
-					id: appointment.id,
-					title: `Dịch vụ: ${appointment.services
-						.map((service) => service.name)
-						.join(", ")}`,
-					start: new Date(
-						`${appointment.appointmentDate}T${appointment.timeTable.startTime}`
-					),
-					end: new Date(
-						`${appointment.appointmentDate}T${appointment.timeTable.endTime}`
-					),
-				}));
-
-				setEvents(formattedData);
+				setPetList(petList);
+				setWorkingSchedule(response?.data?.data?.items);
 			} catch (error) {
 				console.log("Error:", error);
 			}
@@ -55,20 +49,17 @@ function PatientMedicalReport() {
 
 			<div className="appointment-list-container">
 				<div className="appointment-list">
-					<AppointmentCard />
-					<AppointmentCard />
-					<AppointmentCard />
-					<AppointmentCard />
-					<AppointmentCard />
-					<AppointmentCard />
-					<AppointmentCard />
-					<AppointmentCard />
-					<AppointmentCard />
-					<AppointmentCard />
-					<AppointmentCard />
-					<AppointmentCard />
-					<AppointmentCard />
-					<AppointmentCard />
+					{workingSchedule.length > 0 ? (
+						workingSchedule.map((appointment, _) => (
+							<AppointmentCard
+								name={appointment.name}
+								date={appointment.appointmentDate}
+								petList={petList}
+							/>
+						))
+					) : (
+						<h1>Không có dữ liệu</h1>
+					)}
 				</div>
 			</div>
 		</div>
