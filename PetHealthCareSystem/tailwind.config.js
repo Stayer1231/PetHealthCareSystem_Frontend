@@ -1,14 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
-  theme: {
-    extend: {},
-    colors: {
-      "jelly-bean": "#2d759f"
-    }
-  },
-  plugins: [],
-}
+	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+	theme: {
+		extend: {
+			colors: {
+				"jelly-bean": "#2d759f",
+			},
+		},
+	},
+	plugins: [],
+};
