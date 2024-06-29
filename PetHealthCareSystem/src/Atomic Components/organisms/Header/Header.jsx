@@ -29,10 +29,7 @@ function Header({ role }) {
 
 		sessionStorage.setItem("successMessage", "Đăng xuất thành công");
 
-		// Fake loading when logout
-		setTimeout(() => {
-			setIsLoading(false);
-		}, 500);
+		setIsLoading(false);
 
 		// Reload the page to apply changes of authentication
 		window.location.reload();

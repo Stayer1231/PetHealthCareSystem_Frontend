@@ -149,7 +149,7 @@ const LoginPageTemplate = () => {
 								className="login__label"
 							/>
 
-							{errors.username && (
+							{errors.username && loginData.username == "" && (
 								<Text
 									content={errors.username}
 									type={"secondary"}
@@ -178,7 +178,7 @@ const LoginPageTemplate = () => {
 								className="login__label"
 							/>
 
-							{errors.password && (
+							{errors.password && loginData.password == "" && (
 								<Text
 									content={errors.password}
 									type={"secondary"}

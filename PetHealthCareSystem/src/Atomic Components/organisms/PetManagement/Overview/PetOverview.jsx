@@ -3,18 +3,21 @@ import "./PetOverview.scss";
 import Text from "../../../atoms/Text/Text";
 import PetCard from "../../../molecules/PetCard/PetCard";
 import Button from "../../../atoms/Button/Button";
-import { AddIcon } from "../../../../assets/Icon/Icon";
+import { AddIcon, SuccessIcon } from "../../../../assets/Icon/Icon";
 import { Modal, ModalBody, ModalHeader } from "../../../molecules/Modal/Modal";
 import APIInUse from "./../../../../config/axios/AxiosInUse";
 import useAuth from "../../../../config/provider/useAuth";
 import { Backdrop, CircularProgress } from "@mui/material";
 import Cookies from "js-cookie";
+import Toast from "../../../molecules/ToasterNotification/ToasterNotification";
+import { CreatePetValidation } from "../../../../validate/Validation";
 
 function PetOverview() {
 	const [isLoading, setIsLoading] = useState(false);
 	const { auth } = useAuth();
 	const [showAddPetModal, setShowAddPetModal] = useState(false);
 	const [petList, setPetList] = useState(null);
+	const [errors, setErrors] = useState({});
 	const [petData, setPetData] = useState({
 		name: "",
 		species: "",
@@ -33,12 +36,21 @@ function PetOverview() {
 		setShowAddPetModal(false);
 	};
 
+	const handleValidateAddPet = (data) => {
+		const error = CreatePetValidation(data);
+		setErrors(error);
+	};
+
 	// HANDLE SUBMIT ADD PET FORM
 	const handleAddPet = async (e) => {
 		e.preventDefault();
+
+		if (Object.keys(errors).length > 0) return;
+
 		try {
 			setIsLoading(true);
 			await APIInUse.post("Pet/customer/add", petData);
+			sessionStorage.setItem("successMessage", "Tạo mới thú cưng thành công");
 			window.location.reload();
 		} catch (error) {
 			console.log(error.response.data.message);
@@ -63,6 +75,18 @@ function PetOverview() {
 		};
 
 		getPetList();
+	}, []);
+
+	// GET SUCCESS MESSAGE FROM SESSION
+	useEffect(() => {
+		if (sessionStorage.getItem("successMessage")) {
+			Toast({
+				type: "Success",
+				title: "Thành công",
+				message: sessionStorage.getItem("successMessage"),
+			});
+			sessionStorage.removeItem("successMessage");
+		}
 	}, []);
 
 	return (
@@ -144,6 +168,14 @@ function PetOverview() {
 												}))
 											}
 										/>
+
+										{errors.name && petData.name == "" && (
+											<Text
+												content={errors.name}
+												type={"secondary"}
+												className={"text-red-500"}
+											/>
+										)}
 									</div>
 
 									{/* PET SPECIES */}
@@ -171,6 +203,14 @@ function PetOverview() {
 											<option value="dog">Chó</option>
 											<option value="cat">Mèo</option>
 										</select>
+
+										{errors.species && petData.species == "" && (
+											<Text
+												content={errors.species}
+												type={"secondary"}
+												className={"text-red-500"}
+											/>
+										)}
 									</div>
 
 									{/* PET BREED */}
@@ -191,6 +231,14 @@ function PetOverview() {
 												}))
 											}
 										/>
+
+										{errors.breed && petData.breed == "" && (
+											<Text
+												content={errors.breed}
+												type={"secondary"}
+												className={"text-red-500"}
+											/>
+										)}
 									</div>
 
 									{/* PET DOB */}
@@ -210,6 +258,14 @@ function PetOverview() {
 												}))
 											}
 										/>
+
+										{errors.dateOfBirth && petData.dateOfBirth == "" && (
+											<Text
+												content={errors.dateOfBirth}
+												type={"secondary"}
+												className={"text-red-500"}
+											/>
+										)}
 									</div>
 
 									{/* PET GENDER */}
@@ -237,6 +293,14 @@ function PetOverview() {
 											<option value="male">Đực</option>
 											<option value="female">Cái</option>
 										</select>
+
+										{errors.gender && petData.gender == "" && (
+											<Text
+												content={errors.gender}
+												type={"secondary"}
+												className={"text-red-500"}
+											/>
+										)}
 									</div>
 
 									{/* PET NEUTERED */}
@@ -268,6 +332,14 @@ function PetOverview() {
 											<option value={true}>Rồi</option>
 											<option value={false}>Chưa</option>
 										</select>
+
+										{errors.isNeutered && petData.isNeutered == null && (
+											<Text
+												content={errors.isNeutered}
+												type={"secondary"}
+												className={"text-red-500"}
+											/>
+										)}
 									</div>
 								</div>
 
@@ -277,7 +349,7 @@ function PetOverview() {
 										content="Lưu"
 										variant="filled"
 										className={"btn"}
-										onClick={closeAddPetModal}
+										onClick={() => handleValidateAddPet(petData)}
 										type={"submit"}
 									/>
 									<Button

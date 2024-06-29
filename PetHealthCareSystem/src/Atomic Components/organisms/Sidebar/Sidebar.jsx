@@ -11,12 +11,14 @@ import { Modal, ModalBody, ModalHeader } from "../../molecules/Modal/Modal";
 import Button from "../../atoms/Button/Button";
 import APIInUse from "./../../../config/axios/AxiosInUse";
 import { Backdrop, CircularProgress } from "@mui/material";
+import { CreatePetValidation } from "../../../validate/Validation";
 
 function Sidebar() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [submenuActive, setSubmenuActive] = useState(false);
 	const location = useLocation();
 	const [petList, setPetList] = useState(null);
+	const [errors, setErrors] = useState({});
 	const [petData, setPetData] = useState({
 		name: "",
 		species: "",
@@ -37,13 +39,21 @@ function Sidebar() {
 		setSubmenuActive(!submenuActive);
 	};
 
+	const handleValidateAddPet = (data) => {
+		const error = CreatePetValidation(data);
+		setErrors(error);
+	};
+
 	// HANDLE SUBMIT ADD PET FORM
 	const handleAddPet = async (e) => {
 		e.preventDefault();
-		setIsLoading(true);
+
+		if (Object.keys(errors).length > 0) return;
 
 		try {
+			setIsLoading(true);
 			await APIInUse.post("Pet/customer/add", petData);
+			sessionStorage.setItem("successMessage", "Tạo mới thú cưng thành công");
 			window.location.reload();
 		} catch (error) {
 			console.log(error.response.data.message);
@@ -79,6 +89,18 @@ function Sidebar() {
 		getPetList();
 	}, []);
 
+	// GET SUCCESS MESSAGE FROM SESSION
+	useEffect(() => {
+		if (sessionStorage.getItem("successMessage")) {
+			Toast({
+				type: "Success",
+				title: "Thành công",
+				message: sessionStorage.getItem("successMessage"),
+			});
+			sessionStorage.removeItem("successMessage");
+		}
+	}, []);
+
 	return (
 		<>
 			{isLoading && (
@@ -111,8 +133,9 @@ function Sidebar() {
 					{/* USER ACCOUNT */}
 					<Link
 						to="my-account"
-						className={`${isActive("/your-pet/my-account") ? "active-tab" : ""
-							}`}
+						className={`${
+							isActive("/your-pet/my-account") ? "active-tab" : ""
+						}`}
 					>
 						<Text
 							content={"Tài Khoản Của Tôi"}
@@ -125,8 +148,9 @@ function Sidebar() {
 					{/* <Link to="pet-profiles"> */}
 					<div className="pet-profile-menu">
 						<div
-							className={`flex justify-between cursor-pointer profile-menu-${submenuActive ? "active" : "inactive"
-								} ${isSubmenuActive}`}
+							className={`flex justify-between cursor-pointer profile-menu-${
+								submenuActive ? "active" : "inactive"
+							} ${isSubmenuActive}`}
 							onClick={PetProfileMenuClicked}
 						>
 							<Text
@@ -140,27 +164,29 @@ function Sidebar() {
 						</div>
 
 						<div
-							className={`pet-profile-submenu submenu-${submenuActive ? "active" : "inactive"
-								}`}
+							className={`pet-profile-submenu submenu-${
+								submenuActive ? "active" : "inactive"
+							}`}
 						>
 							<ul className="submenu-container">
 								{petList?.length > 0
 									? petList.map((pet) => (
-										<Link
-											to={`/your-pet/pet-profile/${pet?.id}`}
-											className={`${isActive(`/your-pet/pet-profile/${pet?.id}`)
-												? "active-sub-tab"
-												: ""
+											<Link
+												to={`/your-pet/pet-profile/${pet?.id}`}
+												className={`${
+													isActive(`/your-pet/pet-profile/${pet?.id}`)
+														? "active-sub-tab"
+														: ""
 												} submenu-item`}
-										>
-											<Text
-												content={pet?.name}
-												type={"subtitle"}
-												className={"item"}
-												cursor={"pointer"}
-											/>
-										</Link>
-									))
+											>
+												<Text
+													content={pet?.name}
+													type={"subtitle"}
+													className={"item"}
+													cursor={"pointer"}
+												/>
+											</Link>
+									  ))
 									: null}
 								<div className="add-pet-btn">
 									<Button
@@ -212,6 +238,14 @@ function Sidebar() {
 												}))
 											}
 										/>
+
+										{errors.name && petData.name == "" && (
+											<Text
+												content={errors.name}
+												type={"secondary"}
+												className={"text-red-500"}
+											/>
+										)}
 									</div>
 
 									{/* PET SPECIES */}
@@ -239,6 +273,14 @@ function Sidebar() {
 											<option value="dog">Chó</option>
 											<option value="cat">Mèo</option>
 										</select>
+
+										{errors.species && petData.species == "" && (
+											<Text
+												content={errors.species}
+												type={"secondary"}
+												className={"text-red-500"}
+											/>
+										)}
 									</div>
 
 									{/* PET BREED */}
@@ -259,6 +301,14 @@ function Sidebar() {
 												}))
 											}
 										/>
+
+										{errors.breed && petData.breed == "" && (
+											<Text
+												content={errors.breed}
+												type={"secondary"}
+												className={"text-red-500"}
+											/>
+										)}
 									</div>
 
 									{/* PET DOB */}
@@ -278,6 +328,14 @@ function Sidebar() {
 												}))
 											}
 										/>
+
+										{errors.dateOfBirth && petData.dateOfBirth == "" && (
+											<Text
+												content={errors.dateOfBirth}
+												type={"secondary"}
+												className={"text-red-500"}
+											/>
+										)}
 									</div>
 
 									{/* PET GENDER */}
@@ -305,6 +363,14 @@ function Sidebar() {
 											<option value="male">Đực</option>
 											<option value="female">Cái</option>
 										</select>
+
+										{errors.gender && petData.gender == "" && (
+											<Text
+												content={errors.gender}
+												type={"secondary"}
+												className={"text-red-500"}
+											/>
+										)}
 									</div>
 
 									{/* PET NEUTERED */}
@@ -336,6 +402,14 @@ function Sidebar() {
 											<option value={true}>Rồi</option>
 											<option value={false}>Chưa</option>
 										</select>
+
+										{errors.isNeutered && petData.isNeutered == null && (
+											<Text
+												content={errors.isNeutered}
+												type={"secondary"}
+												className={"text-red-500"}
+											/>
+										)}
 									</div>
 								</div>
 
@@ -345,7 +419,7 @@ function Sidebar() {
 										content="Save"
 										variant="filled"
 										className={"btn"}
-										onClick={closeAddPetModal}
+										onClick={() => handleValidateAddPet(petData)}
 										type={"submit"}
 									/>
 									<Button

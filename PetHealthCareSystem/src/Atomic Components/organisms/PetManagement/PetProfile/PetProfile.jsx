@@ -18,6 +18,8 @@ import { Backdrop, CircularProgress } from "@mui/material";
 import { formatDate } from "../../../../config/convertDate";
 import Cookies from "js-cookie";
 import { convertToPetAge } from "./../../../../config/convertToPetAge";
+import { UpdatePetValidation } from "../../../../validate/Validation";
+import Toast from "../../../molecules/ToasterNotification/ToasterNotification";
 
 function PetProfile() {
 	const [isLoading, setIsLoading] = useState(false);
@@ -25,6 +27,7 @@ function PetProfile() {
 	const { petId } = useParams();
 	const [petUpdateProfileShow, setPetUpdateProfileShow] = useState(false);
 	const [pet, setPet] = useState(null);
+	const [errors, setErrors] = useState({});
 	const [petUpdateData, setPetUpdateData] = useState({
 		id: 0,
 		name: "",
@@ -46,13 +49,21 @@ function PetProfile() {
 		setPetUpdateProfileShow(false);
 	};
 
+	const handleValidateUpdatePet = (data) => {
+		const error = UpdatePetValidation(data);
+		setErrors(error);
+	};
+
 	// HANDLE UPDATE PET
 	const handleUpdatePet = async (e) => {
 		e.preventDefault();
-		setIsLoading(true);
+
+		if (Object.keys(errors).length > 0) return;
 
 		try {
+			setIsLoading(true);
 			await APIInUse.put(`Pet/customer/update`, petUpdateData);
+			sessionStorage.setItem("successMessage", "Cập nhật thú cưng thành công");
 			window.location.reload();
 		} catch (error) {
 			console.log(error);
@@ -86,6 +97,18 @@ function PetProfile() {
 
 		getPet();
 	}, [petId]);
+
+	// GET SUCCESS MESSAGE FROM SESSION
+	useEffect(() => {
+		if (sessionStorage.getItem("successMessage")) {
+			Toast({
+				type: "success",
+				title: "Thành công",
+				message: sessionStorage.getItem("successMessage"),
+			});
+			sessionStorage.removeItem("successMessage");
+		}
+	}, []);
 
 	return (
 		<>
@@ -276,6 +299,14 @@ function PetProfile() {
 											}))
 										}
 									/>
+
+									{errors.name && petUpdateData.name == "" && (
+										<Text
+											content={errors.name}
+											type={"secondary"}
+											className={"text-red-500"}
+										/>
+									)}
 								</div>
 
 								{/* PET SPECIES */}
@@ -323,6 +354,14 @@ function PetProfile() {
 											}))
 										}
 									/>
+
+									{errors.breed && petUpdateData.breed == "" && (
+										<Text
+											content={errors.breed}
+											type={"secondary"}
+											className={"text-red-500"}
+										/>
+									)}
 								</div>
 
 								{/* PET DOB */}
@@ -342,6 +381,14 @@ function PetProfile() {
 											}))
 										}
 									/>
+
+									{errors.dateOfBirth && petUpdateData.dateOfBirth == "" && (
+										<Text
+											content={errors.dateOfBirth}
+											type={"secondary"}
+											className={"text-red-500"}
+										/>
+									)}
 								</div>
 
 								{/* PET GENDER */}
@@ -411,7 +458,7 @@ function PetProfile() {
 									content="Lưu"
 									variant="filled"
 									className={"btn"}
-									onClick={closePetUpdateProfileModal}
+									onClick={() => handleValidateUpdatePet(petUpdateData)}
 									type={"submit"}
 								/>
 								<Button
