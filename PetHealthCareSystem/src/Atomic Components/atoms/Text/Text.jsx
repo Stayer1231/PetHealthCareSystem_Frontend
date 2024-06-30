@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./Text.scss";
 
-function Text({ type, className, content, htmlFor, cursor, textColor, onClick }) {
+function Text({ type, className, content, htmlFor, cursor, textColor, onClick, style }) {
 	const combinedClassName = `${className} ${type}`;
 	return (
 		<>
