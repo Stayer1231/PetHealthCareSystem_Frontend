@@ -32,20 +32,8 @@ function Header({ role }) {
 		setIsLoading(false);
 
 		// Reload the page to apply changes of authentication
-		window.location.reload();
+		// window.location.reload();
 	};
-
-	// TOAST NOTIFICATION
-	useEffect(() => {
-		if (sessionStorage.getItem("successMessage")) {
-			Toast({
-				type: "success",
-				message: sessionStorage.getItem("successMessage"),
-				title: "Thành công",
-			});
-			sessionStorage.removeItem("successMessage");
-		}
-	}, []);
 
 	return (
 		<>
