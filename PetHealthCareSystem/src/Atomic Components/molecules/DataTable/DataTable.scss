@@ -6,6 +6,14 @@
 
     .data-content {
         font-size: 14px;
-        font-weight: 400;
+        font-weight: 400;   
+    }
+
+    .pet-name {
+        user-select: none;
+
+        &:hover {
+            color: var(--JELLY-BEAN);
+        }
     }
 }

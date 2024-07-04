@@ -84,7 +84,7 @@ const LoginPageTemplate = () => {
 			});
 		} catch (error) {
 			Toast({
-				message: error.response.data.message,
+				message: error.response.data.Message,
 				type: "error",
 				title: "Error",
 			});
