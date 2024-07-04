@@ -32,7 +32,7 @@ function Header({ role }) {
 		setIsLoading(false);
 
 		// Reload the page to apply changes of authentication
-		// window.location.reload();
+		window.location.reload();
 	};
 
 	return (

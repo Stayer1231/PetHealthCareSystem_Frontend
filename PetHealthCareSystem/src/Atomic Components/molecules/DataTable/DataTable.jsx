@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
 	Box,
 	Paper,
@@ -72,11 +72,16 @@ const DataTable = ({ data, headerColumns }) => {
 	const URL_PATH = useLocation();
 	const [currentPage, setCurrentPage] = useState(1);
 	const [recordsPerPage, setRecordsPerPage] = useState(10);
-
+	const navigate = useNavigate();
 	const lastIndex = currentPage * recordsPerPage;
 	const firstIndex = lastIndex - recordsPerPage;
 	const records = data?.slice(firstIndex, lastIndex);
 	const npage = Math.ceil(data?.length / recordsPerPage);
+
+	// 	HANDLE NAME CLICK
+	const handleNameClick = (id) => {
+		navigate(`patient/${id}`);
+	};
 
 	// HANDLE CHANGE PAGE
 	const handleChangePage = (event, value) => {
@@ -136,6 +141,7 @@ const DataTable = ({ data, headerColumns }) => {
 															content={firstIndex + rowIndex + 1}
 															type={"subtitle"}
 															className={"data-content"}
+															cursor={"pointer"}
 														/>
 													</TableCell>
 
@@ -148,7 +154,9 @@ const DataTable = ({ data, headerColumns }) => {
 														<Text
 															content={row.pet.name}
 															type={"subtitle"}
-															className={"data-content"}
+															className={"data-content pet-name"}
+															cursor={"pointer"}
+															onClick={() => handleNameClick(row.pet.id)}
 														/>
 													</TableCell>
 
@@ -168,6 +176,7 @@ const DataTable = ({ data, headerColumns }) => {
 																	content={truncateString(servicesString, 100)}
 																	type={"subtitle"}
 																	className={"data-content"}
+																	cursor={"pointer"}
 																/>
 															</div>
 														</CustomTooltip>
@@ -183,6 +192,7 @@ const DataTable = ({ data, headerColumns }) => {
 															content={formatDate(row.pet.dateOfBirth)}
 															type={"subtitle"}
 															className={"data-content"}
+															cursor={"pointer"}
 														/>
 													</TableCell>
 
@@ -197,6 +207,7 @@ const DataTable = ({ data, headerColumns }) => {
 															content={formatDate(row.appointmentDate)}
 															type={"subtitle"}
 															className={"data-content"}
+															cursor={"pointer"}
 														/>
 													</TableCell>
 												</TableRow>
@@ -208,12 +219,17 @@ const DataTable = ({ data, headerColumns }) => {
 										<TableCell
 											colSpan={
 												headerColumns && Array.isArray(headerColumns)
-													? headerColumns.length
+													? headerColumns.length + 1
 													: 0
 											}
+											align="center"
 											className="not-found-message"
 										>
-											không có
+											<Text
+												content={"Chưa có thông tin"}
+												type={"h6"}
+												textColor={"red"}
+											/>
 										</TableCell>
 									</TableRow>
 								)}
