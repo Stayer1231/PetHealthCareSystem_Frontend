@@ -29,7 +29,7 @@ $small-font-size: 0.813rem;
 	.login__content {
 		display: grid;
 		row-gap: 1.75rem;
-		margin-bottom: 1.5rem;
+		margin-bottom: 2rem;
 
 		.login__box {
 			display: grid;
@@ -75,6 +75,14 @@ $small-font-size: 0.813rem;
 				margin: 0;
 				padding: 0;
 				border: none;
+			}
+
+			.error-message{
+				position: absolute;
+				left: 0;
+				bottom: -1.45rem;
+				color: red;
+				font-size: 0.8rem;
 			}
 		}
 	}

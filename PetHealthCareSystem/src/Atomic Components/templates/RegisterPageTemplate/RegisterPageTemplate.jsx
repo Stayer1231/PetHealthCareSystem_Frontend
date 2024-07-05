@@ -3,27 +3,17 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Text from "../../atoms/Text/Text";
 import Button from "../../atoms/Button/Button";
-import Snackbar from "@mui/material/Snackbar";
-import MuiAlert from "@mui/material/Alert";
 import { Backdrop, CircularProgress, IconButton } from "@mui/material";
-import { Visibility, VisibilityOff, ArrowBack } from "@mui/icons-material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import AuthAPI from "../../../config/axios/AxiosAuth";
-import Toast from "../../molecules/ToasterNotification/ToasterNotification";
 import LoginLogo from "../../../assets/img/dog_logo.jpg";
-
-const Alert = React.forwardRef(function Alert(props, ref) {
-	return (
-		<MuiAlert
-			elevation={6}
-			ref={ref}
-			variant="filled"
-			{...props}
-		/>
-	);
-});
+import { RegisterValidation } from "../../../validate/Validation";
+import Cookies from "js-cookie";
+import useAuth from "../../../config/provider/useAuth";
 
 const RegisterPageTemplate = () => {
 	const navigate = useNavigate();
+	const { setAuth } = useAuth();
 	const [isLoading, setIsLoading] = useState(false);
 	const [username, setUsername] = useState("");
 	const [fullName, setFullName] = useState("");
@@ -31,13 +21,9 @@ const RegisterPageTemplate = () => {
 	const [phoneNumber, setPhoneNumber] = useState("");
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
-	const [validationMessageShown, setValidationMessageShown] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
 	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-	const [snackbarOpen, setSnackbarOpen] = useState(false);
-	const [snackbarMessage, setSnackbarMessage] = useState("");
-	const [snackbarSeverity, setSnackbarSeverity] = useState("error");
-	const [isErrorDisplayed, setIsErrorDisplayed] = useState(false); // New flag to track error display
+	const [errors, setErrors] = useState({});
 
 	const handleLogoClick = () => {
 		navigate('/'); // Navigate to the home page URL ("/")
@@ -51,109 +37,52 @@ const RegisterPageTemplate = () => {
 		setShowConfirmPassword(!showConfirmPassword);
 	};
 
-	const handleUsernameChange = (event) => {
-		setUsername(event.target.value);
-		setValidationMessageShown(false);
+	const handleRegisterValidation = () => {
+		const data = {
+			username,
+			fullName,
+			email,
+			phone: phoneNumber,
+			password,
+			confirmPassword
+		};
+		const errors = RegisterValidation(data);
+		setErrors(errors);
+		return errors;
 	};
 
-	const handleFullNameChange = (event) => {
-		setFullName(event.target.value);
-		setValidationMessageShown(false);
-	};
-
-	const handleEmailChange = (event) => {
-		setEmail(event.target.value);
-		setValidationMessageShown(false);
-	};
-
-	const handlePhoneNumberChange = (event) => {
-		setPhoneNumber(event.target.value);
-		setValidationMessageShown(false);
-	};
-
-	const handlePasswordChange = (event) => {
-		setPassword(event.target.value);
-		setValidationMessageShown(false);
-	};
-
-	const handleConfirmPasswordChange = (event) => {
-		setConfirmPassword(event.target.value);
-		setValidationMessageShown(false);
-	};
-
-	const handleRegister = async (e) => {
+	const handleSubmitRegister = async (e) => {
 		e.preventDefault();
 
-		if (
-			username.trim() === "" ||
-			fullName.trim() === "" ||
-			email.trim() === "" ||
-			phoneNumber.trim() === "" ||
-			password.trim() === "" ||
-			confirmPassword.trim() === ""
-		) {
-			if (!validationMessageShown) {
-				Toast({
-					message: "Please fill in all fields.",
-					type: "error",
-					title: "Error",
-				});
-				setValidationMessageShown(true);
-			}
-			return;
-		}
+		const errors = handleRegisterValidation();
+		if (Object.keys(errors).length > 0) return;
 
 		try {
 			setIsLoading(true);
-			const response = await AuthAPI.post("register", {
-				username,
-				fullName,
-				email,
-				phoneNumber,
-				password,
-				confirmPassword,
-			});
+			const registerData = { username, fullName, email, phone: phoneNumber, password };
+			const response = await AuthAPI.post("register", registerData);
 
-			Toast({
-				message: "Registration Successful!",
-				type: "success",
-				title: "Success",
-			});
-			navigate("/login");
+			let userId = response?.data?.id;
+			let accessToken = response?.data?.token;
+			let role = response?.data?.role[0];
+			let fullName = response?.data?.fullName;
+			let userName = response?.data?.userName;
+			let refToken = response?.data?.refreshToken;
+
+			Cookies.set("accessToken", accessToken);
+			Cookies.set("fullName", fullName);
+			Cookies.set("username", userName);
+			Cookies.set("refToken", refToken);
+			Cookies.set("role", role);
+			Cookies.set("userId", userId);
+
+			setAuth({ accessToken, fullName, userName, refToken, role, userId });
+			navigate("/", { replace: true });
 		} catch (error) {
-			let errorMessage = "An error occurred";
-
-			if (error.response?.data) {
-				const responseData = error.response.data;
-				if (responseData.Message) {
-					errorMessage = responseData.Message;
-				} else if (responseData.errors) {
-					const errorKeys = Object.keys(responseData.errors);
-					if (errorKeys.length > 0) {
-						errorMessage = errorKeys
-							.map((key) => responseData.errors[key][0])
-							.join("\n");
-					}
-				}
-			}
-
-			Toast({
-				message: errorMessage,
-				type: "error",
-				title: "Error",
-			});
+			console.error(error.response.data.message);
 		} finally {
 			setIsLoading(false);
 		}
-	};
-
-	const handleSnackbarClose = (event, reason) => {
-		if (reason === "clickaway") {
-			return;
-		}
-		setSnackbarOpen(false);
-		setValidationMessageShown(false);
-		setIsErrorDisplayed(false);
 	};
 
 	return (
@@ -172,6 +101,7 @@ const RegisterPageTemplate = () => {
 			<form
 				action=""
 				className="register__form"
+				onSubmit={handleSubmitRegister}
 			>
 				<div className="register__logo" onClick={handleLogoClick}>
 					<img
@@ -185,12 +115,11 @@ const RegisterPageTemplate = () => {
 						<div className="register__box-input">
 							<input
 								type="text"
-								required
 								className="register__input"
 								id="register-username"
 								placeholder=" "
 								value={username}
-								onChange={handleUsernameChange}
+								onChange={(e) => setUsername(e.target.value)}
 							/>
 							<Text
 								type="label"
@@ -198,18 +127,24 @@ const RegisterPageTemplate = () => {
 								htmlFor="register-username"
 								className="register__label"
 							/>
+							{errors.username && (
+								<Text
+									content={errors.username}
+									type={"secondary"}
+									className="error-message"
+								/>
+							)}
 						</div>
 					</div>
 					<div className="register__box">
 						<div className="register__box-input">
 							<input
 								type="text"
-								required
 								className="register__input"
 								id="register-fullName"
 								placeholder=" "
 								value={fullName}
-								onChange={handleFullNameChange}
+								onChange={(e) => setFullName(e.target.value)}
 							/>
 							<Text
 								type="label"
@@ -217,18 +152,24 @@ const RegisterPageTemplate = () => {
 								htmlFor="register-fullName"
 								className="register__label"
 							/>
+							{errors.fullName && (
+								<Text
+									content={errors.fullName}
+									type={"secondary"}
+									className="error-message"
+								/>
+							)}
 						</div>
 					</div>
 					<div className="register__box">
 						<div className="register__box-input">
 							<input
 								type="email"
-								required
 								className="register__input"
 								id="register-email"
 								placeholder=" "
 								value={email}
-								onChange={handleEmailChange}
+								onChange={(e) => setEmail(e.target.value)}
 							/>
 							<Text
 								type="label"
@@ -236,18 +177,24 @@ const RegisterPageTemplate = () => {
 								htmlFor="register-email"
 								className="register__label"
 							/>
+							{errors.email && (
+								<Text
+									content={errors.email}
+									type={"secondary"}
+									className="error-message"
+								/>
+							)}
 						</div>
 					</div>
 					<div className="register__box">
 						<div className="register__box-input">
 							<input
 								type="text"
-								required
 								className="register__input"
 								id="register-phoneNumber"
 								placeholder=" "
 								value={phoneNumber}
-								onChange={handlePhoneNumberChange}
+								onChange={(e) => setPhoneNumber(e.target.value)}
 							/>
 							<Text
 								type="label"
@@ -255,18 +202,24 @@ const RegisterPageTemplate = () => {
 								htmlFor="register-phoneNumber"
 								className="register__label"
 							/>
+							{errors.phone && (
+								<Text
+									content={errors.phone}
+									type={"secondary"}
+									className="error-message"
+								/>
+							)}
 						</div>
 					</div>
 					<div className="register__box">
 						<div className="register__box-input">
 							<input
 								type={showPassword ? "text" : "password"}
-								required
 								className="register__input"
 								id="register-pass"
 								placeholder=" "
 								value={password}
-								onChange={handlePasswordChange}
+								onChange={(e) => setPassword(e.target.value)}
 							/>
 							<Text
 								type="label"
@@ -274,6 +227,13 @@ const RegisterPageTemplate = () => {
 								htmlFor="register-pass"
 								className="register__label"
 							/>
+							{errors.password && (
+								<Text
+									content={errors.password}
+									type={"secondary"}
+									className="error-message"
+								/>
+							)}
 							<IconButton
 								onClick={togglePasswordVisibility}
 								className="password-toggle-btn"
@@ -291,12 +251,11 @@ const RegisterPageTemplate = () => {
 						<div className="register__box-input">
 							<input
 								type={showConfirmPassword ? "text" : "password"}
-								required
 								className="register__input"
 								id="register-confirm-pass"
 								placeholder=" "
 								value={confirmPassword}
-								onChange={handleConfirmPasswordChange}
+								onChange={(e) => setConfirmPassword(e.target.value)}
 							/>
 							<Text
 								type="label"
@@ -304,6 +263,13 @@ const RegisterPageTemplate = () => {
 								htmlFor="register-confirm-pass"
 								className="register__label"
 							/>
+							{errors.confirmPassword && (
+								<Text
+									content={errors.confirmPassword}
+									type={"secondary"}
+									className="error-message"
+								/>
+							)}
 							<IconButton
 								onClick={toggleConfirmPasswordVisibility}
 								className="password-toggle-btn"
@@ -322,7 +288,7 @@ const RegisterPageTemplate = () => {
 				<Button
 					content="Đăng ký"
 					variant="filled"
-					onClick={handleRegister}
+					type="submit"
 					className="register__button"
 					textColor="var(--LILY-WHITE)"
 				/>
@@ -346,18 +312,6 @@ const RegisterPageTemplate = () => {
 				className="copyright"
 				content="Copyright © Peticine 2024"
 			/>
-			<Snackbar
-				open={snackbarOpen}
-				autoHideDuration={6000}
-				onClose={handleSnackbarClose}
-			>
-				<Alert
-					onClose={handleSnackbarClose}
-					severity={snackbarSeverity}
-				>
-					{snackbarMessage}
-				</Alert>
-			</Snackbar>
 		</>
 	);
 };
