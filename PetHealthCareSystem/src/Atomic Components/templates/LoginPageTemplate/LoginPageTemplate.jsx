@@ -66,6 +66,7 @@ const LoginPageTemplate = () => {
 			let fullName = response?.data?.fullName;
 			let userName = response?.data?.userName;
 			let refToken = response?.data?.refreshToken;
+			let phone = response?.data?.phoneNumber;
 
 			Cookies.set("accessToken", accessToken);
 			Cookies.set("fullName", fullName);
@@ -74,7 +75,7 @@ const LoginPageTemplate = () => {
 			Cookies.set("role", role);
 			Cookies.set("userId", userId);
 
-			setAuth({ accessToken, fullName, userName, refToken, role, userId });
+			setAuth({ accessToken, fullName, userName, refToken, role, userId, phone });
 			navigate(from, { replace: true });
 
 			Toast({
