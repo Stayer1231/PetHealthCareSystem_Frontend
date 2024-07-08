@@ -11,16 +11,12 @@ import { Backdrop, CircularProgress } from "@mui/material";
 import Cookies from "js-cookie";
 import Toast from "../../../molecules/ToasterNotification/ToasterNotification";
 import { CreatePetValidation } from "../../../../validate/Validation";
-import { CatBreeds } from "../../../../TestData/AnimalBreed/CatBreeds";
-import { DogBreeds } from "../../../../TestData/AnimalBreed/DogBreeds";
 
 function PetOverview() {
 	const [isLoading, setIsLoading] = useState(false);
 	const { auth } = useAuth();
 	const [showAddPetModal, setShowAddPetModal] = useState(false);
 	const [petList, setPetList] = useState(null);
-	const [catBreedList, setCatBreedList] = useState([]);
-	const [dogBreedList, setDogBreedList] = useState([]);
 	const [errors, setErrors] = useState({});
 	const [petData, setPetData] = useState({
 		name: "",
@@ -91,12 +87,6 @@ function PetOverview() {
 			});
 			sessionStorage.removeItem("successMessage");
 		}
-	}, []);
-
-	// GET ANIMAL BREED LIST
-	useEffect(() => {
-		setCatBreedList(CatBreeds);
-		setDogBreedList(DogBreeds);
 	}, []);
 
 	return (
@@ -229,34 +219,18 @@ function PetOverview() {
 											content={"Giống thú cưng của bạn là gì?"}
 											className={"field-label required-field"}
 										/>
-										<select
-											name=""
-											id=""
+										<input
+											type="text"
 											className="general-input-field"
+											value={petData.breed}
+											placeholder="Nhập giống thú cưng của bạn..."
 											onChange={(e) =>
 												setPetData((prev) => ({
 													...prev,
 													breed: e.target.value,
 												}))
 											}
-										>
-											<option
-												disabled
-												selected
-												value={"--Vui lòng chọn giống thú cưng--"}
-											>--Vui lòng chọn giống thú cưng--</option>
-											{petData.species.toLowerCase() === "dog" ? (
-												dogBreedList.map((breed) => (
-													<option value={breed}>{breed}</option>
-												))
-											) : petData.species.toLowerCase() == "cat" ? (
-												catBreedList.map((breed) => (
-													<option value={breed}>{breed}</option>
-												))
-											) : (
-												null
-											)}
-										</select>
+										/>
 
 										{errors.breed && petData.breed == "" && (
 											<Text
