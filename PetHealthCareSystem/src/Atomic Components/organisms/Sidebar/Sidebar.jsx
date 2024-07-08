@@ -12,12 +12,17 @@ import Button from "../../atoms/Button/Button";
 import APIInUse from "./../../../config/axios/AxiosInUse";
 import { Backdrop, CircularProgress } from "@mui/material";
 import { CreatePetValidation } from "../../../validate/Validation";
+import Toast from "../../molecules/ToasterNotification/ToasterNotification";
+import { CatBreeds } from "../../../TestData/AnimalBreed/CatBreeds";
+import { DogBreeds } from "../../../TestData/AnimalBreed/DogBreeds";
 
 function Sidebar() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [submenuActive, setSubmenuActive] = useState(false);
 	const location = useLocation();
 	const [petList, setPetList] = useState(null);
+	const [catBreedList, setCatBreedList] = useState([]);
+	const [dogBreedList, setDogBreedList] = useState([]);
 	const [errors, setErrors] = useState({});
 	const [petData, setPetData] = useState({
 		name: "",
@@ -99,6 +104,12 @@ function Sidebar() {
 			});
 			sessionStorage.removeItem("successMessage");
 		}
+	}, []);
+
+	// GET ANIMAL BREED LIST
+	useEffect(() => {
+		setCatBreedList(CatBreeds);
+		setDogBreedList(DogBreeds);
 	}, []);
 
 	return (
@@ -283,24 +294,41 @@ function Sidebar() {
 										)}
 									</div>
 
+									
 									{/* PET BREED */}
 									<div className="pet-breed input-div">
 										<Text
 											content={"Giống thú cưng của bạn là gì?"}
 											className={"field-label required-field"}
 										/>
-										<input
-											type="text"
+										<select
+											name=""
+											id=""
 											className="general-input-field"
-											value={petData.breed}
-											placeholder="Nhập giống thú cưng của bạn..."
 											onChange={(e) =>
 												setPetData((prev) => ({
 													...prev,
 													breed: e.target.value,
 												}))
 											}
-										/>
+										>
+											<option
+												disabled
+												selected
+												value={"--Vui lòng chọn giống thú cưng--"}
+											>--Vui lòng chọn giống thú cưng--</option>
+											{petData.species.toLowerCase() === "dog" ? (
+												dogBreedList.map((breed) => (
+													<option value={breed}>{breed}</option>
+												))
+											) : petData.species.toLowerCase() == "cat" ? (
+												catBreedList.map((breed) => (
+													<option value={breed}>{breed}</option>
+												))
+											) : (
+												null
+											)}
+										</select>
 
 										{errors.breed && petData.breed == "" && (
 											<Text
