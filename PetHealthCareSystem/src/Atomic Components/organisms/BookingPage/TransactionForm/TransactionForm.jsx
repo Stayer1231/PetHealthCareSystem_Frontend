@@ -31,6 +31,7 @@ function TransactionForm() {
     const selectedPets = useSelector((state) => state.bookingForm.selectedPets);
     const dispatch = useDispatch();
     const [totalPrice, setTotalPrice] = useState(0);
+    const appointmentId = useSelector((state) => state.bookingForm.appointmentId);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -67,10 +68,10 @@ function TransactionForm() {
         }, 500);
         loadPaymentOptions();
         handleTotalPriceCalculation();
+        testTransaction();
     }, []);
 
     useEffect(() => {
-        console.log(serviceQuantity);
         handleTotalPriceCalculation();
     }, [serviceQuantity]);
 
@@ -83,18 +84,6 @@ function TransactionForm() {
             )
         );
         handleTotalPriceCalculation();
-        var testData = {
-            paymentMethod: paymentMethods.find((paymentMethod) => paymentMethod.value === selectedPaymentMethod).id,
-            paymentDate: new Date(),
-            note: "Test Transaction",
-            status: 1,
-            services: serviceQuantity.map((service) => ({
-                serviceId: service.id,
-                quantity: service.quantity
-            })),
-            total: totalPrice
-        }
-        console.log(testData);
     };
 
     const handleDecreaseQuantity = (serviceId) => {
@@ -106,34 +95,22 @@ function TransactionForm() {
             )
         );
         handleTotalPriceCalculation();
-        var testData = {
-            paymentMethod: paymentMethods.find((paymentMethod) => paymentMethod.value === selectedPaymentMethod).id,
-            paymentDate: new Date(),
-            note: "Test Transaction",
-            status: 1,
-            services: serviceQuantity.map((service) => ({
-                serviceId: service.id,
-                quantity: service.quantity
-            })),
-            total: totalPrice
-        }
-        console.log(testData);
     };
 
 
-    const handlePaymentSubmit = async (e) => {
-        e.preventDefault();
+    const handlePaymentSubmit = async () => {
 
-        const appointmentId = await handleCreateAppointment();
-        if (appointmentId) {
-            await handleCreateTransaction(appointmentId);
+        handleCreateAppointment();
+        if (appointmentId > 0) {
+            handleCreateTransaction();
             navigate('/booking/success');
         } else {
-            console.log('Failed to create appointment');
+            console.log("Failed to create appointment");
         }
     };
 
     const handleCreateAppointment = async () => {
+
         try {
             const response = await APIInUse.post("Appointment/customer/book", {
                 serviceIdList: selectedServices,
@@ -142,18 +119,16 @@ function TransactionForm() {
                 timeTableId: selectedTimeFrame,
                 appointmentDate: selectedDate,
                 petIdList: selectedPets.map((pet) => pet.id),
-            });
-            const appointmentId = response.data.data.id;
-            dispatch(setAppointmentId(appointmentId));
+            })
+            dispatch(setAppointmentId(response.data.data.id));
             console.log(response.data);
-            return appointmentId;
         } catch (error) {
             console.log(error);
-            return null;
         }
+
     };
 
-    const handleCreateTransaction = async (appointmentId) => {
+    const handleCreateTransaction = async () => {
         try {
             const response = await APIInUse.post("Transaction/create", {
                 appointmentId: appointmentId,
@@ -164,7 +139,8 @@ function TransactionForm() {
                 services: serviceQuantity.map((service) => ({
                     serviceId: service.id,
                     quantity: service.quantity
-                }))
+                })
+                )
             });
             console.log(response.data);
         } catch (error) {
@@ -172,6 +148,25 @@ function TransactionForm() {
         }
     };
 
+    const testTransaction = async () => {
+        try {
+            const response = await APIInUse.post("Transaction/create", {
+                appointmentId: 10,
+                paymentMethods: 1,
+                paymentDate: new Date(),
+                note: "Test Transaction",
+                status: 1,
+                services: serviceQuantity.map((service) => ({
+                    serviceId: service.id,
+                    quantity: service.quantity
+                })
+                )
+            });
+            console.log(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <>
@@ -213,12 +208,9 @@ function TransactionForm() {
 
                     <div className="form-group selected-pets-container">
                         <Text className={"form-label"} content="Thú cưng" />
-
-                        <div className="selected-pets">
                             {selectedPets.map((pet) => (
                                 <SimplePetCard data={pet} key={pet.id} />
                             ))}
-                        </div>
                     </div>
 
                     <div className="form-group selected-vet-container">
@@ -353,10 +345,13 @@ function TransactionForm() {
                     </div>
 
                     <div className="button-container">
-                        <button type="submit" className="submit-button">
+
+                        <button type="submit"
+                            className="submit-button">
                             Xác nhận thanh toán
                         </button>
                     </div>
+
                 </form>
             </div>
         </>

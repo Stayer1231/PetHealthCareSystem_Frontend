@@ -1,6 +1,6 @@
 import "./LoginPageTemplate.scss";
 import React, { useEffect, useState } from "react";
-import { useNavigate, Link} from "react-router-dom";
+import { useNavigate, Link, Navigate } from "react-router-dom";
 import Text from "../../atoms/Text/Text";
 import Button from "../../atoms/Button/Button";
 import MuiAlert from "@mui/material/Alert";
@@ -11,6 +11,7 @@ import AuthAPI from "../../../config/axios/AxiosAuth";
 import { LoginValidation } from "../../../validate/Validation";
 import Cookies from "js-cookie";
 import useAuth from "../../../config/provider/useAuth";
+import Toast from "../../molecules/ToasterNotification/ToasterNotification";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
 	return (
@@ -75,8 +76,18 @@ const LoginPageTemplate = () => {
 
 			setAuth({ accessToken, fullName, userName, refToken, role, userId });
 			navigate(from, { replace: true });
+
+			Toast({
+				message: "Đăng nhập thành công!",
+				type: "success",
+				title: "Thành công",
+			});
 		} catch (error) {
-			console.error(error.response.data.message);
+			Toast({
+				message: error.response.data.message,
+				type: "error",
+				title: "Error",
+			});
 		} finally {
 			setIsLoading(false);
 		}
@@ -142,7 +153,7 @@ const LoginPageTemplate = () => {
 								<Text
 									content={errors.username}
 									type={"secondary"}
-									className="error-message"
+									className={"text-red-500"}
 								/>
 							)}
 						</div>
@@ -171,7 +182,7 @@ const LoginPageTemplate = () => {
 								<Text
 									content={errors.password}
 									type={"secondary"}
-									className="error-message"
+									className={"text-red-500"}
 								/>
 							)}
 							<IconButton
@@ -196,6 +207,7 @@ const LoginPageTemplate = () => {
 					textColor="var(--LILY-WHITE)"
 					type={"submit"}
 					onClick={() => handleLoginValidation(loginData)}
+					s
 				/>
 
 				<div className="login__check">

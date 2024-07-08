@@ -14,7 +14,6 @@ const StyledTooltip = styled(({ className, ...props }) => (
 	max-width: 250px;
     font-size: 12px; /* Adjust the font size here */
     color: white;
-	line-height: 1.25;
     letter-spacing: 0.75px;
     box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.5);
   }

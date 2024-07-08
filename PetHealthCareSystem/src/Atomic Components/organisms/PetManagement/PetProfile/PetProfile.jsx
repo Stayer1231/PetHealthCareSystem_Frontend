@@ -20,8 +20,6 @@ import Cookies from "js-cookie";
 import { convertToPetAge } from "./../../../../config/convertToPetAge";
 import { UpdatePetValidation } from "../../../../validate/Validation";
 import Toast from "../../../molecules/ToasterNotification/ToasterNotification";
-import { CatBreeds } from "../../../../TestData/AnimalBreed/CatBreeds";
-import { DogBreeds } from "../../../../TestData/AnimalBreed/DogBreeds";
 
 function PetProfile() {
 	const [isLoading, setIsLoading] = useState(false);
@@ -29,8 +27,6 @@ function PetProfile() {
 	const { petId } = useParams();
 	const [petUpdateProfileShow, setPetUpdateProfileShow] = useState(false);
 	const [pet, setPet] = useState(null);
-	const [catBreedList, setCatBreedList] = useState([]);
-	const [dogBreedList, setDogBreedList] = useState([]);
 	const [errors, setErrors] = useState({});
 	const [petUpdateData, setPetUpdateData] = useState({
 		id: 0,
@@ -102,12 +98,6 @@ function PetProfile() {
 		getPet();
 	}, [petId]);
 
-	// GET ANIMAL BREED LIST
-	useEffect(() => {
-		setCatBreedList(CatBreeds);
-		setDogBreedList(DogBreeds);
-	}, []);
-
 	// GET SUCCESS MESSAGE FROM SESSION
 	useEffect(() => {
 		if (sessionStorage.getItem("successMessage")) {
@@ -178,7 +168,7 @@ function PetProfile() {
 						</div>
 						<div className="medical-record-btn">
 							<Button
-								content="Hồ Sơ Bệnh"
+								content="Xem Hồ Sơ Bệnh Án"
 								variant="filled"
 								className={"btn"}
 							/>
@@ -347,40 +337,23 @@ function PetProfile() {
 								</div>
 
 								{/* PET BREED */}
-								<div className="pet-breed input-div">
+								<div className="pet-dob input-div">
 									<Text
-										content={"Giống thú cưng của bạn là gì?"}
+										content={`Giống thú cưng của bạn là gì?`}
 										className={"field-label required-field"}
 									/>
-									<select
-										name=""
-										id=""
+									<input
+										type="text"
 										className="general-input-field"
 										value={petUpdateData?.breed}
+										placeholder="Nhập giống thú cưng của bạn..."
 										onChange={(e) =>
 											setPetUpdateData((prev) => ({
 												...prev,
 												breed: e.target.value,
 											}))
 										}
-									>
-										<option
-											disabled
-											selected
-											value={"--Vui lòng chọn giống thú cưng--"}
-										>
-											--Vui lòng chọn giống thú cưng--
-										</option>
-										{petUpdateData.species.toLowerCase() === "dog"
-											? dogBreedList.map((breed) => (
-													<option value={breed}>{breed}</option>
-											  ))
-											: petUpdateData.species.toLowerCase() == "cat"
-											? catBreedList.map((breed) => (
-													<option value={breed}>{breed}</option>
-											  ))
-											: null}
-									</select>
+									/>
 
 									{errors.breed && petUpdateData.breed == "" && (
 										<Text
