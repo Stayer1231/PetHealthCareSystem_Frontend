@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./Sidebar.scss";
 import { Link } from "react-router-dom";
 import Text from "../../../atoms/Text/Text";
@@ -20,13 +20,16 @@ function Sidebar() {
 		Cookies.remove("role");
 		setAuth(null);
 
-		sessionStorage.setItem("successMessage", "Đăng xuất thành công");
-		setIsLoading(false);
+		sessionStorage.setItem("successMessage", "Logout Successfully");
+
+		// Fake loading when logout
+		setTimeout(() => {
+			setIsLoading(false);
+		}, 500);
 
 		// Reload the page to apply changes of authentication
 		window.location.reload();
 	};
-
 	return (
 		<>
 			{isLoading && (

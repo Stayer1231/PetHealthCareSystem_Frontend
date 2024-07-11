@@ -13,6 +13,7 @@ function PatientMangementLayout() {
 	const navigate = useNavigate();
 	const id = Cookies.get("userId");
 	const { patientId } = useParams();
+	const [isLoading, setIsLoading] = useState(false);
 	const [patientInformation, setPatientInformation] = useState({});
 
 	// HANDLE VIEW MEDICAL RECORD
@@ -20,8 +21,39 @@ function PatientMangementLayout() {
 		navigate(`/medical-record/patient-medical-record/${patientId}`);
 	};
 
+	// GET PATIENT INFORMATION
+	// useEffect(() => {
+	// 	const getPatientInformation = async () => {
+	// 		s;
+	// 		try {
+	// 			setIsLoading(true);
+	// 			const response = await APIInUse.get(`Patient/${patientId}`);
+
+	// 			// setPatientInformation(response?.data?.data);
+	// 		} catch (error) {
+	// 			console.log(error);
+	// 		} finally {
+	// 			setIsLoading(false);
+	// 		}
+	// 	};
+
+	// 	getPatientInformation();
+	// }, []);
+
 	return (
 		<>
+			{isLoading && (
+				<Backdrop
+					sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+					open={isLoading}
+				>
+					<div className="flex flex-col justify-center items-center gap-2">
+						<CircularProgress color="inherit" />
+						<h1>Waiting</h1>
+					</div>
+				</Backdrop>
+			)}
+
 			<div className="patient-management-container">
 				<div className="btn-container text-right">
 					<Button
