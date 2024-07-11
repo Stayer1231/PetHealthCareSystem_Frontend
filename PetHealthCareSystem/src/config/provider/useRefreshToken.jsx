@@ -15,7 +15,6 @@ const useRefreshToken = () => {
 			response = await AuthAPI.post(`refresh-token`, {
 				token: refToken,
 			});
-			console.log("line 2: ", refToken);
 
 			setAuth((prevAuth) => {
 				return {
@@ -28,7 +27,6 @@ const useRefreshToken = () => {
 				};
 			});
 
-			console.log(response.data.data.refreshToken);
 			Cookies.set("accessToken", response.data.data.token);
 			Cookies.remove("refToken");
 			Cookies.set("refToken", response.data.data.refreshToken);
