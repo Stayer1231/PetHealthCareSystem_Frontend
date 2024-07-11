@@ -12,12 +12,11 @@ function VetScheduler() {
 	const [view, setView] = useState("week");
 	const [viewAttributes, setViewAttributes] = useState({
 		week: {
-			weekDays: [2, 3, 4, 5, 6, 7, 8],
+			weekDays: [0, 1, 2, 3, 4, 5],
 			weekStartOn: 6,
 			startHour: 8,
 			endHour: 18,
 		},
-
 		day: {
 			dayStartOn: 6,
 			startHour: 8,

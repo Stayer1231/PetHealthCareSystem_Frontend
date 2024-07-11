@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Header.scss";
 import Logo from "../../../assets/img/dog_logo.jpg";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Text from "../../atoms/Text/Text";
 import useAuth from "../../../config/provider/useAuth";
 import Toast from "../../molecules/ToasterNotification/ToasterNotification";
@@ -12,7 +12,6 @@ function Header({ role }) {
 	const [isLoading, setIsLoading] = useState(false);
 	const { auth, setAuth } = useAuth();
 	const navigate = useNavigate();
-	const location = useLocation();
 
 	const isEmptyObject = (obj) => {
 		return obj && Object.keys(obj).length === 0 && obj.constructor === Object;
@@ -33,12 +32,20 @@ function Header({ role }) {
 		setIsLoading(false);
 
 		// Reload the page to apply changes of authentication
-		if (location.pathname != "/") {
-			navigate("/");
-		} else {
-			window.location.reload();
-		}
+		window.location.reload();
 	};
+
+	// TOAST NOTIFICATION
+	useEffect(() => {
+		if (sessionStorage.getItem("successMessage")) {
+			Toast({
+				type: "success",
+				message: sessionStorage.getItem("successMessage"),
+				title: "Thành công",
+			});
+			sessionStorage.removeItem("successMessage");
+		}
+	}, []);
 
 	return (
 		<>
