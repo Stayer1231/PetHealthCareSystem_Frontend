@@ -89,6 +89,14 @@ function BookingForm() {
             newInputExceptions.push("time-frame-input-exception");
         }
 
+        if (selectedPets.length > 3) {
+            newInputExceptions.push("pet-limit-exception");
+        }
+
+        if (selectedServices.length > 3) {
+            newInputExceptions.push("service-limit-exception");
+        }
+
         dispatch(setInputExceptions(newInputExceptions));
 
         if (newInputExceptions.length > 0) {
@@ -96,6 +104,20 @@ function BookingForm() {
         }
 
         navigate('/booking/transaction');
+
+        // try {
+        //     const response = await APIInUse.post("Appointment/customer/book", {
+        //         serviceIdList: selectedServices,
+        //         vetId: selectedVet.id,
+        //         note: bookingNote,
+        //         timeTableId: selectedTimeFrame.id,
+        //         appointmentDate: selectedDate,
+        //         petIdList: selectedPets.map((pet) => pet.id),
+        //     });
+        //     console.log(response.data);
+        // } catch (error) {
+        //     console.log(error);
+        // }
     };
 
     const handleLoadServices = async () => {
@@ -136,8 +158,11 @@ function BookingForm() {
     const handlePetClick = (pet) => {
         if (selectedPets.some(selectedPet => selectedPet.id === pet.id)) {
             dispatch(setSelectedPets(selectedPets.filter(selectedPet => selectedPet.id !== pet.id)));
-        } else {
+        } else if (selectedPets.length < 3) {
             dispatch(setSelectedPets([...selectedPets, pet]));
+            dispatch(setInputExceptions(inputExceptions.filter(exception => exception !== "pet-limit-exception")));
+        } else {
+            dispatch(setInputExceptions([...inputExceptions, "pet-limit-exception"]));
         }
     };
 
@@ -153,8 +178,11 @@ function BookingForm() {
     const handleServiceClick = (service) => {
         if (selectedServices.includes(service.id)) {
             dispatch(setSelectedServices(selectedServices.filter(selectedService => selectedService !== service.id)));
-        } else {
+        } else if (selectedServices.length < 3) {
             dispatch(setSelectedServices([...selectedServices, service.id]));
+            dispatch(setInputExceptions(inputExceptions.filter(exception => exception !== "service-limit-exception")));
+        } else {
+            dispatch(setInputExceptions([...inputExceptions, "service-limit-exception"]));
         }
     };
 
@@ -168,6 +196,10 @@ function BookingForm() {
         } else {
             dispatch(setSelectedVet(vet));
         }
+    }
+
+    const handleCancel = () => {
+        navigate('/');
     }
 
     return (
@@ -191,6 +223,9 @@ function BookingForm() {
                             isSelected={selectedPets.some(selectedPet => selectedPet.id === pet.id)}
                         />
                     ))}
+                    {inputExceptions.includes("pet-limit-exception") && (
+                    <Text className="pet-limit-exception input-exception" content="Chỉ có thể chọn tối đa 3 thú cưng" type="p" />
+                )}
                 </div>
 
                 {inputExceptions.includes("pet-input-exception") && (
@@ -211,6 +246,10 @@ function BookingForm() {
                         />
                     ))}
                 </div>
+
+                {inputExceptions.includes("service-limit-exception") && (
+                    <Text className="service-limit-exception input-exception" content="Chỉ có thể chọn tối đa 3 dịch vụ" type="p" />
+                )}
 
                 <div className="booking-form-select-date">
                     <Text className="select-date-label" content="Chọn ngày đặt lịch" type="p" />
@@ -287,7 +326,7 @@ function BookingForm() {
                 </div>
 
                 <div className="booking-form-buttons-group">
-                    <Button content="Hủy" className="cancel-button" />
+                    <Button content="Hủy" className="cancel-button" onClick={handleCancel}/>
                     <Button content="Đặt lịch" className="confirm-button" onClick={handleBookAppointment} />
                 </div>
             </div>
