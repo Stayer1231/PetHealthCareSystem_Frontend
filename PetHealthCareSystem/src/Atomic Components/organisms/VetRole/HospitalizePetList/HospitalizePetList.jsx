@@ -24,7 +24,12 @@ function HospitalizePetList() {
 					appointment.pets?.map((pet) => pet)
 				);
 
-				setHospitalizedPetList(petList);
+				// Use a Set to filter out duplicates
+				const uniquePets = Array.from(
+					new Set(petList.map((pet) => pet.id))
+				).map((id) => petList.find((pet) => pet.id === id));
+
+				setHospitalizedPetList(uniquePets);
 			} catch (error) {
 				console.log(error);
 			} finally {
@@ -52,9 +57,7 @@ function HospitalizePetList() {
 			<div className="hospitalize-pet-list-container">
 				<div className="pet-list-container">
 					{hospitalizedPetList.length > 0 ? (
-						hospitalizedPetList?.map((pet) => (
-							<HospitalizeCard data={pet} />
-						))
+						hospitalizedPetList?.map((pet) => <HospitalizeCard data={pet} />)
 					) : (
 						<h1>Hổng có</h1>
 					)}

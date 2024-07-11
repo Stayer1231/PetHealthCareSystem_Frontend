@@ -24,6 +24,7 @@ const DataTableHeader = ({ headerColumns }) => {
 		dob: "Ngày sinh",
 		petId: "Pet ID",
 		services: "Dịch vụ",
+		medicalRecord: "Hồ sơ khám bệnh",
 	};
 
 	return (
@@ -205,6 +206,21 @@ const DataTable = ({ data, headerColumns }) => {
 													>
 														<Text
 															content={formatDate(row.appointmentDate)}
+															type={"subtitle"}
+															className={"data-content"}
+															cursor={"pointer"}
+														/>
+													</TableCell>
+
+													{/* HAS MEDICAL RECORD */}
+													<TableCell
+														align="center"
+														padding="normal"
+														className={"data-content"}
+														id={labelId}
+													>
+														<Text
+															content={row.pet.hasMedicalRecord ? "Đã có hồ sơ" : "Chưa có hồ sơ"}
 															type={"subtitle"}
 															className={"data-content"}
 															cursor={"pointer"}

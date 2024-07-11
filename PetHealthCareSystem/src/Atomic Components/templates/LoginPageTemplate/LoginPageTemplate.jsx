@@ -1,6 +1,6 @@
 import "./LoginPageTemplate.scss";
 import React, { useEffect, useState } from "react";
-import { useNavigate, Link} from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Text from "../../atoms/Text/Text";
 import Button from "../../atoms/Button/Button";
 import MuiAlert from "@mui/material/Alert";
@@ -11,6 +11,7 @@ import AuthAPI from "../../../config/axios/AxiosAuth";
 import { LoginValidation } from "../../../validate/Validation";
 import Cookies from "js-cookie";
 import useAuth from "../../../config/provider/useAuth";
+import Toast from "../../molecules/ToasterNotification/ToasterNotification";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
 	return (
@@ -74,20 +75,18 @@ const LoginPageTemplate = () => {
 			Cookies.set("userId", userId);
 
 			setAuth({ accessToken, fullName, userName, refToken, role, userId });
+			sessionStorage.setItem("successMessage", "Đăng nhập thành công");
 			navigate(from, { replace: true });
 		} catch (error) {
-			console.error(error.response.data.message);
+			Toast({
+				message: error?.response?.data?.Message,
+				title: "Lỗi",
+				type: "error",
+			});
 		} finally {
 			setIsLoading(false);
 		}
 	};
-
-	// REDIRECT USER WHEN THEY ALREADY LOGGED IN
-	// useEffect(() => {
-	// 	if (auth?.role != null) {
-	// 		navigate(from, { replace: true });
-	// 	}
-	// }, []);
 
 	return (
 		<>

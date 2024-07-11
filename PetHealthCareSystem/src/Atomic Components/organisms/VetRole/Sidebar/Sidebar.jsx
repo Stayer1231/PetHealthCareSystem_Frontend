@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Sidebar.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Text from "../../../atoms/Text/Text";
 import { Backdrop, CircularProgress } from "@mui/material";
 import Cookies from "js-cookie";
@@ -9,22 +9,18 @@ import useAuth from "../../../../config/provider/useAuth";
 function Sidebar() {
 	const { auth, setAuth } = useAuth();
 	const [isLoading, setIsLoading] = useState(false);
+	const navigate = useNavigate();
 
 	const handleLogout = () => {
-		setIsLoading(true);
 		Cookies.remove("accessToken");
 		Cookies.remove("fullName");
 		Cookies.remove("username");
 		Cookies.remove("password");
 		Cookies.remove("refToken");
-		Cookies.remove("role");
+		Cookies.remove("role");	
 		setAuth(null);
-
 		sessionStorage.setItem("successMessage", "Đăng xuất thành công");
-		setIsLoading(false);
-
-		// Reload the page to apply changes of authentication
-		window.location.reload();
+		navigate("/");
 	};
 
 	return (
