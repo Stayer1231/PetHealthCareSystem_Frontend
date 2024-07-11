@@ -61,8 +61,8 @@ function MedicalRecordTemplate() {
 
 			<div className="medical-record-template-container">
 				<DataTable
-					headerColumns={["pet", "services", "dob", "appointmentDate"]}
-					bodyColumn={["pet", "owner", "services", "appointmentDate"]}
+					headerColumns={["pet", "services", "dob", "appointmentDate", "medicalRecord"]}
+					bodyColumn={["pet", "owner", "services", "appointmentDate", "hasMedicalRecord"]}
 					data={tableData}
 				/>
 			</div>

@@ -52,7 +52,7 @@ function BookingForm() {
         if (selectedTimeFrame && selectedDate) {
             try {
                 const response = await APIInUse.get(
-                    "Appointment/customer/free-vet-time-frames?Date=" + selectedDate + "&TimetableId=" + selectedTimeFrame.id
+                    "Appointment/free-vet-time-frames?Date=" + selectedDate + "&TimetableId=" + selectedTimeFrame.id
                 );
                 dispatch(setVets(response.data.data));
             } catch (error) {
@@ -63,7 +63,7 @@ function BookingForm() {
 
     const handleLoadTimeFrames = async () => {
         try {
-            const response = await APIInUse.get("Appointment/customer/time-frames");
+            const response = await APIInUse.get("Appointment/time-frames");
             setTimeFrames(response.data.data);
         } catch (error) {
             console.log(error);
@@ -96,20 +96,6 @@ function BookingForm() {
         }
 
         navigate('/booking/transaction');
-
-        // try {
-        //     const response = await APIInUse.post("Appointment/customer/book", {
-        //         serviceIdList: selectedServices,
-        //         vetId: selectedVet.id,
-        //         note: bookingNote,
-        //         timeTableId: selectedTimeFrame.id,
-        //         appointmentDate: selectedDate,
-        //         petIdList: selectedPets.map((pet) => pet.id),
-        //     });
-        //     console.log(response.data);
-        // } catch (error) {
-        //     console.log(error);
-        // }
     };
 
     const handleLoadServices = async () => {
