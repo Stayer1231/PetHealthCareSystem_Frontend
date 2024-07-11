@@ -28,13 +28,13 @@ function MyAccount() {
 							content={"Personal Details"}
 							type={"h3"}
 						/>
-						<Button
+						{/* <Button
 							content="Update"
 							rightIcon={<AddIcon />}
 							variant="transparent"
 							stroke
 							onClick={openUpdateUserProfile}
-						/>
+						/> */}
 					</div>
 					<div className="info-container">
 						<div className="user-fullname info-div">
@@ -55,28 +55,6 @@ function MyAccount() {
 							/>
 							<Text
 								content={auth?.dob}
-								type={"subtitle"}
-								className={"info-content"}
-							/>
-						</div>
-						<div className="user-email info-div">
-							<Text
-								content={"Email:"}
-								type={"subtitle"}
-							/>
-							<Text
-								content={auth?.email}
-								type={"subtitle"}
-								className={"info-content"}
-							/>
-						</div>
-						<div className="user-address info-div">
-							<Text
-								content={"Address:"}
-								type={"subtitle"}
-							/>
-							<Text
-								content={auth?.address}
 								type={"subtitle"}
 								className={"info-content"}
 							/>
