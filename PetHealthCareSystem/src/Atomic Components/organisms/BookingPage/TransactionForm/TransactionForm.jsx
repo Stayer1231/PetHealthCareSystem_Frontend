@@ -10,6 +10,7 @@ import VetInfoCard from "../../../molecules/VetInfoCard/VetInfoCard";
 import { setAppointmentId } from "../../../../config/store/BookingForm/bookingForm";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { set } from "date-fns";
 
 function TransactionForm() {
     const [paymentMethods, setPaymentMethods] = useState([]);
@@ -31,6 +32,8 @@ function TransactionForm() {
     const selectedDate = useSelector((state) => state.bookingForm.selectedDate);
     const selectedTimeFrame = useSelector((state) => state.bookingForm.selectedTimeFrameId);
     const selectedPets = useSelector((state) => state.bookingForm.selectedPets);
+    const [appointmentId, setAppointmentId] = useState(null);
+    const appId = useSelector((state) => state.bookingForm.appointmentId);
     const dispatch = useDispatch();
     const [totalPrice, setTotalPrice] = useState(0);
     const navigate = useNavigate();
@@ -125,12 +128,13 @@ function TransactionForm() {
 
     const handlePaymentSubmit = async (e) => {
         e.preventDefault();
-        handleCreateAppointment();
-        if (appointmentId > 0) {
-            handleCreateTransaction();
-            navigate('/booking/success');
-        } else {
-            console.log("Failed to create appointment");
+        try {
+            await handleCreateAppointment();
+            console.log(appId);
+            await handleCreateTransaction(appId);
+            navigate("/booking/success");
+        } catch (error) {
+            console.log(error);
         }
     };
 
@@ -146,9 +150,10 @@ function TransactionForm() {
                 appointmentDate: selectedDate,
                 petIdList: selectedPets.map((pet) => pet.id),
             });
-            const appointmentId = response.data.data.id;
-            dispatch(setAppointmentId(appointmentId));
             console.log(response.data);
+            setAppointmentId(response.data.data.id);
+            dispatch(setAppointmentId(appointmentId));
+            
             return appointmentId;
         } catch (error) {
             console.log(error);
