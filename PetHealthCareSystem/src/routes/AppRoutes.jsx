@@ -116,7 +116,7 @@ function AppRoutes() {
 										element={<PatientDetailPage />}
 									/>
 									<Route
-										path="patient/:patientId"
+										path="patient"
 										element={<PatientPage />}
 									/>
 								</Route>

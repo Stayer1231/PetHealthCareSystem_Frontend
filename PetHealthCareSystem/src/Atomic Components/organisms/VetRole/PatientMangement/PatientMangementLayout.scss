@@ -1,59 +1,211 @@
-.patient-management-container {
-	width: 100%;
+.patient-management-container.form-inactive {
+	width: 85%;
+	margin: auto;
+	position: relative;
 
-	.btn-container {
-		margin-top: 30px;
+	.pet-medical-record-container {
+		.form-header {
+			.pet-overview-container {
+				padding: 0;
+				display: grid;
+				grid-template-columns: 0.2fr 1.2fr;
+				margin-top: 0;
+				margin-bottom: 0;
 
-		label {
-			font-size: 16px;
+				.img-container {
+					width: 160px;
+					height: 150px;
+					background-color: var(--CHELSEA-CUCUMBER);
+
+					img {
+						width: 100%;
+						height: 100%;
+						object-fit: cover;
+						border-right: 1px solid black;
+						padding: 20px;
+					}
+				}
+
+				.pet-information-container {
+					display: flex;
+					padding-left: 25%;
+					justify-content: center;
+					flex-direction: column;
+					gap: 15px;
+					background-color: var(--JELLY-BEAN);
+					height: 100%;
+
+					.information-div {
+						color: white;
+						display: grid;
+						grid-template-columns: 1fr 2fr;
+
+						.text-label {
+							font-size: 16px;
+							font-weight: 500;
+						}
+
+						.text-content {
+							font-size: 14px;
+							font-weight: 450;
+						}
+					}
+				}
+			}
+
+			.header-sub {
+				width: 102%;
+				height: 15px;
+				display: grid;
+				position: relative;
+				grid-template-columns: repeat(2, 1fr);
+
+				.color-1 {
+					position: absolute;
+					height: 15px;
+					width: 50%;
+					background-color: var(--JELLY-BEAN-DARK);
+				}
+
+				.color-2 {
+					position: absolute;
+					height: 15px;
+					width: 51%;
+					transform: translateX(92.4%);
+					background-color: var(--CHELSEA-CUCUMBER);
+					clip-path: polygon(2% 0, 100% 0, 100% 100%, 0 100%);
+				}
+			}
+		}
+
+		.form-body {
 		}
 	}
 
-	.pet-overview-container {
-		padding: 0;
-		display: grid;
-		grid-template-columns: 0.5fr 2fr;
+	.patient-management-form-container {
+		position: absolute;
+		width: 100%;
+		height: 800px;
 		border: 1px solid black;
-		margin-bottom: 50px;
-		margin-top: 0;
-		margin-top: 10px;
+	}
 
-		.img-container {
-			width: 220px;
-			height: 210px;
-			background-color: var(--CHELSEA-CUCUMBER);
+	.patient-management-form-container.active-form {
+		transform: translateY(0);
+		transition: transform 0.5s;
+	}
 
-			img {
-				width: 100%;
-				height: 100%;
-				object-fit: cover;
-				border-right: 1px solid black;
-				padding: 20px;
-			}
+	.patient-management-form-container.inactive-form {
+		transform: translateY(-2000px);
+		transition: transform 0.5s;
+	}
+
+	.medical-record-not {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		height: 500px;
+		gap: 12px;
+	}
+}
+
+.patient-management-container.form-active {
+	height: 850px;
+	width: 85%;
+	margin: auto;
+	position: relative;
+
+	.patient-management-form-container {
+		position: absolute;
+		width: 100%;
+		height: fit-content;
+		background-color: white;
+		border: 1px solid black;
+		margin-bottom: 10px;
+		padding: 24px 34px;
+
+		.form-title {
+			text-align: center;
+			margin-bottom: 50px;
 		}
 
-		.pet-information-container {
+		.form-content-container {
 			display: flex;
-			padding-left: 15%;
-			justify-content: center;
 			flex-direction: column;
-			gap: 25px;
-			background-color: var(--JELLY-BEAN);
-			height: 100%;
+			gap: 35px;
 
-			.information-div {
-				color: white;
+			.label-container {
+				display: flex;
+				flex-direction: column;
+			}
+
+			.input-div {
 				display: grid;
-				grid-template-columns: 1fr 2fr;
+				grid-template-columns: 0.55fr 1fr;
 
-				.text-label {
-					font-weight: 500;
+				.input-pre-val {
+					padding: 0 0 0 8px;
+					font-weight: 400;
+					font-size: 15px;
 				}
 
-				.text-content {
-					font-weight: 450;
+				.general-textarea-field {
+					resize: vertical;
+					min-height: 40px;
+					max-height: 150px;
+				}
+			}
+
+			.checkbox-div {
+				display: flex;
+				gap: 10px;
+			}
+
+			.medical-item-select {
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+				border: 1px solid black;
+				padding: 10px;
+			}
+
+			.select-div {
+				display: grid;
+				grid-template-columns: 0.5fr 1fr;
+				column-gap: 20px;
+				row-gap: 20px;
+
+				.select-input {
+					width: 250px;
+				}
+			}
+
+			.add-medical-item-btn {
+				background-color: var(--CHELSEA-CUCUMBER);
+
+				&:active {
+					background-color: var(--CHELSEA-CUCUMBER-ACTIVE);
 				}
 			}
 		}
+	}
+
+	.patient-management-form-container.active-form {
+		transform: translateY(0);
+		transition: transform 0.5s;
+	}
+
+	.patient-management-form-container.inactive-form {
+		transform: translateY(-2000px);
+		transition: transform 0.5s;
+	}
+
+	.medical-record-not {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		height: 500px;
+		gap: 12px;
 	}
 }

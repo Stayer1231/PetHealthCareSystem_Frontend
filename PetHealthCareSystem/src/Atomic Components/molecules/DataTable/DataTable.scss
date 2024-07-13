@@ -1,19 +1,28 @@
 .table-container {
-    .table-head-label {
-        font-size: 16px;
-        font-weight: 600;
-    }
+	.table-head-label {
+		font-size: 16px;
+		font-weight: 600;
+	}
 
-    .data-content {
-        font-size: 14px;
-        font-weight: 400;   
-    }
+	.data-content {
+		font-size: 14px;
+		font-weight: 400;
 
-    .pet-name {
-        user-select: none;
+		> .action-btn {
+			padding: 5px;
 
-        &:hover {
-            color: var(--JELLY-BEAN);
-        }
-    }
+			label {
+				font-size: 12px;
+				font-weight: 400;
+			}
+		}
+	}
+
+	.pet-name {
+		user-select: none;
+
+		&:hover {
+			color: var(--JELLY-BEAN);
+		}
+	}
 }

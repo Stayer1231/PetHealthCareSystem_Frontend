@@ -47,6 +47,7 @@ function Sidebar() {
 		}
 	};
 
+	// HANDLE VALIDATE ADD PET FORM
 	const handleValidateAddPet = (data) => {
 		const error = CreatePetValidation(data);
 		setErrors(error);

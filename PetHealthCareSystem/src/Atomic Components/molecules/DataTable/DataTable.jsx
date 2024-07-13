@@ -15,8 +15,9 @@ import CustomTooltip from "../Tooltip/Tooltip";
 import { formatDate } from "./../../../config/convertDate";
 import "./DataTable.scss";
 import Pagination from "../Paginate/Pagination";
+import Button from "../../atoms/Button/Button";
 
-const DataTableHeader = ({ headerColumns }) => {
+const DataTableHeader = ({ headerColumns, allowedAction }) => {
 	// Use to display the column name
 	const columnMapping = {
 		appointmentDate: "Ngày hẹn",
@@ -63,13 +64,30 @@ const DataTableHeader = ({ headerColumns }) => {
 							</div>
 						</TableCell>
 					))}
+
+				{allowedAction && (
+					<TableCell
+						align="center"
+						padding="normal"
+						className="table-head table-head-title"
+					>
+						<div className="table-head-label">
+							<Text
+								content={"Hành động"}
+								type="subtitle"
+								textColor={"white"}
+								className={"table-head-label"}
+							/>
+						</div>
+					</TableCell>
+				)}
 			</TableRow>
 		</TableHead>
 	);
 };
 
 // ---------------------------- DataTable ----------------------------
-const DataTable = ({ data, headerColumns }) => {
+const DataTable = ({ data, headerColumns, allowedAction }) => {
 	const URL_PATH = useLocation();
 	const [currentPage, setCurrentPage] = useState(1);
 	const [recordsPerPage, setRecordsPerPage] = useState(10);
@@ -78,11 +96,6 @@ const DataTable = ({ data, headerColumns }) => {
 	const firstIndex = lastIndex - recordsPerPage;
 	const records = data?.slice(firstIndex, lastIndex);
 	const npage = Math.ceil(data?.length / recordsPerPage);
-
-	// 	HANDLE NAME CLICK
-	const handleNameClick = (id) => {
-		navigate(`patient/${id}`);
-	};
 
 	// HANDLE CHANGE PAGE
 	const handleChangePage = (event, value) => {
@@ -93,6 +106,13 @@ const DataTable = ({ data, headerColumns }) => {
 	const handleChangePageSize = (value, pageIndex) => {
 		setRecordsPerPage(value);
 		setCurrentPage(1);
+	};
+
+	// HANDLE PET NAME CLICKED
+	const handlePetNameClicked = (petId, appointmentId) => {
+		navigate(`patient?petId=${petId}&appointmentId=${appointmentId}`, {
+			state: { from: URL_PATH },
+		});
 	};
 
 	// TRUNCATE STRING
@@ -112,7 +132,10 @@ const DataTable = ({ data, headerColumns }) => {
 							sx={{ minWidth: 750 }}
 							aria-labelledby="tableTitle"
 						>
-							<DataTableHeader headerColumns={headerColumns} />
+							<DataTableHeader
+								headerColumns={headerColumns}
+								allowedAction={allowedAction}
+							/>
 							<TableBody>
 								{records?.length !== 0 ? (
 									<>
@@ -129,7 +152,7 @@ const DataTable = ({ data, headerColumns }) => {
 													hover
 													role="checkbox"
 													tabIndex={-1}
-													key={row.pet.id}
+													key={rowIndex}
 													sx={{ cursor: "pointer" }}
 												>
 													{/* ROW NUMBER */}
@@ -157,7 +180,26 @@ const DataTable = ({ data, headerColumns }) => {
 															type={"subtitle"}
 															className={"data-content pet-name"}
 															cursor={"pointer"}
-															onClick={() => handleNameClick(row.pet.id)}
+															onClick={() =>
+																handlePetNameClicked(
+																	row.pet.id,
+																	row.appointmentId
+																)
+															}
+														/>
+													</TableCell>
+
+													{/* PET DOB */}
+													<TableCell
+														align="center"
+														padding="normal"
+														className={"data-content"}
+													>
+														<Text
+															content={formatDate(row.pet.dateOfBirth)}
+															type={"subtitle"}
+															className={"data-content"}
+															cursor={"pointer"}
 														/>
 													</TableCell>
 
@@ -197,20 +239,6 @@ const DataTable = ({ data, headerColumns }) => {
 														)}
 													</TableCell>
 
-													{/* PET DOB */}
-													<TableCell
-														align="center"
-														padding="normal"
-														className={"data-content"}
-													>
-														<Text
-															content={formatDate(row.pet.dateOfBirth)}
-															type={"subtitle"}
-															className={"data-content"}
-															cursor={"pointer"}
-														/>
-													</TableCell>
-
 													{/* APPOINTMENT DATE */}
 													<TableCell
 														align="center"
@@ -244,6 +272,21 @@ const DataTable = ({ data, headerColumns }) => {
 															cursor={"pointer"}
 														/>
 													</TableCell>
+
+													{/* IF ALLOWED ACTION */}
+													{allowedAction && (
+														<TableCell
+															align="center"
+															padding="normal"
+															className={"data-content"}
+														>
+															<Button
+																content={"Xem hồ sơ"}
+																variant="filled"
+																className={"action-btn"}
+															/>
+														</TableCell>
+													)}
 												</TableRow>
 											);
 										})}

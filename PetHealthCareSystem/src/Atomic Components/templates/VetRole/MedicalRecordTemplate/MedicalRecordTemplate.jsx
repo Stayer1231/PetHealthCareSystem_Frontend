@@ -19,6 +19,7 @@ function MedicalRecordTemplate() {
 				const appointments = response.data.data.items.flatMap((item) =>
 					item.pets.map((pet) => ({
 						appointmentDate: item.appointmentDate,
+						appointmentId: item.id,
 						pet: {
 							name: pet.name,
 							id: pet.id,
@@ -69,6 +70,7 @@ function MedicalRecordTemplate() {
 						"medicalRecord",
 					]}
 					data={tableData}
+					allowedAction={true}
 				/>
 			</div>
 		</>
