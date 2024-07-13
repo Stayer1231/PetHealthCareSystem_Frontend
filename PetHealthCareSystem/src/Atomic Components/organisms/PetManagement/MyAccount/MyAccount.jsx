@@ -25,7 +25,7 @@ function MyAccount() {
 				<div className="personal-details-container">
 					<div className="title-container">
 						<Text
-							content={"Personal Details"}
+							content={"Thông Tin Cá Nhân"}
 							type={"h3"}
 						/>
 						{/* <Button
@@ -39,7 +39,7 @@ function MyAccount() {
 					<div className="info-container">
 						<div className="user-fullname info-div">
 							<Text
-								content={"Full Name:"}
+								content={"Họ và Tên:"}
 								type={"subtitle"}
 							/>
 							<Text
@@ -50,22 +50,22 @@ function MyAccount() {
 						</div>
 						<div className="user-dob info-div">
 							<Text
-								content={"Birthday:"}
+								content={"Ngày sinh:"}
 								type={"subtitle"}
 							/>
 							<Text
-								content={auth?.dob}
+								content={auth?.birthDate}
 								type={"subtitle"}
 								className={"info-content"}
 							/>
 						</div>
 						<div className="user-phone info-div">
 							<Text
-								content={"Phone Number:"}
+								content={"Số điện thoại:"}
 								type={"subtitle"}
 							/>
 							<Text
-								content={auth?.phone}
+								content={auth?.phoneNumber}
 								type={"subtitle"}
 								className={"info-content"}
 							/>

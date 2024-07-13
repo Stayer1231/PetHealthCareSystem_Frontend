@@ -167,11 +167,25 @@ const DataTable = ({ data, headerColumns }) => {
 														padding="normal"
 														className={"data-content w-72"}
 													>
-														<CustomTooltip
-															title={servicesString}
-															placement={"right"}
-															arrow
-														>
+														{servicesString.length > 100 ? (
+															<CustomTooltip
+																title={servicesString}
+																placement={"right"}
+																arrow
+															>
+																<div>
+																	<Text
+																		content={truncateString(
+																			servicesString,
+																			100
+																		)}
+																		type={"subtitle"}
+																		className={"data-content"}
+																		cursor={"pointer"}
+																	/>
+																</div>
+															</CustomTooltip>
+														) : (
 															<div>
 																<Text
 																	content={truncateString(servicesString, 100)}
@@ -180,7 +194,7 @@ const DataTable = ({ data, headerColumns }) => {
 																	cursor={"pointer"}
 																/>
 															</div>
-														</CustomTooltip>
+														)}
 													</TableCell>
 
 													{/* PET DOB */}
@@ -220,7 +234,11 @@ const DataTable = ({ data, headerColumns }) => {
 														id={labelId}
 													>
 														<Text
-															content={row.pet.hasMedicalRecord ? "Đã có hồ sơ" : "Chưa có hồ sơ"}
+															content={
+																row.pet.hasMedicalRecord
+																	? "Đã có hồ sơ"
+																	: "Chưa có hồ sơ"
+															}
 															type={"subtitle"}
 															className={"data-content"}
 															cursor={"pointer"}

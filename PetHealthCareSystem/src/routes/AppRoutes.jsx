@@ -28,6 +28,7 @@ import RegisterPage from "../Atomic Components/pages/RegisterPage/RegisterPage";
 import BookingSuccess from "../Atomic Components/organisms/BookingPage/BookingSuccess/BookingSuccess";
 import StaffCommonLayout from "../Atomic Components/pages/StaffRole/CommonLayout/StaffCommonLayout";
 import StaffAppointmentManagement from "../Atomic Components/pages/StaffRole/AppointmentManagement/StaffAppointmentManagement";
+import MyAppointment from "../Atomic Components/organisms/PetManagement/MyAppointment/MyAppointment";
 
 function AppRoutes() {
 	const { auth } = useAuth();
@@ -193,6 +194,10 @@ function AppRoutes() {
 									<Route
 										path="my-account"
 										element={<MyAccount />}
+									/>
+									<Route
+										path="my-appointments"
+										element={<MyAppointment />}
 									/>
 									<Route
 										path="pet-profile/:petId"
