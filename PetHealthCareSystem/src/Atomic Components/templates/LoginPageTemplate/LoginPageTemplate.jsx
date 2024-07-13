@@ -66,6 +66,8 @@ const LoginPageTemplate = () => {
 			let fullName = response?.data?.fullName;
 			let userName = response?.data?.userName;
 			let refToken = response?.data?.refreshToken;
+			let phoneNumber = response?.data?.phoneNumber;
+			let birthDate = response?.data?.birthDate;
 
 			Cookies.set("accessToken", accessToken);
 			Cookies.set("fullName", fullName);
@@ -74,7 +76,16 @@ const LoginPageTemplate = () => {
 			Cookies.set("role", role);
 			Cookies.set("userId", userId);
 
-			setAuth({ accessToken, fullName, userName, refToken, role, userId });
+			setAuth({
+				accessToken,
+				fullName,
+				userName,
+				refToken,
+				role,
+				userId,
+				phoneNumber,
+				birthDate,
+			});
 			sessionStorage.setItem("successMessage", "Đăng nhập thành công");
 			navigate(from, { replace: true });
 		} catch (error) {

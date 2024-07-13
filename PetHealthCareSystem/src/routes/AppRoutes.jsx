@@ -26,6 +26,7 @@ import TransactionForm from "../Atomic Components/organisms/BookingPage/Transact
 import BookingForm from "../Atomic Components/organisms/BookingPage/BookingForm/BookingForm";
 import RegisterPage from "../Atomic Components/pages/RegisterPage/RegisterPage";
 import BookingSuccess from "../Atomic Components/organisms/BookingPage/BookingSuccess/BookingSuccess";
+import MyAppointment from "../Atomic Components/organisms/PetManagement/MyAppointment/MyAppointment";
 
 function AppRoutes() {
 	const { auth } = useAuth();
@@ -167,6 +168,10 @@ function AppRoutes() {
 									<Route
 										path="my-account"
 										element={<MyAccount />}
+									/>
+									<Route
+										path="my-appointments"
+										element={<MyAppointment />}
 									/>
 									<Route
 										path="pet-profile/:petId"

@@ -22,6 +22,7 @@ import { UpdatePetValidation } from "../../../../validate/Validation";
 import Toast from "../../../molecules/ToasterNotification/ToasterNotification";
 import { CatBreeds } from "../../../../TestData/AnimalBreed/CatBreeds";
 import { DogBreeds } from "../../../../TestData/AnimalBreed/DogBreeds";
+import LoadingComponent from "../../../molecules/LoadingComponent/LoadingComponent";
 
 function PetProfile() {
 	const [isLoading, setIsLoading] = useState(false);
@@ -122,22 +123,13 @@ function PetProfile() {
 
 	return (
 		<>
-			{isLoading && (
-				<Backdrop
-					sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-					open={isLoading}
-				>
-					<div className="flex flex-col justify-center items-center gap-2">
-						<CircularProgress color="inherit" />
-						<h1>Waiting</h1>
-					</div>
-				</Backdrop>
-			)}
+			<LoadingComponent isLoading={isLoading} />
+
 			<div className="pet-profile-container">
 				{/* WELCOME BACKGROUND */}
 				<div className="background-container">
 					<img
-						src={DogImg}
+						src={pet?.species.toLowerCase() === "cat" ? CatImg : DogImg}
 						alt="Pet Logo"
 						className="pet-logo"
 					/>
@@ -191,7 +183,7 @@ function PetProfile() {
 					<div className="welcome-card">
 						<div className="pet-logo-container">
 							<img
-								src={DogImg}
+								src={pet?.species.toLowerCase() === "cat" ? CatImg : DogImg}
 								alt="Dog Logo"
 							/>
 						</div>
@@ -254,7 +246,9 @@ function PetProfile() {
 											type={"subtitle"}
 										/>
 										<Text
-											content={pet?.gender}
+											content={
+												pet?.gender.toLowerCase() === "male" ? "Đực" : "Cái"
+											}
 											type={"subtitle"}
 										/>
 									</div>
