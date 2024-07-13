@@ -1,0 +1,13 @@
+.staff-common-layout-container {
+	display: grid;
+	grid-template-columns: 0.2fr 1fr !important;
+
+	.staff-sidebar-layout {
+		width: 255px;
+	}
+	
+	.staff-page-container {
+		padding: 50px 100px;
+		width: 100%;
+	}
+}

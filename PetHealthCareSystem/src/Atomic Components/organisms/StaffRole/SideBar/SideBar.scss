@@ -1,0 +1,33 @@
+.staff-sidebar-container {
+	width: inherit;
+	width: inherit;
+	min-height: 100vh;
+	height: 100%;
+	box-shadow: rgba(0, 0, 0, 0.12) 5px 0px 5px;
+
+	.item-container {
+		height: inherit;
+		width: inherit;
+		position: fixed;
+
+		.item {
+			a,
+			.nav-item {
+				display: block;
+				padding: 10px 20px;
+				color: var(--JELLY-BEAN);
+				text-decoration: none;
+				line-height: 45px;
+
+				> label {
+					font-weight: 450;
+				}
+
+				&:hover {
+					background-color: var(--ACTIVE-COLOR);
+					transition: background-color 0.2s;
+				}
+			}
+		}
+	}
+}
