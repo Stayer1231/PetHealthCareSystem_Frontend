@@ -1,12 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Sidebar.scss";
 import { Link, useLocation } from "react-router-dom";
 import Text from "./../../atoms/Text/Text";
-import {
-	AddIcon,
-	LeftArrowBracket,
-	RightArrowBracket,
-} from "./../../../assets/Icon/Icon";
+import { AddIcon, LeftArrowBracket } from "./../../../assets/Icon/Icon";
 import { Modal, ModalBody, ModalHeader } from "../../molecules/Modal/Modal";
 import Button from "../../atoms/Button/Button";
 import APIInUse from "./../../../config/axios/AxiosInUse";
@@ -21,6 +17,8 @@ function Sidebar() {
 	const [submenuActive, setSubmenuActive] = useState(false);
 	const location = useLocation();
 	const [petList, setPetList] = useState(null);
+	const [submenuHeight, setSubmenuHeight] = useState(0);
+	const submenuRef = useRef(null);
 	const [catBreedList, setCatBreedList] = useState([]);
 	const [dogBreedList, setDogBreedList] = useState([]);
 	const [errors, setErrors] = useState({});
@@ -42,6 +40,11 @@ function Sidebar() {
 	// WHEN USER CLICK ON SUBMENU THEN SET THE ACTIVE TO TRUE
 	const PetProfileMenuClicked = () => {
 		setSubmenuActive(!submenuActive);
+		if (!submenuActive) {
+			setSubmenuHeight(submenuRef.current.scrollHeight);
+		} else {
+			setSubmenuHeight(0);
+		}
 	};
 
 	const handleValidateAddPet = (data) => {
@@ -156,6 +159,21 @@ function Sidebar() {
 						/>
 					</Link>
 
+					{/* USER APPOINTMENT */}
+					<Link
+						to="my-appointments"
+						className={`${
+							isActive("/your-pet/my-appointments") ? "active-tab" : ""
+						}`}
+					>
+						<Text
+							content={"Lịch Hẹn Của Tôi"}
+							type={"subtitle"}
+							className={`item`}
+							cursor={"pointer"}
+						/>
+					</Link>
+
 					{/* <Link to="pet-profiles"> */}
 					<div className="pet-profile-menu">
 						<div
@@ -178,6 +196,8 @@ function Sidebar() {
 							className={`pet-profile-submenu submenu-${
 								submenuActive ? "active" : "inactive"
 							}`}
+							ref={submenuRef}
+							style={{ height: `${submenuHeight}px` }}
 						>
 							<ul className="submenu-container">
 								{petList?.length > 0
@@ -199,17 +219,17 @@ function Sidebar() {
 											</Link>
 									  ))
 									: null}
-								<div className="add-pet-btn">
-									<Button
-										content="Thêm Thú Cưng"
-										onClick={openAddPetModal}
-										variant="transparent"
-										className={"add-btn"}
-										rightIcon={<AddIcon />}
-										stroke
-									/>
-								</div>
 							</ul>
+							<div className="add-pet-btn">
+								<Button
+									content="Thêm Thú Cưng"
+									onClick={openAddPetModal}
+									variant="transparent"
+									className={"add-btn"}
+									rightIcon={<AddIcon />}
+									stroke
+								/>
+							</div>
 						</div>
 					</div>
 				</ul>
@@ -294,7 +314,6 @@ function Sidebar() {
 										)}
 									</div>
 
-									
 									{/* PET BREED */}
 									<div className="pet-breed input-div">
 										<Text
@@ -316,18 +335,18 @@ function Sidebar() {
 												disabled
 												selected
 												value={"--Vui lòng chọn giống thú cưng--"}
-											>--Vui lòng chọn giống thú cưng--</option>
-											{petData.species.toLowerCase() === "dog" ? (
-												dogBreedList.map((breed) => (
-													<option value={breed}>{breed}</option>
-												))
-											) : petData.species.toLowerCase() == "cat" ? (
-												catBreedList.map((breed) => (
-													<option value={breed}>{breed}</option>
-												))
-											) : (
-												null
-											)}
+											>
+												--Vui lòng chọn giống thú cưng--
+											</option>
+											{petData.species.toLowerCase() === "dog"
+												? dogBreedList.map((breed) => (
+														<option value={breed}>{breed}</option>
+												  ))
+												: petData.species.toLowerCase() == "cat"
+												? catBreedList.map((breed) => (
+														<option value={breed}>{breed}</option>
+												  ))
+												: null}
 										</select>
 
 										{errors.breed && petData.breed == "" && (
