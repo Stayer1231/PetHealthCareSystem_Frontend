@@ -26,6 +26,8 @@ import TransactionForm from "../Atomic Components/organisms/BookingPage/Transact
 import BookingForm from "../Atomic Components/organisms/BookingPage/BookingForm/BookingForm";
 import RegisterPage from "../Atomic Components/pages/RegisterPage/RegisterPage";
 import BookingSuccess from "../Atomic Components/organisms/BookingPage/BookingSuccess/BookingSuccess";
+import StaffCommonLayout from "../Atomic Components/pages/StaffRole/CommonLayout/StaffCommonLayout";
+import StaffAppointmentManagement from "../Atomic Components/pages/StaffRole/AppointmentManagement/StaffAppointmentManagement";
 import MyAppointment from "../Atomic Components/organisms/PetManagement/MyAppointment/MyAppointment";
 
 function AppRoutes() {
@@ -90,6 +92,16 @@ function AppRoutes() {
 						/>
 					)}
 
+					{auth?.role == "Staff" && (
+						<Route
+							path="/"
+						>
+							<Route index
+								element={<StaffCommonLayout />}
+							/>
+						</Route>
+					)}
+
 					{/* AUTHENTICATED ROUTES */}
 					<Route element={<PersistLogin />}>
 						{/* ROUTES FOR VET */}
@@ -143,6 +155,20 @@ function AppRoutes() {
 								element={<AdminPage />}
 							/>
 						</Route>
+
+						{/* ROUTES FOR STAFF */}
+						<Route element={<RequireAuth allowedRoles={"Staff"} />}>
+							<Route
+								path="/"
+								element={<StaffCommonLayout />}
+							>
+								<Route
+									path="appointment-management"
+									element={<StaffAppointmentManagement />}
+								/>
+							</Route>
+						</Route>
+
 						{/* ROUTES FOR CUSTOMER */}
 						<Route element={<RequireAuth allowedRoles={"Customer"} />}>
 							<Route
