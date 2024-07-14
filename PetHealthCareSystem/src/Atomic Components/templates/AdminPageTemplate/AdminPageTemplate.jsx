@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
@@ -18,15 +19,19 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
-import DashboardIcon from '@mui/icons-material/Dashboard';
 import CreateIcon from '@mui/icons-material/Create';
 import ViewListIcon from '@mui/icons-material/ViewList';
-import DeleteIcon from '@mui/icons-material/Delete';
-import UpdateIcon from '@mui/icons-material/Update';
-import Dashboard from "../../templates/AdminPageTemplate/Dashboard/Dashboard";
-import AccountManagement from "../../templates/AdminPageTemplate/AccountManagement/AccountManagement";
+import LogoutIcon from '@mui/icons-material/Logout';
+import SettingsIcon from '@mui/icons-material/Settings'; // Import the gear icon
+import EditIcon from '@mui/icons-material/Edit'; // Import edit icon
+import CreateAccount from './AccountManagement/CreateAccountByRole/CreateAccount';
+import ViewAccount from './AccountManagement/ViewAllAccountByRole/ViewAccount';
+import ViewConfiguration from './ConfigurationManagement/ViewConfiguration/ViewConfiguration';
+import UpdateConfiguration from './ConfigurationManagement/UpdateConfiguration/UpdateConfiguration';
+import Cookies from 'js-cookie';
+import useAuth from '../../../config/provider/useAuth';
 
-const drawerWidth = 240;
+const drawerWidth = 250;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -95,9 +100,12 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 const AdminPageTemplate = () => {
   const theme = useTheme();
+  const { setAuth } = useAuth();
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [selectedComponent, setSelectedComponent] = useState('Dashboard');
   const [accountManagementOpen, setAccountManagementOpen] = useState(false);
+  const [configurationOpen, setConfigurationOpen] = useState(false); // State for configuration dropdown
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -115,10 +123,34 @@ const AdminPageTemplate = () => {
     setAccountManagementOpen(!accountManagementOpen);
   };
 
+  const handleConfigurationClick = () => {
+    setConfigurationOpen(!configurationOpen);
+  };
+
+  const handleLogout = () => {
+    // Clear the authentication cookies
+    Cookies.remove('accessToken');
+    Cookies.remove('fullName');
+    Cookies.remove('username');
+    Cookies.remove('refToken');
+    Cookies.remove('role');
+    Cookies.remove('userId');
+
+    // Clear the auth state
+    setAuth(null);
+
+    // Clear local storage and session storage
+    localStorage.clear();
+    sessionStorage.clear();
+
+    // Redirect to the login page
+    navigate('/login');
+  };
+
   return (
-    <Box sx={{ display: 'flex' }} >
-      <CssBaseline  />
-      <AppBar position="fixed" open={open} style={{ background: '#282828'}}>
+    <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
+      <AppBar position="fixed" open={open} style={{ background: '#282828' }}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -135,6 +167,15 @@ const AdminPageTemplate = () => {
           <Typography variant="h6" noWrap component="div">
             ADMIN DASHBOARD
           </Typography>
+          <IconButton
+            color="inherit"
+            aria-label="logout"
+            onClick={handleLogout}
+            edge="end"
+            sx={{ marginLeft: 'auto' }}
+          >
+            <LogoutIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -145,27 +186,6 @@ const AdminPageTemplate = () => {
         </DrawerHeader>
         <Divider />
         <List>
-          <ListItem disablePadding sx={{ display: 'block' }}>
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? 'initial' : 'center',
-                px: 2.5,
-              }}
-              onClick={() => handleMenuClick('Dashboard')}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : 'auto',
-                  justifyContent: 'center',
-                }}
-              >
-                <DashboardIcon />
-              </ListItemIcon>
-              <ListItemText primary="Dashboard" sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
           <ListItem disablePadding sx={{ display: 'block' }}>
             <ListItemButton
               sx={{
@@ -200,31 +220,55 @@ const AdminPageTemplate = () => {
                   </ListItemIcon>
                   <ListItemText primary="View Account" />
                 </ListItemButton>
-                <ListItemButton sx={{ pl: 4 }} onClick={() => handleMenuClick('DeleteAccount')}>
+              </List>
+            </Collapse>
+          </ListItem>
+          <Divider />
+          <ListItem disablePadding sx={{ display: 'block' }}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? 'initial' : 'center',
+                px: 2.5,
+              }}
+              onClick={handleConfigurationClick}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : 'auto',
+                  justifyContent: 'center',
+                }}
+              >
+                <SettingsIcon />
+              </ListItemIcon>
+              <ListItemText primary="Configuration" sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+            <Collapse in={configurationOpen} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItemButton sx={{ pl: 4 }} onClick={() => handleMenuClick('ViewConfiguration')}>
                   <ListItemIcon>
-                    <DeleteIcon />
+                    <ViewListIcon />
                   </ListItemIcon>
-                  <ListItemText primary="Delete Account" />
+                  <ListItemText primary="View Configuration" />
                 </ListItemButton>
-                <ListItemButton sx={{ pl: 4 }} onClick={() => handleMenuClick('UpdateAccount')}>
+                <ListItemButton sx={{ pl: 4 }} onClick={() => handleMenuClick('UpdateConfiguration')}>
                   <ListItemIcon>
-                    <UpdateIcon />
+                    <EditIcon />
                   </ListItemIcon>
-                  <ListItemText primary="Update Account" />
+                  <ListItemText primary="Update Configuration" />
                 </ListItemButton>
               </List>
             </Collapse>
           </ListItem>
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }} style={{ background: 'rgb(249, 250, 251)'}}>
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }} style={{ background: 'var(--GRAY-BG-COLOR)', width: '100%', height:'100vh' }}>
         <DrawerHeader />
-        {selectedComponent === 'Dashboard' && <Dashboard />}
-        {selectedComponent === 'AccountManagement' && <AccountManagement />}
-        {selectedComponent === 'CreateAccount' && <div>Create Account Component</div>}
-        {selectedComponent === 'ViewAccount' && <div>View Account Component</div>}
-        {selectedComponent === 'DeleteAccount' && <div>Delete Account Component</div>}
-        {selectedComponent === 'UpdateAccount' && <div>Update Account Component</div>}
+        {selectedComponent === 'CreateAccount' && <CreateAccount />}
+        {selectedComponent === 'ViewAccount' && <ViewAccount />}
+        {selectedComponent === 'ViewConfiguration' && <ViewConfiguration />}
+        {selectedComponent === 'UpdateConfiguration' && <UpdateConfiguration />}
       </Box>
     </Box>
   );
