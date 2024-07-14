@@ -29,6 +29,7 @@ import BookingSuccess from "../Atomic Components/organisms/BookingPage/BookingSu
 import StaffCommonLayout from "../Atomic Components/pages/StaffRole/CommonLayout/StaffCommonLayout";
 import StaffAppointmentManagement from "../Atomic Components/pages/StaffRole/AppointmentManagement/StaffAppointmentManagement";
 import MyAppointment from "../Atomic Components/organisms/PetManagement/MyAppointment/MyAppointment";
+import TransactionManagement from "../Atomic Components/pages/StaffRole/TransactionManagement/TransactionManagement";
 
 function AppRoutes() {
 	const { auth } = useAuth();
@@ -165,6 +166,10 @@ function AppRoutes() {
 								<Route
 									path="appointment-management"
 									element={<StaffAppointmentManagement />}
+								/>
+								<Route
+									path="transaction-management"
+									element={<TransactionManagement />}
 								/>
 							</Route>
 						</Route>

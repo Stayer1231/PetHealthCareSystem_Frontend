@@ -31,7 +31,7 @@ function SimplePetCard({ data, onClick, isSelected }) {
                     />
                     <span> - </span>
                     <Text
-                        content={data.age}
+                        content={data.species}
                         type={"subtitle"}
                         className={"simple-pet-age-content"}
                     />

@@ -45,7 +45,7 @@ const DataTableHeader = () => {
     );
 };
 
-const DataTable = () => {
+const AppointmentDataTable = () => {
     const dispatch = useDispatch();
     const pageNo = useSelector((state) => state.staffRole.pageNo);
     const pageSize = useSelector((state) => state.staffRole.pageSize);
@@ -53,6 +53,7 @@ const DataTable = () => {
     const hasPreviousPage = useSelector((state) => state.staffRole.hasPreviousPage);
     const hasNextPage = useSelector((state) => state.staffRole.hasNextPage);
     const totalPage = useSelector((state) => state.staffRole.totalPage);
+    const showModal = useSelector((state) => state.staffRole.showModal);
     const [appList, setAppList] = React.useState([]);
 
     const handleLoadAppointmentList = async () => {
@@ -72,7 +73,7 @@ const DataTable = () => {
 
     useEffect(() => {
         handleLoadAppointmentList();
-    }, [pageNo, pageSize]);
+    }, [pageNo, pageSize, showModal]);
 
     useEffect(() => {
         console.log("Updated Appointment List:", appointmentList);
@@ -162,6 +163,7 @@ const DataTable = () => {
                     </div>
                 </Box>
                 <Box className="page-size">
+                    <Text content={"Số dòng mỗi trang"} type={"subtitle"} />
                     <Select value={pageSize} onChange={(e) => handleChangePageSize(e.target.value)}>
                         {[10, 20, 50, 100].map((size) => (
                             <MenuItem value={size} key={size}>{size}</MenuItem>
@@ -173,4 +175,4 @@ const DataTable = () => {
     );
 };
 
-export { DataTable, DataTableHeader };
+export { AppointmentDataTable, DataTableHeader };
