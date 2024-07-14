@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./PatientDetailForm.scss";
 import Text from "../../../atoms/Text/Text";
 import LogoImg from "../../../../assets/img/dog_logo.jpg";
 import DogImg from "../../../../assets/img/Dog.jpg";
+import CatImg from "../../../../assets/img/Cat.jpg";
 import {
 	Paper,
 	Table,
@@ -12,10 +13,20 @@ import {
 	TableHead,
 	TableRow,
 } from "@mui/material";
+import LoadingComponent from "../../../molecules/LoadingComponent/LoadingComponent";
+import APIInUse from "./../../../../config/axios/AxiosInUse";
+import { useParams } from "react-router-dom";
+import { convertToPetAge } from "../../../../config/convertToPetAge";
+import { formatDate } from "../../../../config/convertDate";
 
 function PatientDetailForm() {
-	function createData(date, description, diagnosis, action, status) {
-		return { date, description, diagnosis, action, status };
+	const [petInformation, setPetInformation] = useState(null);
+	const [isLoading, setIsLoading] = useState(true);
+	const { patientId } = useParams();
+	const [petMedicalRecordList, setPetMedicalRecordList] = useState([]);
+
+	function createData(date, description, diagnosis, treatment) {
+		return { date, description, diagnosis, treatment };
 	}
 
 	function createData2(date, name) {
@@ -39,8 +50,43 @@ function PatientDetailForm() {
 		createData2("30/11/2021", "Leptospirosis"),
 	];
 
+	// GET PET DATA
+	useEffect(() => {
+		const getPetData = async () => {
+			try {
+				setIsLoading(true);
+				const response = await APIInUse.get(`Pet/${patientId}`);
+				setPetInformation(response.data.data);
+			} catch (error) {
+				console.error("Error: ", error);
+			} finally {
+				setIsLoading(false);
+			}
+		};
+
+		getPetData();
+	}, []);
+
+	// GET PET MEDICAL RECORDS
+	useEffect(() => {
+		const getPetMedicalRecords = async () => {
+			try {
+				setIsLoading(true);
+				const response = await APIInUse.get(`MedicalRecord/pet/${patientId}`);
+				setPetMedicalRecordList(response.data.data.items);
+			} catch (error) {
+				console.error("Error: ", error);
+			} finally {
+				setIsLoading(false);
+			}
+		};
+
+		getPetMedicalRecords();
+	}, []);
+
 	return (
 		<>
+			{isLoading && <LoadingComponent isLoading={isLoading} />}
 			<div className="patient-detail-form-container">
 				<div className="form-container">
 					{/* FORM HEADER CONTAINER */}
@@ -94,7 +140,11 @@ function PatientDetailForm() {
 								{/* IMG CONTAINER */}
 								<div className="img-container">
 									<img
-										src={DogImg}
+										src={
+											petInformation?.species?.toLowerCase() === "dog"
+												? DogImg
+												: CatImg
+										}
 										alt="Pet Image"
 									/>
 								</div>
@@ -109,7 +159,7 @@ function PatientDetailForm() {
 											className={"text-label"}
 										/>
 										<Text
-											content={"Kakashi"}
+											content={petInformation?.name}
 											type={"subtitle"}
 											className={"text-content"}
 										/>
@@ -123,7 +173,11 @@ function PatientDetailForm() {
 											className={"text-label"}
 										/>
 										<Text
-											content={"Chó"}
+											content={
+												petInformation?.species.toLowerCase() === "dog"
+													? "Chó"
+													: "Mèo"
+											}
 											type={"subtitle"}
 											className={"text-content"}
 										/>
@@ -137,7 +191,7 @@ function PatientDetailForm() {
 											className={"text-label"}
 										/>
 										<Text
-											content={"Ninja"}
+											content={petInformation?.breed}
 											type={"subtitle"}
 											className={"text-content"}
 										/>
@@ -146,12 +200,12 @@ function PatientDetailForm() {
 									{/* DATE OF BIRTH */}
 									<div className="pet-dob information-div">
 										<Text
-											content={"Ngày sinh: "}
+											content={"Tuổi: "}
 											type={"subtitle"}
 											className={"text-label"}
 										/>
 										<Text
-											content={"21/09/2003"}
+											content={convertToPetAge(petInformation?.dateOfBirth)}
 											type={"subtitle"}
 											className={"text-content"}
 										/>
@@ -224,14 +278,13 @@ function PatientDetailForm() {
 											<TableCell>Ngày</TableCell>
 											<TableCell align="right">Mô tả</TableCell>
 											<TableCell align="right">Chẩn đoán</TableCell>
-											<TableCell align="right">Hành động</TableCell>
-											<TableCell align="right">Trạng thái</TableCell>
+											<TableCell align="right">Điều trị</TableCell>
 										</TableRow>
 									</TableHead>
 									<TableBody>
-										{rows.map((row) => (
+										{petMedicalRecordList.map((medical) => (
 											<TableRow
-												key={row.date}
+												key={medical.appointmentId}
 												sx={{
 													"&:last-child td, &:last-child th": { border: 0 },
 												}}
@@ -240,12 +293,11 @@ function PatientDetailForm() {
 													component="th"
 													scope="row"
 												>
-													{row.date}
+													{formatDate(medical.date)}
 												</TableCell>
-												<TableCell align="right">{row.description}</TableCell>
-												<TableCell align="right">{row.diagnosis}</TableCell>
-												<TableCell align="right">{row.action}</TableCell>
-												<TableCell align="right">{row.status}</TableCell>
+												<TableCell align="right">{medical.recordDetails}</TableCell>
+												<TableCell align="right">{medical.diagnosis}</TableCell>
+												<TableCell align="right">{medical.treatment}</TableCell>
 											</TableRow>
 										))}
 									</TableBody>
@@ -254,7 +306,7 @@ function PatientDetailForm() {
 						</div>
 
 						{/* IMMUNIZATION HISTORY */}
-						<div className="immunization-history-container information-block">
+						{/* <div className="immunization-history-container information-block">
 							<HeaderDiv title={"Lịch Sử Tiêm Phòng"} />
 							<TableContainer component={Paper}>
 								<Table
@@ -287,7 +339,7 @@ function PatientDetailForm() {
 									</TableBody>
 								</Table>
 							</TableContainer>
-						</div>
+						</div> */}
 					</div>
 				</div>
 			</div>

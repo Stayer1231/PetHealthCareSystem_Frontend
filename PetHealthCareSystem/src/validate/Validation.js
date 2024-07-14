@@ -143,9 +143,9 @@ export const CreateMedicalRecordValidation = (
 			errors.admissionDate = "Ngày nhập viện không được bỏ trống";
 		}
 
-		if (data.dischargeDate === null) {
-			errors.dischargeDate = "Ngày xuất viện dự kiến không được bỏ trống";
-		}
+		// if (data.dischargeDate === null) {
+		// 	errors.dischargeDate = "Ngày xuất viện dự kiến không được bỏ trống";
+		// }
 	}
 
 	return errors;
