@@ -6,7 +6,23 @@ const initialState = {
     pageSize: 10,
     totalPage: 1,
     hasPreviousPage: false,
-    hasNextPage: false
+    hasNextPage: false,
+    customerId: 0,
+    services: [],
+    vets: [],
+    timeTables: [],
+    selectedDate: "",
+    selectedTimeFrameId: 0,
+    inputExceptions: [],
+    selectedServices: [],
+    selectedPets: [],
+    selectedVetId: 0,
+    bookingNote: "",
+    selectedCustomer: null,
+    phoneNumberInPut: "",
+    customerList: [],
+    petList: [],
+    showModal: false,
 };
 
 const staffRoleSlice = createSlice({
@@ -30,7 +46,55 @@ const staffRoleSlice = createSlice({
         },
         setTotalPage: (state, action) => {
             state.totalPage = action.payload
-        }
+        },
+        setCustomerId: (state, action) => {
+            state.customerId = action.payload
+        },
+        setServices: (state, action) => {
+            state.services = action.payload
+        },
+        setVets: (state, action) => {
+            state.vets = action.payload
+        },
+        setTimeTables: (state, action) => {
+            state.timeTables = action.payload
+        },
+        setSelectedDate: (state, action) => {
+            state.selectedDate = action.payload
+        },
+        setSelectedTimeFrameId: (state, action) => {
+            state.selectedTimeFrameId = action.payload
+        },
+        setInputExceptions: (state, action) => {
+            state.inputExceptions = action.payload
+        },
+        setSelectedServices: (state, action) => {
+            state.selectedServices = action.payload
+        },
+        setSelectedPets: (state, action) => {
+            state.selectedPets = action.payload
+        },
+        setSelectedVetId: (state, action) => {
+            state.selectedVetId = action.payload
+        },
+        setBookingNote: (state, action) => {
+            state.bookingNote = action.payload
+        },
+        setSelectedCustomer: (state, action) => {
+            state.selectedCustomer = action.payload
+        },
+        setPhoneNumberInPut: (state, action) => {
+            state.phoneNumberInPut = action.payload
+        },
+        setCustomerList: (state, action) => {
+            state.customerList = action.payload
+        },
+        setPetList: (state, action) => {
+            state.petList = action.payload
+        },
+        setShowModal: (state, action) => {
+            state.showModal = action.payload
+        },
     }
 });
 
@@ -40,7 +104,23 @@ export const {
     setPageSize,
     setHasPreviousPage,
     setHasNextPage,
-    setTotalPage
+    setTotalPage,
+    setCustomerId,
+    setServices,
+    setVets,
+    setTimeTables,
+    setSelectedDate,
+    setSelectedTimeFrameId,
+    setInputExceptions,
+    setSelectedServices,
+    setSelectedPets,
+    setSelectedVetId,
+    setBookingNote,
+    setSelectedCustomer,
+    setPhoneNumberInPut,
+    setCustomerList,
+    setPetList,
+    setShowModal
 } = staffRoleSlice.actions;
 
 export default staffRoleSlice.reducer;
