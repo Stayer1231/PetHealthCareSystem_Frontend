@@ -24,6 +24,7 @@ function MedicalRecordTemplate() {
 							name: pet.name,
 							id: pet.id,
 							dateOfBirth: pet.dateOfBirth,
+							hasMedicalRecord: pet.hasMedicalRecord,
 						},
 						services: item.services.map((service) => ({
 							id: service.id,
