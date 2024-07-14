@@ -141,7 +141,7 @@ const DataTable = ({ data, headerColumns, allowedAction }) => {
 									<>
 										{records?.map((row, rowIndex) => {
 											const labelId = `enhanced-table-checkbox-${rowIndex}`;
-
+											console.log(row.pet.hasMedicalRecord);
 											// Concatenate service names and prices into a single string
 											const servicesString = row.services
 												.map((service) => `${service.name}`)
@@ -268,7 +268,11 @@ const DataTable = ({ data, headerColumns, allowedAction }) => {
 																	: "Chưa có hồ sơ"
 															}
 															type={"subtitle"}
-															className={"data-content"}
+															className={`data-content ${
+																row.pet.hasMedicalRecord
+																	? "text-green"
+																	: "text-red"
+															}`}
 															cursor={"pointer"}
 														/>
 													</TableCell>

@@ -2,18 +2,16 @@ import React, { useEffect, useState } from "react";
 import "./PatientMangementLayout.scss";
 import CatImg from "../../../../assets/img/Cat.jpg";
 import DogImg from "../../../../assets/img/Dog-NonBG.png";
-import PatientMedicalReport from "../../../molecules/VetRole/PatientMedicalReport/PatientMedicalReport";
 import Text from "../../../atoms/Text/Text";
 import Button from "../../../atoms/Button/Button";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { Backdrop, CircularProgress } from "@mui/material";
-import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 import APIInUse from "../../../../config/axios/AxiosInUse";
 import LoadingComponent from "../../../molecules/LoadingComponent/LoadingComponent";
 import { convertToPetAge } from "./../../../../config/convertToPetAge";
 import { formatDate } from "../../../../config/convertDate";
-import { set } from "date-fns";
 import { CreateMedicalRecordValidation } from "../../../../validate/Validation";
+import Toast from "../../../molecules/ToasterNotification/ToasterNotification";
+import { format } from "date-fns";
 
 function PatientMangementLayout() {
 	const [isLoading, setIsLoading] = useState(false);
@@ -29,6 +27,7 @@ function PatientMangementLayout() {
 	const [medicalByPet, setMedicalByPet] = useState(null);
 	const [patientInformation, setPatientInformation] = useState(null);
 	const [appointmentInformation, setAppointmentInformation] = useState(null);
+	const todayDate = new Date();
 	const [medicalRecordData, setMedicalRecordData] = useState({
 		appointmentId: 0,
 		petId: 0,
@@ -44,7 +43,7 @@ function PatientMangementLayout() {
 	});
 
 	// HANDLE VIEW MEDICAL RECORD
-	const handleViewMedicalRecord = () => {
+	const handleViewMedicalRecord = (petId) => {
 		navigate(`/medical-record/patient-medical-record/${petId}`);
 	};
 
@@ -75,6 +74,7 @@ function PatientMangementLayout() {
 		setErrors(error);
 	};
 
+	// HANDLE SUBMIT CREATE MEDICAL RECORD
 	const handleSubmitCreateMedicalRecord = async (e) => {
 		e.preventDefault();
 
@@ -83,10 +83,14 @@ function PatientMangementLayout() {
 		try {
 			setIsLoading(true);
 			await APIInUse.post("MedicalRecord/create", medicalRecordData);
-			sessionStorage.setItem("successMessage", "Tạo mới thú cưng thành công");
+			sessionStorage.setItem("successMessage", "Tạo mới hồ sơ bệnh thành công");
 			window.location.reload();
 		} catch (error) {
-			console.error(error);
+			Toast({
+				message: error.response.data.Message,
+				type: "error",
+				title: "Lỗi",
+			});
 		} finally {
 			setIsLoading(false);
 		}
@@ -139,16 +143,17 @@ function PatientMangementLayout() {
 		}));
 	}, [patientInformation, appointmentInformation]);
 
-	// GET PATIENT INFORMATION
+	// GET REQUIRED DATA
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
 				setIsLoading(true);
-				const [patientResponse, appointmentResponse] = await Promise.all([
-					APIInUse.get(`Pet/${petId}`),
-					APIInUse.get(`Appointment/${appointmentId}`),
-				]);
+				const patientResponse = await APIInUse.get(`Pet/${petId}`);
 				setPatientInformation(patientResponse.data.data);
+
+				const appointmentResponse = await APIInUse.get(
+					`Appointment/${appointmentId}`
+				);
 				setAppointmentInformation(appointmentResponse.data.data);
 			} catch (error) {
 				console.error(error);
@@ -179,6 +184,37 @@ function PatientMangementLayout() {
 		fetchGetMedicalOfPet();
 	}, []);
 
+	// GET SUCCESS MESSAGE
+	useEffect(() => {
+		const successMessage = sessionStorage.getItem("successMessage");
+		if (successMessage) {
+			Toast({
+				message: successMessage,
+				type: "success",
+				title: "Thành công",
+			});
+			sessionStorage.removeItem("successMessage");
+		}
+	}, []);
+
+	useEffect(() => {
+		if (isAdmissionDate) {
+			console.log(
+				"Admission Date: ",
+				format(new Date(todayDate), "yyyy-MM-dd")
+			);
+			setMedicalRecordData((prevData) => ({
+				...prevData,
+				admissionDate: format(new Date(todayDate), "yyyy-MM-dd"),
+			}));
+		} else {
+			setMedicalRecordData((prevData) => ({
+				...prevData,
+				admissionDate: null,
+			}));
+		}
+	}, [isAdmissionDate]);
+
 	return (
 		<>
 			{isLoading && <LoadingComponent isLoading={isLoading} />}
@@ -192,25 +228,27 @@ function PatientMangementLayout() {
 					<Button
 						content="Hồ sơ thú cưng"
 						variant="filled"
-						onClick={handleViewMedicalRecord}
+						onClick={() => handleViewMedicalRecord(patientInformation.id)}
 					/>
 				</div>
 
 				{/* CHECK IF PET ALREADY HAS MEDICAL RECORD */}
 				{medicalByPet ? (
 					<div className="pet-medical-record-container">
+						{/* INFO HEADER */}
 						<div className="info-header">
 							<div className="pet-overview-container">
 								<div className="img-container">
 									<img
 										src={
-											patientInformation?.breed.toLowerCase() === "cat"
+											patientInformation?.species.toLowerCase() === "cat"
 												? CatImg
 												: DogImg
 										}
 										alt="Pet Image"
 									/>
 								</div>
+
 								<div className="pet-information-container">
 									<div className="information-div">
 										<Text
@@ -256,6 +294,146 @@ function PatientMangementLayout() {
 							<div className="header-sub">
 								<div className="color-1" />
 								<div className="color-2" />
+							</div>
+						</div>
+
+						{/* INFO BODY */}
+						<div className="info-body">
+							<div className="info-title">
+								<Text
+									content={`Hồ sơ bệnh ngày ${formatDate(
+										appointmentInformation?.appointmentDate
+									)}`}
+									type={"h3"}
+								/>
+							</div>
+
+							{/* MAIN INFO CONTAINER */}
+							<div className="info-layout">
+								{/* RECORD DETAILS */}
+								<div className="info-div">
+									<Text
+										content={"Record details: "}
+										className={"info-label"}
+									/>
+									<Text
+										content={medicalByPet?.recordDetails}
+										className={"info-content"}
+									/>
+								</div>
+
+								{/* DIAGNOSIS */}
+								<div className="info-div">
+									<Text
+										content={"Chẩn đoán: "}
+										className={"info-label"}
+									/>
+									<Text
+										content={medicalByPet?.diagnosis}
+										className={"info-content"}
+									/>
+								</div>
+
+								{/* TREATMENT */}
+								<div className="info-div">
+									<Text
+										content={"Điều trị: "}
+										className={"info-label"}
+									/>
+									<Text
+										content={medicalByPet?.treatment}
+										className={"info-content"}
+									/>
+								</div>
+
+								{/* NOTE */}
+								<div className="info-div">
+									<Text
+										content={"Ghi chú: "}
+										className={"info-label"}
+									/>
+									<Text
+										content={medicalByPet?.note}
+										className={"info-content"}
+									/>
+								</div>
+
+								{/* NEXT APPOINTMENT */}
+								<div className="info-div">
+									<Text
+										content={"Ngày tái khám: "}
+										className={"info-label"}
+									/>
+									<Text
+										content={
+											medicalByPet?.nextAppointment
+												? formatDate(medicalByPet?.nextAppointment)
+												: "Không có"
+										}
+										className={"info-content"}
+									/>
+								</div>
+
+								{/* PET WEIGHT */}
+								<div className="info-div">
+									<Text
+										content={"Cân nặng thú cưng (kg): "}
+										className={"info-label"}
+									/>
+									<Text
+										content={`${medicalByPet?.petWeight}kg`}
+										className={"info-content"}
+									/>
+								</div>
+
+								{/* PET WEIGHT */}
+								<div className="medical-items-container">
+									<Text
+										content={"Thuốc chỉ định: "}
+										className={"info-label"}
+									/>
+									<table
+										className="medical-items-table"
+										border={1}
+									>
+										<thead>
+											<tr>
+												<th>STT</th>
+												<th>Tên thuốc</th>
+												<th>Số lượng</th>
+											</tr>
+										</thead>
+										<tbody>
+											{medicalByPet?.medicalItems.map((item, index) => (
+												<tr key={index}>
+													<td className="orderal-number-content">
+														{index + 1}
+													</td>
+													<td>{item.name}</td>
+													<td className="quantity-content">
+														x{item.quantity ? item.quantity : 2}
+													</td>
+												</tr>
+											))}
+										</tbody>
+									</table>
+								</div>
+
+								{/* ADMISSION DATE */}
+								<div className="info-div">
+									<Text
+										content={"Ngày nhập viện: "}
+										className={"info-label"}
+									/>
+									<Text
+										content={`${
+											medicalByPet?.admissionDate
+												? formatDate(medicalByPet?.admissionDate)
+												: "Không có"
+										}`}
+										className={"info-content"}
+									/>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -620,41 +798,7 @@ function PatientMangementLayout() {
 										type="date"
 										className="general-input-field"
 										placeholder="Ngày nhập viện..."
-										onChange={(e) =>
-											setMedicalRecordData((prevData) => ({
-												...prevData,
-												admissionDate: e.target.value,
-											}))
-										}
-									/>
-								</div>
-
-								<div className="input-div">
-									<div className="label-container">
-										<Text
-											content={"Ngày xuất viện dự kiến: "}
-											className={"input-label"}
-										/>
-										{errors.dischargeDate &&
-											medicalRecordData.dischargeDate === null && (
-												<Text
-													content={errors.dischargeDate}
-													type={"secondary"}
-													className={"text-red-500"}
-												/>
-											)}
-									</div>
-									<input
-										value={medicalRecordData.dischargeDate}
-										type="date"
-										className="general-input-field"
-										placeholder="Ngày ra viện dự kiến..."
-										onChange={(e) =>
-											setMedicalRecordData((prevData) => ({
-												...prevData,
-												dischargeDate: e.target.value,
-											}))
-										}
+										disabled
 									/>
 								</div>
 							</>
