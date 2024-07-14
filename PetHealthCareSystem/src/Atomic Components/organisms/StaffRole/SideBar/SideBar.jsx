@@ -48,6 +48,17 @@ function SideBar() {
 							/>
 						</Link>
 					</li>
+
+					<li className="item">
+						<Link to={"/transaction-management"}>
+							<Text
+								content={"Quảng lý giao dịch"}
+								type={"subtitle"}
+								cursor={"pointer"}
+							/>
+						</Link>
+					</li>
+
 					<li className="item">
 						<Text
 							content={"Đăng xuất"}
