@@ -78,6 +78,13 @@ function MyAppointment() {
 				</div>
 
 				<DataTable
+					headerColumns={[
+						"pet",
+						"dob",
+						"services",
+						"appointmentDate",
+						"status",
+					]}
 					data={appointments}
 					allowedAction={true}
 				/>
@@ -198,13 +205,7 @@ const DataTable = ({ data, headerColumns, allowedAction }) => {
 							aria-labelledby="tableTitle"
 						>
 							<DataTableHeader
-								headerColumns={[
-									"pet",
-									"dob",
-									"services",
-									"appointmentDate",
-									"status",
-								]}
+								headerColumns={headerColumns}
 								allowedAction={allowedAction}
 							/>
 							<TableBody>
