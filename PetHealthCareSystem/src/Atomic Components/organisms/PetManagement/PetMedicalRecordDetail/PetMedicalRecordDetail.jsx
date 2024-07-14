@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import "./PatientDetailForm.scss";
-import Text from "../../../atoms/Text/Text";
 import LogoImg from "../../../../assets/img/dog_logo.jpg";
 import DogImg from "../../../../assets/img/Dog.jpg";
 import CatImg from "../../../../assets/img/Cat.jpg";
+import "./PetMedicalRecordDetail.scss";
+import { HeaderDiv } from "../../VetRole/PatientDetailForm/PatientDetailForm";
+import { useLocation, useParams } from "react-router-dom";
+import { convertToPetAge } from "../../../../config/convertToPetAge";
 import {
 	Paper,
 	Table,
@@ -13,32 +15,25 @@ import {
 	TableHead,
 	TableRow,
 } from "@mui/material";
+import Text from "../../../atoms/Text/Text";
 import LoadingComponent from "../../../molecules/LoadingComponent/LoadingComponent";
-import APIInUse from "./../../../../config/axios/AxiosInUse";
-import { useParams } from "react-router-dom";
-import { convertToPetAge } from "../../../../config/convertToPetAge";
+import APIInUse from "../../../../config/axios/AxiosInUse";
 import { formatDate } from "../../../../config/convertDate";
 
-function PatientDetailForm() {
+function PetMedicalRecordDetail() {
 	const [petInformation, setPetInformation] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
-	const { patientId } = useParams();
-	const [petMedicalRecordList, setPetMedicalRecordList] = useState([]);
-
-	function createData(date, description, diagnosis, treatment) {
-		return { date, description, diagnosis, treatment };
-	}
-
-	function createData2(date, name) {
-		return { date, name };
-	}
+	const searchParams = new URLSearchParams(location.search);
+	const petId = searchParams.get("petId");
+	const appointmentId = searchParams.get("appointmentId");
+	const [medicalByPet, setMedicalByPet] = useState(null);
 
 	// GET PET DATA
 	useEffect(() => {
 		const getPetData = async () => {
 			try {
 				setIsLoading(true);
-				const response = await APIInUse.get(`Pet/${patientId}`);
+				const response = await APIInUse.get(`Pet/${petId}`);
 				setPetInformation(response.data.data);
 			} catch (error) {
 				console.error("Error: ", error);
@@ -52,25 +47,28 @@ function PatientDetailForm() {
 
 	// GET PET MEDICAL RECORDS
 	useEffect(() => {
-		const getPetMedicalRecords = async () => {
+		const fetchGetMedicalOfPet = async () => {
 			try {
 				setIsLoading(true);
-				const response = await APIInUse.get(`MedicalRecord/pet/${patientId}`);
-				setPetMedicalRecordList(response.data.data.items);
+				const response = await APIInUse.get(
+					`MedicalRecord/pet/${petId}/appointment/${appointmentId}?pageNumber=1&pageSize=100000`
+				);
+				setMedicalByPet(response.data.data);
 			} catch (error) {
-				console.error("Error: ", error);
+				console.error(error);
 			} finally {
 				setIsLoading(false);
 			}
 		};
 
-		getPetMedicalRecords();
+		fetchGetMedicalOfPet();
 	}, []);
 
 	return (
 		<>
 			{isLoading && <LoadingComponent isLoading={isLoading} />}
-			<div className="patient-detail-form-container">
+
+			<div className="pet-medical-record-detail-container">
 				<div className="form-container">
 					{/* FORM HEADER CONTAINER */}
 					<div className="form-header-container">
@@ -197,116 +195,183 @@ function PatientDetailForm() {
 							</div>
 						</div>
 
-						{/* OWNER INFORMATION BLOCK */}
-						<div className="owner-info-container information-block">
-							<HeaderDiv title={"Thông Tin Chủ Nhân"} />
+						{/* MEDICAL RECORD BLOCK */}
+						<div className="medical-record-container information-block">
+							<HeaderDiv title={"Thông Tin Hồ Sơ Bệnh"} />
 							<div className="information-body">
 								{/* INFO CONTAINER */}
 								<div className="info-container">
-									{/* OWNER NAME */}
-									<div className="owner-name information-div">
+									{/* RECORD DETAILS */}
+									<div className="record-details information-div">
 										<Text
-											content={"Tên: "}
+											content={"Chi tiết hồ sơ: "}
 											type={"subtitle"}
 											className={"text-label"}
 										/>
 										<Text
-											content={"Kakashi Hatake"}
+											content={
+												medicalByPet?.recordDetails
+													? medicalByPet?.recordDetails
+													: "Chưa có dữ liệu"
+											}
 											type={"subtitle"}
 											className={"text-content"}
 										/>
 									</div>
 
-									{/* OWNER PHONE NUMBER */}
-									<div className="owner-phone information-div">
+									{/* DIAGNOSIS */}
+									<div className="diagnosis information-div">
 										<Text
-											content={"Số điện thoại: "}
+											content={"Chẩn đoán: "}
 											type={"subtitle"}
 											className={"text-label"}
 										/>
 										<Text
-											content={"0938555758"}
+											content={
+												medicalByPet?.diagnosis
+													? medicalByPet?.diagnosis
+													: "Chưa có dữ liệu"
+											}
 											type={"subtitle"}
 											className={"text-content"}
 										/>
 									</div>
 
-									{/* OWNER EMAIL */}
-									<div className="owner-email information-div">
+									{/* TREATMENT */}
+									<div className="treatment information-div">
 										<Text
-											content={"Email: "}
+											content={"Điều trị: "}
 											type={"subtitle"}
 											className={"text-label"}
 										/>
 										<Text
-											content={"nthanhphong941@gmail.com"}
+											content={
+												medicalByPet?.treatment
+													? medicalByPet?.treatment
+													: "Chưa có dữ liệu"
+											}
 											type={"subtitle"}
 											className={"text-content"}
 										/>
+									</div>
+
+									{/* NOTE */}
+									<div className="note information-div">
+										<Text
+											content={"Ghi chú: "}
+											type={"subtitle"}
+											className={"text-label"}
+										/>
+										<Text
+											content={
+												medicalByPet?.note
+													? medicalByPet?.note
+													: "Chưa có dữ liệu"
+											}
+											type={"subtitle"}
+											className={"text-content"}
+										/>
+									</div>
+
+									{/* PET WEIGHT */}
+									<div className="pet-weight information-div">
+										<Text
+											content={"Cân nặng (kg): "}
+											type={"subtitle"}
+											className={"text-label"}
+										/>
+										<Text
+											content={`${
+												medicalByPet?.petWeight
+													? medicalByPet?.petWeight + "kg"
+													: "Chưa có dữ liệu"
+											}`}
+											type={"subtitle"}
+											className={"text-content"}
+										/>
+									</div>
+
+									{/* REAPPOINTMENT DATE */}
+									<div className="reappointment-date information-div">
+										<Text
+											content={"Ngày tái khám: "}
+											type={"subtitle"}
+											className={"text-label"}
+										/>
+										<Text
+											content={
+												medicalByPet?.nextAppointment
+													? formatDate(medicalByPet?.nextAppointment)
+													: "Chưa có dữ liệu"
+											}
+											type={"subtitle"}
+											className={"text-content"}
+										/>
+									</div>
+
+									{/* ADMISSION DATE */}
+									<div className="admission-date information-div">
+										<Text
+											content={"Ngày nhập viện: "}
+											type={"subtitle"}
+											className={"text-label"}
+										/>
+										<Text
+											content={
+												medicalByPet?.admissionDate
+													? formatDate(medicalByPet?.admissionDate)
+													: "Chưa có dữ liệu"
+											}
+											type={"subtitle"}
+											className={"text-content"}
+										/>
+									</div>
+
+									{/* MEDICAL ITEMS */}
+									<div className="medical-items-container">
+										<Text
+											content={"Thuốc chỉ định: "}
+											className={"text-label"}
+										/>
+										<table
+											className="medical-items-table"
+											border={1}
+										>
+											<thead>
+												<tr>
+													<th>STT</th>
+													<th>Tên thuốc</th>
+													<th>Số lượng</th>
+												</tr>
+											</thead>
+											<tbody>
+												{medicalByPet ? (
+													medicalByPet?.medicalItems.map((item, index) => (
+														<tr key={index}>
+															<td className="orderal-number-content">
+																{index + 1}
+															</td>
+															<td className="text-center">{item.name}</td>
+															<td className="quantity-content">
+																x{item.quantity ? item.quantity : 0}
+															</td>
+														</tr>
+													))
+												) : (
+													<tr>
+														<td
+															colSpan={3}
+															className="text-center text-red-500"
+														>
+															Chưa có dữ liệu
+														</td>
+													</tr>
+												)}
+											</tbody>
+										</table>
 									</div>
 								</div>
 							</div>
-						</div>
-
-						{/* MEDICAL HISTORY */}
-						<div className="meidcal-history-container information-block">
-							<HeaderDiv title={"Lịch Sử Chữa Bệnh"} />
-							<TableContainer component={Paper}>
-								<Table
-									sx={{ minWidth: 650 }}
-									aria-label="simple table"
-								>
-									<TableHead>
-										<TableRow>
-											<TableCell>Ngày</TableCell>
-											<TableCell align="right">Mô tả</TableCell>
-											<TableCell align="right">Chẩn đoán</TableCell>
-											<TableCell align="right">Điều trị</TableCell>
-										</TableRow>
-									</TableHead>
-									<TableBody>
-										{petMedicalRecordList.length > 0 ? (
-											petMedicalRecordList.map((medical) => (
-												<TableRow
-													key={medical.appointmentId}
-													sx={{
-														"&:last-child td, &:last-child th": { border: 0 },
-													}}
-												>
-													<TableCell
-														component="th"
-														scope="row"
-													>
-														{formatDate(medical.date)}
-													</TableCell>
-													<TableCell align="right">
-														{medical.recordDetails}
-													</TableCell>
-													<TableCell align="right">
-														{medical.diagnosis}
-													</TableCell>
-													<TableCell align="right">
-														{medical.treatment}
-													</TableCell>
-												</TableRow>
-											))
-										) : (
-											<TableRow>
-												<TableCell
-													colSpan={4}
-													align="center"
-												>
-													<Text
-														content={"Không có dữ liệu"}
-														type={"subtitle"}
-														className={"text-content text-red-500"}
-													/>
-												</TableCell>
-											</TableRow>
-										)}
-									</TableBody>
-								</Table>
-							</TableContainer>
 						</div>
 					</div>
 				</div>
@@ -315,21 +380,4 @@ function PatientDetailForm() {
 	);
 }
 
-export default PatientDetailForm;
-
-export const HeaderDiv = ({ title }) => {
-	return (
-		<>
-			<div className="header-div">
-				<div className="header-title">
-					<Text
-						content={title}
-						type={"h5"}
-						className={"title-content"}
-					/>
-				</div>
-			</div>
-			<div className="sub-header-div"></div>
-		</>
-	);
-};
+export default PetMedicalRecordDetail;

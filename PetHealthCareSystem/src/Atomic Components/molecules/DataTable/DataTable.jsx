@@ -123,6 +123,13 @@ const DataTable = ({ data, headerColumns, allowedAction }) => {
 		return str.slice(0, num) + "...";
 	};
 
+	// CONST VIEW MEDICAL RECORD
+	const handleViewRecord = (petId) => {
+		navigate(`patient-medical-record/${petId}`, {
+			state: { from: URL_PATH },
+		});
+	};
+
 	return (
 		<div className="table-container">
 			<Box sx={{ width: "100%" }}>
@@ -141,7 +148,7 @@ const DataTable = ({ data, headerColumns, allowedAction }) => {
 									<>
 										{records?.map((row, rowIndex) => {
 											const labelId = `enhanced-table-checkbox-${rowIndex}`;
-											console.log(row.pet.hasMedicalRecord);
+
 											// Concatenate service names and prices into a single string
 											const servicesString = row.services
 												.map((service) => `${service.name}`)
@@ -288,6 +295,7 @@ const DataTable = ({ data, headerColumns, allowedAction }) => {
 																content={"Xem hồ sơ"}
 																variant="filled"
 																className={"action-btn"}
+																onClick={() => handleViewRecord(row.pet.id)}
 															/>
 														</TableCell>
 													)}
@@ -300,7 +308,7 @@ const DataTable = ({ data, headerColumns, allowedAction }) => {
 										<TableCell
 											colSpan={
 												headerColumns && Array.isArray(headerColumns)
-													? headerColumns.length + 1
+													? headerColumns.length + 2
 													: 0
 											}
 											align="center"

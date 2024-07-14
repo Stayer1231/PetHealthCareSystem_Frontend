@@ -16,6 +16,7 @@ function MedicalRecordTemplate() {
 				const response = await APIInUse.get(
 					`Appointment/vet/appointments/${id}?pageNumber=1&pageSize=1000000`
 				);
+				
 				const appointments = response.data.data.items.flatMap((item) =>
 					item.pets.map((pet) => ({
 						appointmentDate: item.appointmentDate,
