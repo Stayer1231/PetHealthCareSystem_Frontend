@@ -3,8 +3,14 @@
 	margin-top: 50px;
 
 	.appointment-list-container {
-		.appointment-item {
-			
+		margin-bottom: 30px;
+	}
+
+	.table-container {
+		.pet-name {
+			&:hover {
+				color: black;
+			}
 		}
 	}
 }

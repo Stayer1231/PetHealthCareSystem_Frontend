@@ -1,7 +1,9 @@
-.patient-detail-form-container {
+.pet-medical-record-detail-container {
 	.form-container {
 		margin: auto;
 		width: 800px;
+		margin-bottom: 30px;
+		margin-top: 30px;
 		min-height: 800px;
 		background-color: rgb(255, 255, 255, 0.95);
 		border: 1px solid rgba(0, 0, 0, 0.3);
@@ -126,10 +128,11 @@
 						gap: 15px;
 
 						.text-label {
-							font-weight: 600;
+							font-weight: 500;
 						}
 
 						.text-content {
+							font-weight: 400;
 							color: var(--JELLY-BEAN-DARK);
 						}
 
@@ -141,8 +144,8 @@
 				}
 			}
 
-			// OWNER INFORMATION BLOCK
-			.owner-info-container {
+			// MEDICAL RECORD BLOCK
+			.medical-record-container {
 				.info-container {
 					flex: 1;
 					color: var(--JELLY-BEAN);
@@ -151,16 +154,39 @@
 					gap: 15px;
 
 					.text-label {
-						font-weight: 600;
+						font-weight: 500;
 					}
 
 					.text-content {
+						font-weight: 400;
 						color: var(--JELLY-BEAN-DARK);
 					}
 
 					.information-div {
 						display: grid;
-						grid-template-columns: 1fr 2fr;
+						grid-template-columns: 1.5fr 2fr;
+					}
+				}
+
+				.medical-items-container {
+					.medical-items-table {
+						margin-top: 10px;
+						width: 100%;
+						border-collapse: collapse;
+						box-shadow: 0 2px 10px 1px rgb(0, 0, 0, 0.1);
+
+						th,
+						td {
+							padding: 8px;
+						}
+
+						.orderal-number-content {
+							text-align: right;
+						}
+
+						.quantity-content {
+							text-align: center;
+						}
 					}
 				}
 			}

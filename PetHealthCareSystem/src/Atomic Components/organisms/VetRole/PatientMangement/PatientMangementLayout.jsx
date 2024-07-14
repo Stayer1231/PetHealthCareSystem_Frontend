@@ -11,7 +11,7 @@ import { convertToPetAge } from "./../../../../config/convertToPetAge";
 import { formatDate } from "../../../../config/convertDate";
 import { CreateMedicalRecordValidation } from "../../../../validate/Validation";
 import Toast from "../../../molecules/ToasterNotification/ToasterNotification";
-import { format } from "date-fns";
+import { addDays, format, parseISO } from "date-fns";
 
 function PatientMangementLayout() {
 	const [isLoading, setIsLoading] = useState(false);
@@ -27,7 +27,6 @@ function PatientMangementLayout() {
 	const [medicalByPet, setMedicalByPet] = useState(null);
 	const [patientInformation, setPatientInformation] = useState(null);
 	const [appointmentInformation, setAppointmentInformation] = useState(null);
-	const todayDate = new Date();
 	const [medicalRecordData, setMedicalRecordData] = useState({
 		appointmentId: 0,
 		petId: 0,
@@ -41,6 +40,16 @@ function PatientMangementLayout() {
 		admissionDate: null,
 		dischargeDate: null,
 	});
+
+	//	CALCULATE THE MIN DATE OF ADMISSION DATE
+	const calculateMinDate = (appointmentDate) => {
+		if (!appointmentDate) return ""; // Return empty string if appointmentDate is falsy
+
+		const parsedDate = parseISO(appointmentDate); // Parsing ISO string to Date object
+		const minDate = format(addDays(parsedDate, 1), "yyyy-MM-dd");
+
+		return minDate;
+	};
 
 	// HANDLE VIEW MEDICAL RECORD
 	const handleViewMedicalRecord = (petId) => {
@@ -82,12 +91,28 @@ function PatientMangementLayout() {
 
 		try {
 			setIsLoading(true);
+			// Create medical record
 			await APIInUse.post("MedicalRecord/create", medicalRecordData);
+
+			// CREATE TEMP DATA OF MEDICAL RECORD
+			let medicalRecordTemp = await APIInUse.get(
+				`Appointment/${appointmentId}`
+			);
+			let tempData = medicalRecordTemp.data.data;
+
+			// Update appointment status if all pets have medical records
+			if (tempData?.pets.every((pet) => pet.hasMedicalRecord)) {
+				await APIInUse.put(`Appointment/done/${appointmentId}`);
+			}
+
+			// Display success message
 			sessionStorage.setItem("successMessage", "Tạo mới hồ sơ bệnh thành công");
 			window.location.reload();
 		} catch (error) {
+			// Display error message
 			Toast({
-				message: error.response.data.Message,
+				message:
+					error.response?.data?.Message || "Có lỗi xảy ra khi tạo hồ sơ bệnh",
 				type: "error",
 				title: "Lỗi",
 			});
@@ -101,7 +126,6 @@ function PatientMangementLayout() {
 		const isValid = medicalRecordData.medicalItems.some(
 			(item) => item.medicalItemId !== 0 && item.quantity > 0
 		);
-		console.log(isValid);
 		return isValid;
 	};
 
@@ -199,13 +223,11 @@ function PatientMangementLayout() {
 
 	useEffect(() => {
 		if (isAdmissionDate) {
-			console.log(
-				"Admission Date: ",
-				format(new Date(todayDate), "yyyy-MM-dd")
-			);
 			setMedicalRecordData((prevData) => ({
 				...prevData,
-				admissionDate: format(new Date(todayDate), "yyyy-MM-dd"),
+				admissionDate: calculateMinDate(
+					appointmentInformation?.appointmentDate
+				),
 			}));
 		} else {
 			setMedicalRecordData((prevData) => ({
@@ -313,7 +335,7 @@ function PatientMangementLayout() {
 								{/* RECORD DETAILS */}
 								<div className="info-div">
 									<Text
-										content={"Record details: "}
+										content={"Chi tiết hồ sơ: "}
 										className={"info-label"}
 									/>
 									<Text
@@ -386,7 +408,7 @@ function PatientMangementLayout() {
 									/>
 								</div>
 
-								{/* PET WEIGHT */}
+								{/* MEDICAL ITEMS */}
 								<div className="medical-items-container">
 									<Text
 										content={"Thuốc chỉ định: "}
@@ -409,9 +431,9 @@ function PatientMangementLayout() {
 													<td className="orderal-number-content">
 														{index + 1}
 													</td>
-													<td>{item.name}</td>
+													<td className="text-center">{item.name}</td>
 													<td className="quantity-content">
-														x{item.quantity ? item.quantity : 2}
+														x{item.quantity ? item.quantity : 0}
 													</td>
 												</tr>
 											))}
@@ -497,7 +519,7 @@ function PatientMangementLayout() {
 						<div className="input-div">
 							<div className="label-container">
 								<Text
-									content={"Record details: "}
+									content={"Chi tiết hồ sơ: "}
 									className={"input-label"}
 								/>
 								{errors.recordDetails &&
@@ -512,7 +534,7 @@ function PatientMangementLayout() {
 							<textarea
 								value={medicalRecordData.recordDetails}
 								className="general-textarea-field"
-								placeholder="Record details..."
+								placeholder="Chi tiết hồ sơ..."
 								onChange={(e) =>
 									setMedicalRecordData((prevData) => ({
 										...prevData,
@@ -798,7 +820,15 @@ function PatientMangementLayout() {
 										type="date"
 										className="general-input-field"
 										placeholder="Ngày nhập viện..."
-										disabled
+										min={calculateMinDate(
+											appointmentInformation?.appointmentDate
+										)}
+										onChange={(e) =>
+											setMedicalRecordData((prevData) => ({
+												...prevData,
+												admissionDate: e.target.value,
+											}))
+										}
 									/>
 								</div>
 							</>

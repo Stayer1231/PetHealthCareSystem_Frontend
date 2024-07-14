@@ -29,6 +29,7 @@ import BookingSuccess from "../Atomic Components/organisms/BookingPage/BookingSu
 import StaffCommonLayout from "../Atomic Components/pages/StaffRole/CommonLayout/StaffCommonLayout";
 import StaffAppointmentManagement from "../Atomic Components/pages/StaffRole/AppointmentManagement/StaffAppointmentManagement";
 import MyAppointment from "../Atomic Components/organisms/PetManagement/MyAppointment/MyAppointment";
+import PetMedicalRecordDetail from "../Atomic Components/organisms/PetManagement/PetMedicalRecordDetail/PetMedicalRecordDetail";
 import TransactionManagement from "../Atomic Components/pages/StaffRole/TransactionManagement/TransactionManagement";
 
 function AppRoutes() {
@@ -94,10 +95,9 @@ function AppRoutes() {
 					)}
 
 					{auth?.role == "Staff" && (
-						<Route
-							path="/"
-						>
-							<Route index
+						<Route path="/">
+							<Route
+								index
 								element={<StaffCommonLayout />}
 							/>
 						</Route>
@@ -149,6 +149,7 @@ function AppRoutes() {
 								</Route>
 							</Route>
 						</Route>
+
 						{/* ROUTES FOR ADMIN */}
 						<Route element={<RequireAuth allowedRoles={"Admin"} />}>
 							<Route
@@ -200,10 +201,16 @@ function AppRoutes() {
 										path="my-account"
 										element={<MyAccount />}
 									/>
-									<Route
-										path="my-appointments"
-										element={<MyAppointment />}
-									/>
+									<Route path="my-appointments">
+										<Route
+											index
+											element={<MyAppointment />}
+										/>
+										<Route
+											path="pet-medical-detail"
+											element={<PetMedicalRecordDetail />}
+										/>
+									</Route>
 									<Route
 										path="pet-profile/:petId"
 										element={<PetProfile />}

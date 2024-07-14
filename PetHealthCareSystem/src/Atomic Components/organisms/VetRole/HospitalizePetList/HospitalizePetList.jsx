@@ -5,6 +5,7 @@ import APIInUse from "./../../../../config/axios/AxiosInUse";
 import Cookies from "js-cookie";
 import { Backdrop } from "@mui/material";
 import { CircularProgress } from "@mui/material";
+import Text from "../../../atoms/Text/Text";
 
 function HospitalizePetList() {
 	const [isLoading, setIsLoading] = useState(true);
@@ -17,19 +18,19 @@ function HospitalizePetList() {
 			try {
 				setIsLoading(true);
 				const response = await APIInUse.get(
-					`Appointment/vet/appointments/${id}?pageNumber=1&pageSize=1000000`
+					`Hospitalization/all?pageNumber=1&pageSize=100000`
 				);
 
-				const petList = response?.data?.data?.items.flatMap((appointment) =>
-					appointment.pets?.map((pet) => pet)
-				);
+				// const petList = response?.data?.data?.items.flatMap((appointment) =>
+				// 	appointment.pets?.map((pet) => pet)
+				// );
 
-				// Use a Set to filter out duplicates
-				const uniquePets = Array.from(
-					new Set(petList.map((pet) => pet.id))
-				).map((id) => petList.find((pet) => pet.id === id));
+				// // Use a Set to filter out duplicates
+				// const uniquePets = Array.from(
+				// 	new Set(petList.map((pet) => pet.id))
+				// ).map((id) => petList.find((pet) => pet.id === id));
 
-				setHospitalizedPetList(uniquePets);
+				setHospitalizedPetList(response.data.data.items);
 			} catch (error) {
 				console.log(error);
 			} finally {
@@ -55,11 +56,23 @@ function HospitalizePetList() {
 			)}
 
 			<div className="hospitalize-pet-list-container">
-				<div className="pet-list-container">
+				<div
+					className={`pet-list-container ${
+						hospitalizedPetList.length === 0 ? "no-data" : "data"
+					}`}
+				>
 					{hospitalizedPetList.length > 0 ? (
 						hospitalizedPetList?.map((pet) => <HospitalizeCard data={pet} />)
 					) : (
-						<h1>Hổng có</h1>
+						<div className="layout">
+							<div className="no-data-div">
+								<Text
+									content={"Chưa có dữ liệu thú cưng nhập viện"}
+									type={"h3"}
+									textColor={"red"}
+								/>
+							</div>
+						</div>
 					)}
 				</div>
 			</div>

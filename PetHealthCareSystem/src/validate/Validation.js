@@ -131,7 +131,8 @@ export const CreateMedicalRecordValidation = (
 		errors.medicalItems = "Danh sách thuốc y tế không được bỏ trống";
 	} else {
 		const isValidMedicalItem = data.medicalItems.some(
-			(item) => item.medicalItemId !== 0 && item.quantity > 0
+			// (item) => item.medicalItemId !== 0 && item.quantity > 0
+			(item) => item.medicalItemId !== 0
 		);
 		if (!isValidMedicalItem) {
 			errors.medicalItems =

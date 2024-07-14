@@ -143,3 +143,8 @@
 		background-color: var(--JELLY-BEAN-DARK);
 	}
 }
+
+.disabled-btn {
+	background-color: rgb(175, 175, 175) !important;
+	cursor: not-allowed !important;
+}
