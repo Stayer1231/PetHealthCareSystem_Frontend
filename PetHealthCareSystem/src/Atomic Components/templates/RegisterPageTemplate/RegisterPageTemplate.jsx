@@ -8,7 +8,6 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import AuthAPI from "../../../config/axios/AxiosAuth";
 import LoginLogo from "../../../assets/img/dog_logo.jpg";
 import { RegisterValidation } from "../../../validate/Validation";
-import Cookies from "js-cookie";
 import useAuth from "../../../config/provider/useAuth";
 
 const RegisterPageTemplate = () => {
@@ -24,6 +23,7 @@ const RegisterPageTemplate = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 	const [errors, setErrors] = useState({});
+	const [serverError, setServerError] = useState(""); // Add server error state
 
 	const handleLogoClick = () => {
 		navigate('/'); // Navigate to the home page URL ("/")
@@ -53,38 +53,54 @@ const RegisterPageTemplate = () => {
 
 	const handleSubmitRegister = async (e) => {
 		e.preventDefault();
-
+	
 		const errors = handleRegisterValidation();
 		if (Object.keys(errors).length > 0) return;
-
+	
 		try {
 			setIsLoading(true);
-			const registerData = { username, fullName, email, phone: phoneNumber, password };
+			const registerData = { 
+				userName: username, 
+				fullName, 
+				email, 
+				phoneNumber, 
+				password, 
+				confirmPassword 
+			};
+	
+			console.log("Register Data: ", registerData);  // Log the data being sent
+	
+			// Use the endpoint without duplicating the base URL path
 			const response = await AuthAPI.post("register", registerData);
-
-			let userId = response?.data?.id;
-			let accessToken = response?.data?.token;
-			let role = response?.data?.role[0];
-			let fullName = response?.data?.fullName;
-			let userName = response?.data?.userName;
-			let refToken = response?.data?.refreshToken;
-
-			Cookies.set("accessToken", accessToken);
-			Cookies.set("fullName", fullName);
-			Cookies.set("username", userName);
-			Cookies.set("refToken", refToken);
-			Cookies.set("role", role);
-			Cookies.set("userId", userId);
-
-			setAuth({ accessToken, fullName, userName, refToken, role, userId });
-			navigate("/", { replace: true });
+	
+			if (response && response.data) {
+				console.log("Response Data: ", response.data);  // Log the response data
+	
+				// Display success message
+				alert(response.data.data || "Registration successful! Please verify your email to activate your account.");
+	
+				// Navigate to the login page
+				navigate("/login", { replace: true });  // Navigate to the login page after successful registration
+			} else {
+				console.error("Unexpected response structure:", response);
+			}
 		} catch (error) {
-			console.error(error.response.data.message);
+			console.error("Registration error:", error);
+			if (error.response) {
+				console.error("Error response data: ", error.response.data);
+				console.error("Error response status: ", error.response.status);
+				console.error("Error response headers: ", error.response.headers);
+			}
+			if (error.response && error.response.data && error.response.data.message) {
+				setServerError(error.response.data.message);  // Set the server error message
+			} else {
+				setServerError(error.message || "An unexpected error occurred. Please try again.");
+			}
 		} finally {
 			setIsLoading(false);
 		}
-	};
-
+	};	
+	
 	return (
 		<>
 			{isLoading && (
@@ -111,6 +127,15 @@ const RegisterPageTemplate = () => {
 					/>
 				</div>
 				<div className="register__content">
+					{serverError && (
+						<div className="server-error">
+							<Text
+								content={serverError}
+								type="error"
+								className="error-message"
+							/>
+						</div>
+					)}
 					<div className="register__box">
 						<div className="register__box-input">
 							<input
@@ -120,6 +145,7 @@ const RegisterPageTemplate = () => {
 								placeholder=" "
 								value={username}
 								onChange={(e) => setUsername(e.target.value)}
+								autoComplete="username"
 							/>
 							<Text
 								type="label"
@@ -145,6 +171,7 @@ const RegisterPageTemplate = () => {
 								placeholder=" "
 								value={fullName}
 								onChange={(e) => setFullName(e.target.value)}
+								autoComplete="name"
 							/>
 							<Text
 								type="label"
@@ -170,6 +197,7 @@ const RegisterPageTemplate = () => {
 								placeholder=" "
 								value={email}
 								onChange={(e) => setEmail(e.target.value)}
+								autoComplete="email"
 							/>
 							<Text
 								type="label"
@@ -195,6 +223,7 @@ const RegisterPageTemplate = () => {
 								placeholder=" "
 								value={phoneNumber}
 								onChange={(e) => setPhoneNumber(e.target.value)}
+								autoComplete="tel"
 							/>
 							<Text
 								type="label"
@@ -220,6 +249,7 @@ const RegisterPageTemplate = () => {
 								placeholder=" "
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
+								autoComplete="new-password"
 							/>
 							<Text
 								type="label"
@@ -256,6 +286,7 @@ const RegisterPageTemplate = () => {
 								placeholder=" "
 								value={confirmPassword}
 								onChange={(e) => setConfirmPassword(e.target.value)}
+								autoComplete="new-password"
 							/>
 							<Text
 								type="label"

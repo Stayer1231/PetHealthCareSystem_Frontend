@@ -88,10 +88,12 @@ function AppRoutes() {
 					)}
 
 					{auth?.role == "Admin" && (
-						<Route
-							path="/"
-							element={<AdminPage />}
-						/>
+						<Route path="/">
+							<Route
+								index
+								element={<AdminPage />}
+							/>
+						</Route>
 					)}
 
 					{auth?.role == "Staff" && (
