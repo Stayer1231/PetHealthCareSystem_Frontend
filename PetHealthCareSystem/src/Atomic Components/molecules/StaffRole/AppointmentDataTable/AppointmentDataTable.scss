@@ -6,7 +6,73 @@
 
     .data-content {
         font-size: 14px;
-        font-weight: 400;   
+        font-weight: 400;
+
+        .action-accordion {
+            box-shadow: none;
+            border: 1px solid #dcdcdc;
+            margin: 0;
+            border-radius: 4px;
+            background-color: #fff;
+
+            .MuiAccordionSummary-root {
+                min-height: 48px;
+                padding: 0 16px;
+                background-color: #f7f7f7;
+                border-bottom: 1px solid #dcdcdc;
+                border-radius: 4px 4px 0 0;
+                transition: background-color 0.3s ease;
+
+                &:hover {
+                    background-color: #e0e0e0;
+                }
+            }
+
+            .action-accordion-summary-content {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                cursor: pointer;
+            }
+
+            .MuiAccordionSummary-expandIconWrapper {
+                color: #666;
+                transition: transform 0.3s ease;
+
+                &.Mui-expanded {
+                    transform: rotate(180deg);
+                }
+            }
+
+            .MuiAccordionDetails-root {
+                padding: 8px 16px;
+                background-color: #fafafa;
+                border-radius: 0 0 4px 4px;
+            }
+
+            .action-accordion-details-content {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 8px 0;
+                border-bottom: 1px solid #dcdcdc;
+
+                &:last-child {
+                    border-bottom: none;
+                }
+
+                .data-content {
+                    font-size: 14px;
+                    color: #333;
+                    transition: color 0.3s ease;
+
+                    &:hover {
+                        color: #007bff;
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -16,7 +82,10 @@
     align-items: center;
     margin-top: 10px;
 
-    .to-first-page, .to-previous-page, .to-next-page, .to-last-page {
+    .to-first-page,
+    .to-previous-page,
+    .to-next-page,
+    .to-last-page {
         cursor: pointer;
         padding: 10px;
         margin: 0 5px;

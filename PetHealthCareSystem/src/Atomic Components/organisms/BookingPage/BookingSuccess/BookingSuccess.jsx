@@ -12,7 +12,7 @@ function BookingSuccess() {
     };
 
     const handleSeeAppointmentList = () => {
-        navigate('/appointments');
+        navigate('/your-pet/my-appointments');
     };
 
     return (

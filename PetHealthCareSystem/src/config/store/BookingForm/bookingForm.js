@@ -19,7 +19,7 @@ const initialState = {
     servicesList: [],
     bookingNote: "",
     inputExceptions: [],
-    appointmentId: -1,
+    appId: -1,
     selectedTimeFrameId: -1,
 };
 
@@ -40,8 +40,8 @@ const bookingFormSlice = createSlice({
             }
         },
 
-        setAppointmentId: (state, action) => {
-            state.appointmentId = action.payload
+        setAppId: (state, action) => {
+            state.appId = action.payload
         },
 
         reInitialSelectedVet: (state) => {
@@ -96,7 +96,7 @@ export const {
     setInputExceptions,
     reInitialSelectedVet,
     setServicesList,
-    setAppointmentId,
+    setAppId,
     setSelectedTimeFrameId
 } = bookingFormSlice.actions;
 

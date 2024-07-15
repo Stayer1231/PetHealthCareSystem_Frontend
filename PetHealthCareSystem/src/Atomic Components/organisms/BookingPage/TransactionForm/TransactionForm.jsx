@@ -7,12 +7,13 @@ import ServiceCard from "../../../molecules/ServiceCard/ServiceCard";
 import { useSelector, useDispatch } from "react-redux";
 import SimplePetCard from "../../../molecules/SimplePetCard/SimplePetCard";
 import VetInfoCard from "../../../molecules/VetInfoCard/VetInfoCard";
-import { setAppointmentId } from "../../../../config/store/BookingForm/bookingForm";
+import { setAppId } from "../../../../config/store/BookingForm/bookingForm";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { set } from "date-fns";
 
 function TransactionForm() {
+    const dispatch = useDispatch();
     const [paymentMethods, setPaymentMethods] = useState([]);
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('Cash');
     const [cardNumber, setCardNumber] = useState('');
@@ -32,9 +33,7 @@ function TransactionForm() {
     const selectedDate = useSelector((state) => state.bookingForm.selectedDate);
     const selectedTimeFrame = useSelector((state) => state.bookingForm.selectedTimeFrameId);
     const selectedPets = useSelector((state) => state.bookingForm.selectedPets);
-    const [appointmentId, setAppointmentId] = useState(null);
-    const appId = useSelector((state) => state.bookingForm.appointmentId);
-    const dispatch = useDispatch();
+    const appId = useSelector((state) => state.bookingForm.appId);
     const [totalPrice, setTotalPrice] = useState(0);
     const navigate = useNavigate();
 
@@ -129,9 +128,8 @@ function TransactionForm() {
     const handlePaymentSubmit = async (e) => {
         e.preventDefault();
         try {
-            await handleCreateAppointment();
-            console.log(appId);
-            await handleCreateTransaction(appId);
+            const appointmentId = await handleCreateAppointment();
+            await handleCreateTransaction(appointmentId);
             navigate("/booking/success");
         } catch (error) {
             console.log(error);
@@ -150,19 +148,17 @@ function TransactionForm() {
                 appointmentDate: selectedDate,
                 petIdList: selectedPets.map((pet) => pet.id),
             });
-            console.log(response.data);
-            setAppointmentId(response.data.data.id);
-            dispatch(setAppointmentId(appointmentId));
-            
+            const appointmentId = response.data.data.id;
+            dispatch(setAppId(appointmentId));
             return appointmentId;
+            
         } catch (error) {
             console.log(error);
-            return null;
         }
 
     };
 
-    const handleCreateTransaction = async (appointmentId) => {
+    const handleCreateTransaction = async ( appointmentId ) => {
         try {
             const response = await APIInUse.post("Transaction/create", {
                 appointmentId: appointmentId,

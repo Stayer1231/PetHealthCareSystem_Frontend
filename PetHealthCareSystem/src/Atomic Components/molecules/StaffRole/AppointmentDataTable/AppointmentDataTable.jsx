@@ -20,6 +20,9 @@ import {
     TableContainer,
     TableHead,
     TableRow,
+    Accordion,
+    AccordionSummary,
+    AccordionDetails,
 } from "@mui/material";
 import Text from "../../../atoms/Text/Text";
 import './AppointmentDataTable.scss';
@@ -85,6 +88,26 @@ const AppointmentDataTable = () => {
         dispatch(setPageNo(1));
     };
 
+    const handleDoneAppointment = async (appointment) => {
+        try {
+            const response = await APIInUse.put(`Appointment/done/${appointment.id}`);
+            console.log("Done Appointment:", response.data);
+            handleLoadAppointmentList();
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const handleCancelAppointment = async (appointment) => {
+        try {
+            const response = await APIInUse.put(`Appointment/cancel/${appointment.id}`);
+            console.log("Cancel Appointment:", response.data);
+            handleLoadAppointmentList();
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     const formatDate = (date) => new Date(date).toLocaleDateString();
 
     return (
@@ -130,7 +153,32 @@ const AppointmentDataTable = () => {
                                                 <TableCell align="center" padding="normal" className={"data-content"}>
                                                     <Text content={row.status} type={"subtitle"} className={"data-content"} cursor={"pointer"} />
                                                 </TableCell>
-                                                <TableCell align="center" padding="normal" className={"data-content"} />
+                                                <TableCell align="center" padding="normal" className={"data-content"}>
+                                                    <Accordion className="action-accordion">
+                                                        <AccordionSummary
+                                                            aria-controls="panel1a-content"
+                                                            id="panel1a-header"
+                                                            className="action-accordion-summary"
+                                                        >
+                                                            <div className="action-accordion-summary-content">
+                                                                <Text content={"..."} type={"subtitle"} className={"data-content"} cursor={"pointer"} />
+                                                            </div>
+                                                        </AccordionSummary>
+                                                        <AccordionDetails className="action-accordion-details">
+                                                            <div className="action-accordion-details-content"
+                                                                onClick={() => handleDoneAppointment(row)}
+                                                            >
+                                                                <Text content={"Cuộc hẹn hoàn thành"} type={"subtitle"} className={"data-content"} cursor={"pointer"} />
+                                                            </div>
+
+                                                            <div className="action-accordion-details-content"
+                                                                onClick={() => handleCancelAppointment(row)}
+                                                            >
+                                                                <Text content={"Hủy cuộc hẹn"} type={"subtitle"} className={"data-content"} cursor={"pointer"} />
+                                                            </div>
+                                                        </AccordionDetails>
+                                                    </Accordion>
+                                                </TableCell>
                                             </TableRow>
                                         );
                                     })
@@ -155,10 +203,10 @@ const AppointmentDataTable = () => {
                     <div className="page-number">
                         <Text className="page-number-text" content={pageNo} />
                     </div>
-                    <div className={`to-next-page ${pageNo === totalPage ? 'disabled' : ''}`} onClick={() => handleChangePageNo(pageNo + 1)}>
+                    <div className={`to-next-page ${pageNo >= totalPage ? 'disabled' : ''}`} onClick={() => handleChangePageNo(pageNo + 1)}>
                         <Text className="to-next-page-text" content={">"} />
                     </div>
-                    <div className={`to-last-page ${pageNo === totalPage ? 'disabled' : ''}`} onClick={() => handleChangePageNo(totalPage)}>
+                    <div className={`to-last-page ${pageNo >= totalPage ? 'disabled' : ''}`} onClick={() => handleChangePageNo(totalPage)}>
                         <Text className="to-last-page-text" content={">>"} />
                     </div>
                 </Box>
@@ -174,5 +222,6 @@ const AppointmentDataTable = () => {
         </div>
     );
 };
+
 
 export { AppointmentDataTable, DataTableHeader };

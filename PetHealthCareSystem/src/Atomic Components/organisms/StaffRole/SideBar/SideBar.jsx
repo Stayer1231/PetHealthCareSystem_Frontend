@@ -42,7 +42,7 @@ function SideBar() {
 					<li className="item">
 						<Link to={"/appointment-management"}>
 							<Text
-								content={"Quảng lý lịch hẹn"}
+								content={"Quản lý lịch hẹn"}
 								type={"subtitle"}
 								cursor={"pointer"}
 							/>
@@ -52,7 +52,17 @@ function SideBar() {
 					<li className="item">
 						<Link to={"/transaction-management"}>
 							<Text
-								content={"Quảng lý giao dịch"}
+								content={"Quản lý giao dịch"}
+								type={"subtitle"}
+								cursor={"pointer"}
+							/>
+						</Link>
+					</li>
+
+					<li className="item">
+						<Link to={"/service-management"}>
+							<Text
+								content={"Quản lý dịch vụ"}
 								type={"subtitle"}
 								cursor={"pointer"}
 							/>
