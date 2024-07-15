@@ -1,10 +1,18 @@
-.patient-detail-form-container {
+.hospitalization-info-form-container {
 	.form-container {
 		margin: auto;
 		width: 800px;
 		min-height: 800px;
 		background-color: rgb(255, 255, 255, 0.95);
 		border: 1px solid rgba(0, 0, 0, 0.3);
+
+        .text-label {
+            font-weight: 600;
+        }
+
+        .text-content {
+            font-weight: 500;
+        }
 
 		// FORM  HEADER CSS
 		.form-header-container {
@@ -143,6 +151,29 @@
 
 			// OWNER INFORMATION BLOCK
 			.owner-info-container {
+				.info-container {
+					flex: 1;
+					color: var(--JELLY-BEAN);
+					display: flex;
+					flex-direction: column;
+					gap: 15px;
+
+					.text-label {
+						font-weight: 600;
+					}
+
+					.text-content {
+						color: var(--JELLY-BEAN-DARK);
+					}
+
+					.information-div {
+						display: grid;
+						grid-template-columns: 1fr 2fr;
+					}
+				}
+			}
+
+			.hospitalization-info-container {
 				.info-container {
 					flex: 1;
 					color: var(--JELLY-BEAN);

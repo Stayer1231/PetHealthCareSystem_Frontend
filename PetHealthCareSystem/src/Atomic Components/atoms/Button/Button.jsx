@@ -12,6 +12,7 @@ function Button({
 	stroke,
 	textColor,
 	onlyIcon,
+	disabled,
 	type,
 }) {
 	return (
@@ -46,12 +47,15 @@ function Button({
 				</button>
 			) : (
 				<button
-					className={`btn-comp ${variant} ${className}`}
+					className={`btn-comp ${variant} ${className} ${
+						disabled ? "disabled-btn" : ""
+					}`}
 					onClick={onClick}
+					disabled={disabled}
 					type={type}
 				>
 					<Text
-						cursor={"pointer"}
+						cursor={`${disabled ? "not-allowed" : "pointer"}`}
 						content={content}
 						type={"subtitle"}
 					/>
@@ -63,8 +67,13 @@ function Button({
 
 Button.propTypes = {
 	content: PropTypes.string.isRequired,
-	variant: PropTypes.oneOf(["transparent", "filled", "underline", "no-layout", "icon-no-layout"])
-		.isRequired,
+	variant: PropTypes.oneOf([
+		"transparent",
+		"filled",
+		"underline",
+		"no-layout",
+		"icon-no-layout",
+	]).isRequired,
 	onClick: PropTypes.func,
 	className: PropTypes.string,
 	rightIcon: PropTypes.element,
@@ -73,6 +82,6 @@ Button.propTypes = {
 
 Button.defaultProps = {
 	variant: "filled",
-}
+};
 
 export default Button;

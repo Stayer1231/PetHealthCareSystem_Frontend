@@ -18,11 +18,13 @@ import APIInUse from "./../../../../config/axios/AxiosInUse";
 import { useParams } from "react-router-dom";
 import { convertToPetAge } from "../../../../config/convertToPetAge";
 import { formatDate } from "../../../../config/convertDate";
+import Cookies from "js-cookie";
 
 function PatientDetailForm() {
 	const [petInformation, setPetInformation] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const { patientId } = useParams();
+	const fullName = Cookies.get("fullName");
 	const [petMedicalRecordList, setPetMedicalRecordList] = useState([]);
 
 	function createData(date, description, diagnosis, treatment) {
@@ -32,23 +34,6 @@ function PatientDetailForm() {
 	function createData2(date, name) {
 		return { date, name };
 	}
-
-	const rows = [
-		createData("21/09/2003", "Chết", "Chết luôn", "Chôn", "Hoàn thành"),
-		createData("21/09/2003", "Chết", "Chết luôn", "Chôn", "Hoàn thành"),
-		createData("21/09/2003", "Chết", "Chết luôn", "Chôn", "Hoàn thành"),
-		createData("21/09/2003", "Chết", "Chết luôn", "Chôn", "Hoàn thành"),
-		createData("21/09/2003", "Chết", "Chết luôn", "Chôn", "Hoàn thành"),
-	];
-
-	const rows2 = [
-		createData2("21/09/2003", "Chói"),
-		createData2("15/02/2020", "Rabies"),
-		createData2("10/04/2021", "Distemper"),
-		createData2("22/06/2021", "Parvovirus"),
-		createData2("18/09/2021", "Hepatitis"),
-		createData2("30/11/2021", "Leptospirosis"),
-	];
 
 	// GET PET DATA
 	useEffect(() => {
@@ -107,7 +92,7 @@ function PatientDetailForm() {
 										className={"subtitle-content"}
 									/>
 									<Text
-										content={"Bác sĩ phụ trách: Nguyen Thanh Phong"}
+										content={`Bác sĩ phụ trách: ${fullName}`}
 										type={"subtitle"}
 										className={"subtitle-content"}
 									/>
@@ -228,7 +213,7 @@ function PatientDetailForm() {
 											className={"text-label"}
 										/>
 										<Text
-											content={"Kakashi Hatake"}
+											content={petInformation?.ownerName}
 											type={"subtitle"}
 											className={"text-content"}
 										/>
@@ -242,7 +227,7 @@ function PatientDetailForm() {
 											className={"text-label"}
 										/>
 										<Text
-											content={"0938555758"}
+											content={petInformation?.ownerPhone}
 											type={"subtitle"}
 											className={"text-content"}
 										/>
@@ -256,7 +241,7 @@ function PatientDetailForm() {
 											className={"text-label"}
 										/>
 										<Text
-											content={"nthanhphong941@gmail.com"}
+											content={petInformation?.ownerEmail}
 											type={"subtitle"}
 											className={"text-content"}
 										/>
@@ -282,64 +267,49 @@ function PatientDetailForm() {
 										</TableRow>
 									</TableHead>
 									<TableBody>
-										{petMedicalRecordList.map((medical) => (
-											<TableRow
-												key={medical.appointmentId}
-												sx={{
-													"&:last-child td, &:last-child th": { border: 0 },
-												}}
-											>
-												<TableCell
-													component="th"
-													scope="row"
+										{petMedicalRecordList.length > 0 ? (
+											petMedicalRecordList.map((medical) => (
+												<TableRow
+													key={medical.appointmentId}
+													sx={{
+														"&:last-child td, &:last-child th": { border: 0 },
+													}}
 												>
-													{formatDate(medical.date)}
+													<TableCell
+														component="th"
+														scope="row"
+													>
+														{formatDate(medical.date)}
+													</TableCell>
+													<TableCell align="right">
+														{medical.recordDetails}
+													</TableCell>
+													<TableCell align="right">
+														{medical.diagnosis}
+													</TableCell>
+													<TableCell align="right">
+														{medical.treatment}
+													</TableCell>
+												</TableRow>
+											))
+										) : (
+											<TableRow>
+												<TableCell
+													colSpan={4}
+													align="center"
+												>
+													<Text
+														content={"Không có dữ liệu"}
+														type={"subtitle"}
+														className={"text-content text-red-500"}
+													/>
 												</TableCell>
-												<TableCell align="right">{medical.recordDetails}</TableCell>
-												<TableCell align="right">{medical.diagnosis}</TableCell>
-												<TableCell align="right">{medical.treatment}</TableCell>
 											</TableRow>
-										))}
+										)}
 									</TableBody>
 								</Table>
 							</TableContainer>
 						</div>
-
-						{/* IMMUNIZATION HISTORY */}
-						{/* <div className="immunization-history-container information-block">
-							<HeaderDiv title={"Lịch Sử Tiêm Phòng"} />
-							<TableContainer component={Paper}>
-								<Table
-									sx={{ minWidth: 650 }}
-									aria-label="simple table"
-								>
-									<TableHead>
-										<TableRow>
-											<TableCell>Ngày</TableCell>
-											<TableCell align="right">Bệnh cần tiêm</TableCell>
-										</TableRow>
-									</TableHead>
-									<TableBody>
-										{rows2.map((row) => (
-											<TableRow
-												key={row.date}
-												sx={{
-													"&:last-child td, &:last-child th": { border: 0 },
-												}}
-											>
-												<TableCell
-													component="th"
-													scope="row"
-												>
-													{row.date}
-												</TableCell>
-												<TableCell align="right">{row.name}</TableCell>
-											</TableRow>
-										))}
-									</TableBody>
-								</Table>
-							</TableContainer>
-						</div> */}
 					</div>
 				</div>
 			</div>

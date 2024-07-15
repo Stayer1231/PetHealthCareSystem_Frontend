@@ -1,0 +1,85 @@
+.register-account__form {
+    width: 100%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    gap: 1rem;
+    padding: 20px;
+
+    .register-account__title {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+
+    .register-account__content {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+
+        .register-account__box {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+
+            .register-account__box-input {
+                display: flex;
+            }
+
+            .register-account__input {
+                width: 70%;
+                padding: 0.8rem 0;
+                background: none;
+                color: #000;
+                border: none;
+                border-bottom: 1px solid #000;
+            }
+
+            .register-account__label {
+                width: 20%;
+                color: #000;
+            }
+
+            .password-toggle-btn {
+                background-color: transparent;
+                margin: 0;
+                padding: 0;
+                border: none;
+            }
+
+            .error-message {
+                width: 10%;
+                color: red;
+                font-size: 0.8rem;
+                text-align: right;
+            }
+        }
+
+        .register-account__radio-group {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            gap: 30px;
+
+            .register-account__radio {
+                display: flex;
+                align-items: center;
+
+                input {
+                    margin-right: 0.5rem;
+                }
+            }
+        }
+    }
+
+    .register-account__button {
+        width: 20%;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        cursor: pointer;
+    }
+}

@@ -1,0 +1,46 @@
+.view-configuration {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  .view-configuration-error {
+    text-align: center;
+    color: #ff0000;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .view-configuration-list {
+    list-style-type: none;
+    padding: 0;
+
+    .view-configuration-list-item {
+      padding: 1rem;
+      margin-bottom: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      &:nth-child(even) {
+        background-color: #f1f1f1;
+      }
+
+      .view-configuration-display-string {
+        font-size: 1rem;
+        color: #333;
+      }
+
+      .view-configuration-value {
+        font-size: 1rem;
+        color: #555;
+      }
+    }
+  }
+}

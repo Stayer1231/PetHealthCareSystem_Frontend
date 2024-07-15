@@ -126,7 +126,9 @@ function PetOverview() {
 						petList.map((pet) => <PetCard data={pet} />)
 					) : (
 						<Text
-							content={"You don't have any pets yet. Add a pet to get started!"}
+							content={
+								"Bạn chưa có thú cưng nào cả. Hãy thêm thú cưng của bạn ngay!"
+							}
 							type={"subtitle"}
 							className={"no-pet-content"}
 						/>
@@ -244,18 +246,18 @@ function PetOverview() {
 												disabled
 												selected
 												value={"--Vui lòng chọn giống thú cưng--"}
-											>--Vui lòng chọn giống thú cưng--</option>
-											{petData.species.toLowerCase() === "dog" ? (
-												dogBreedList.map((breed) => (
-													<option value={breed}>{breed}</option>
-												))
-											) : petData.species.toLowerCase() == "cat" ? (
-												catBreedList.map((breed) => (
-													<option value={breed}>{breed}</option>
-												))
-											) : (
-												null
-											)}
+											>
+												--Vui lòng chọn giống thú cưng--
+											</option>
+											{petData.species.toLowerCase() === "dog"
+												? dogBreedList.map((breed) => (
+														<option value={breed}>{breed}</option>
+												  ))
+												: petData.species.toLowerCase() == "cat"
+												? catBreedList.map((breed) => (
+														<option value={breed}>{breed}</option>
+												  ))
+												: null}
 										</select>
 
 										{errors.breed && petData.breed == "" && (
