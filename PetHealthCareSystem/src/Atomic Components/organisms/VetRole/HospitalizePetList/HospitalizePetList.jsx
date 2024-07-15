@@ -18,7 +18,7 @@ function HospitalizePetList() {
 			try {
 				setIsLoading(true);
 				const response = await APIInUse.get(
-					`Hospitalization/all?pageNumber=1&pageSize=100000`
+					`Hospitalization/CheckHospitalizaionByVetId?id=${id}`
 				);
 
 				// const petList = response?.data?.data?.items.flatMap((appointment) =>

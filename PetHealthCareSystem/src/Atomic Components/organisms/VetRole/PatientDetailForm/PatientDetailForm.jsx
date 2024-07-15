@@ -18,11 +18,13 @@ import APIInUse from "./../../../../config/axios/AxiosInUse";
 import { useParams } from "react-router-dom";
 import { convertToPetAge } from "../../../../config/convertToPetAge";
 import { formatDate } from "../../../../config/convertDate";
+import Cookies from "js-cookie";
 
 function PatientDetailForm() {
 	const [petInformation, setPetInformation] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const { patientId } = useParams();
+	const fullName = Cookies.get("fullName");
 	const [petMedicalRecordList, setPetMedicalRecordList] = useState([]);
 
 	function createData(date, description, diagnosis, treatment) {
@@ -90,7 +92,7 @@ function PatientDetailForm() {
 										className={"subtitle-content"}
 									/>
 									<Text
-										content={"Bác sĩ phụ trách: Nguyen Thanh Phong"}
+										content={`Bác sĩ phụ trách: ${fullName}`}
 										type={"subtitle"}
 										className={"subtitle-content"}
 									/>
@@ -211,7 +213,7 @@ function PatientDetailForm() {
 											className={"text-label"}
 										/>
 										<Text
-											content={"Kakashi Hatake"}
+											content={petInformation?.ownerName}
 											type={"subtitle"}
 											className={"text-content"}
 										/>
@@ -225,7 +227,7 @@ function PatientDetailForm() {
 											className={"text-label"}
 										/>
 										<Text
-											content={"0938555758"}
+											content={petInformation?.ownerPhone}
 											type={"subtitle"}
 											className={"text-content"}
 										/>
@@ -239,7 +241,7 @@ function PatientDetailForm() {
 											className={"text-label"}
 										/>
 										<Text
-											content={"nthanhphong941@gmail.com"}
+											content={petInformation?.ownerEmail}
 											type={"subtitle"}
 											className={"text-content"}
 										/>

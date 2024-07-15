@@ -27,14 +27,12 @@ function Header({ role }) {
 		Cookies.remove("refToken");
 		Cookies.remove("role");
 		setAuth(null);
-
-		sessionStorage.setItem("successMessage", "Đăng xuất thành công");
-
 		setIsLoading(false);
 
 		// Reload the page to apply changes of authentication
 		if (location.pathname != "/") {
 			navigate("/");
+			window.location.reload();
 		} else {
 			window.location.reload();
 		}

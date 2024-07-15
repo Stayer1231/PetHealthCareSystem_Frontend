@@ -17,9 +17,8 @@ function Sidebar() {
 		Cookies.remove("username");
 		Cookies.remove("password");
 		Cookies.remove("refToken");
-		Cookies.remove("role");	
+		Cookies.remove("role");
 		setAuth(null);
-		sessionStorage.setItem("successMessage", "Đăng xuất thành công");
 		navigate("/");
 		window.location.reload();
 	};
