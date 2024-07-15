@@ -23,6 +23,13 @@ const initialState = {
     customerList: [],
     petList: [],
     showModal: false,
+    transactionList: [],
+    serviceId:0,
+    serviceName:"",
+    servicedescription:"",
+    servicePice:0,
+    showEditModal: false,
+    modelType:""
 };
 
 const staffRoleSlice = createSlice({
@@ -95,6 +102,27 @@ const staffRoleSlice = createSlice({
         setShowModal: (state, action) => {
             state.showModal = action.payload
         },
+        setTransactionList: (state, action) => {
+            state.transactionList = action.payload
+        },
+        setServiceId: (state, action) => {
+            state.serviceId = action.payload
+        },
+        setServiceName: (state, action) => {
+            state.serviceName = action.payload
+        },
+        setServicedescription: (state, action) => {
+            state.servicedescription = action.payload
+        },
+        setServicePice: (state, action) => {
+            state.servicePice = action.payload
+        },
+        setShowEditModal: (state, action) => {
+            state.showEditModal = action.payload
+        },
+        setModalType: (state, action) => {
+            state.modelType = action.payload
+        }
     }
 });
 
@@ -120,7 +148,14 @@ export const {
     setPhoneNumberInPut,
     setCustomerList,
     setPetList,
-    setShowModal
+    setShowModal,
+    setTransactionList,
+    setServiceId,
+    setServiceName,
+    setServicedescription,
+    setServicePice,
+    setShowEditModal,
+    setModalType
 } = staffRoleSlice.actions;
 
 export default staffRoleSlice.reducer;

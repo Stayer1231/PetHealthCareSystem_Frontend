@@ -30,6 +30,7 @@ import StaffCommonLayout from "../Atomic Components/pages/StaffRole/CommonLayout
 import StaffAppointmentManagement from "../Atomic Components/pages/StaffRole/AppointmentManagement/StaffAppointmentManagement";
 import MyAppointment from "../Atomic Components/organisms/PetManagement/MyAppointment/MyAppointment";
 import TransactionManagement from "../Atomic Components/pages/StaffRole/TransactionManagement/TransactionManagement";
+import ServiceManagement from "../Atomic Components/pages/StaffRole/ServiceManagement/ServiceManagement";
 
 function AppRoutes() {
 	const { auth } = useAuth();
@@ -170,6 +171,10 @@ function AppRoutes() {
 								<Route
 									path="transaction-management"
 									element={<TransactionManagement />}
+								/>
+								<Route
+									path="service-management"
+									element={<ServiceManagement />}
 								/>
 							</Route>
 						</Route>

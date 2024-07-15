@@ -1,0 +1,112 @@
+.custom-modal {
+    .modal-content {
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      background-color: #ffffff;
+    }
+  
+    .custom-modal-header {
+      background-color: #007bff;
+      padding: 16px;
+      border-bottom: 1px solid #ddd;
+      border-radius: 8px 8px 0 0;
+      color: white;
+      height: 80px;
+  
+      .modal-title {
+        font-size: 18px;
+        font-weight: bold;
+      }
+  
+      .close {
+        color: white;
+        opacity: 1;
+      }
+    }
+  
+    .custom-modal-body {
+      padding: 24px;
+      width: 500px;
+  
+      .input-container {
+        margin-bottom: 16px;
+  
+        &:last-child {
+          margin-bottom: 0;
+        }
+  
+        .input-lable-container {
+          margin-bottom: 8px;
+  
+          .input-lable {
+            font-weight: 500;
+            font-size: 14px;
+          }
+        }
+  
+        .input,
+        .input-description {
+          width: 100%;
+          padding: 12px;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          font-size: 14px;
+          transition: border-color 0.3s;
+  
+          &:focus {
+            border-color: #007bff;
+            outline: none;
+          }
+        }
+  
+        .input-exception {
+          color: #ff4d4f;
+          margin-top: 8px;
+          font-size: 12px;
+        }
+      }
+    }
+  
+    .custom-modal-footer {
+      padding: 16px;
+      border-top: 1px solid #ddd;
+      border-radius: 0 0 8px 8px;
+      display: flex;
+      justify-content: flex-end;
+  
+      .cancel-button,
+      .create-button {
+        padding: 8px 16px;
+        font-size: 14px;
+        font-weight: 500;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+  
+        &:hover {
+          cursor: pointer;
+        }
+      }
+  
+      .cancel-button {
+        background-color: #ff4d4f;
+        color: white;
+        border: none;
+        margin-right: 8px;
+  
+        &:hover {
+          background-color: #d44a4c;
+        }
+      }
+  
+      .create-button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+  
+        &:hover {
+          background-color: #0056b3;
+        }
+      }
+    }
+  }
+  
