@@ -19,8 +19,8 @@ function SideBar() {
 		Cookies.remove("refToken");
 		Cookies.remove("role");	
 		setAuth(null);
-		sessionStorage.setItem("successMessage", "Đăng xuất thành công");
 		navigate("/");
+		window.location.reload();
 	};
 
 	return (

@@ -31,6 +31,7 @@ import StaffAppointmentManagement from "../Atomic Components/pages/StaffRole/App
 import MyAppointment from "../Atomic Components/organisms/PetManagement/MyAppointment/MyAppointment";
 import PetMedicalRecordDetail from "../Atomic Components/organisms/PetManagement/PetMedicalRecordDetail/PetMedicalRecordDetail";
 import TransactionManagement from "../Atomic Components/pages/StaffRole/TransactionManagement/TransactionManagement";
+import HospitalizationInfoPage from "./../Atomic Components/pages/VetRole/HospitalizationInfoPage/HospitalizationInfoPage";
 
 function AppRoutes() {
 	const { auth } = useAuth();
@@ -141,12 +142,8 @@ function AppRoutes() {
 										element={<HospitalizeRecordPage />}
 									/>
 									<Route
-										path="hospitalize-info/:hospitalizeId"
-										element={
-											<>
-												<h1>hello hehe chưa có gì hết</h1>
-											</>
-										}
+										path="hospitalize-info/pet/:petId"
+										element={<HospitalizationInfoPage />}
 									/>
 								</Route>
 							</Route>

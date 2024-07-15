@@ -88,7 +88,7 @@ function PetMedicalRecordDetail() {
 										className={"subtitle-content"}
 									/>
 									<Text
-										content={"Bác sĩ phụ trách: Nguyen Thanh Phong"}
+										content={`Bác sĩ phụ trách: ${medicalByPet?.createdByName}`}
 										type={"subtitle"}
 										className={"subtitle-content"}
 									/>

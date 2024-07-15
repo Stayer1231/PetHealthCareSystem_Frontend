@@ -9,6 +9,7 @@ import useAuth from "./../../../../config/provider/useAuth";
 function MyAccount() {
 	const [showUpdateUserProfile, setShowUpdateUserProfile] = useState(false);
 	const { auth } = useAuth();
+	console.log(auth);
 
 	// USER MODAL PROFILE
 	const openUpdateUserProfile = () => {
@@ -28,13 +29,6 @@ function MyAccount() {
 							content={"Thông Tin Cá Nhân"}
 							type={"h3"}
 						/>
-						{/* <Button
-							content="Update"
-							rightIcon={<AddIcon />}
-							variant="transparent"
-							stroke
-							onClick={openUpdateUserProfile}
-						/> */}
 					</div>
 					<div className="info-container">
 						<div className="user-fullname info-div">
@@ -48,7 +42,7 @@ function MyAccount() {
 								className={"info-content"}
 							/>
 						</div>
-						<div className="user-dob info-div">
+						{/* <div className="user-dob info-div">
 							<Text
 								content={"Ngày sinh:"}
 								type={"subtitle"}
@@ -58,7 +52,7 @@ function MyAccount() {
 								type={"subtitle"}
 								className={"info-content"}
 							/>
-						</div>
+						</div> */}
 						<div className="user-phone info-div">
 							<Text
 								content={"Số điện thoại:"}

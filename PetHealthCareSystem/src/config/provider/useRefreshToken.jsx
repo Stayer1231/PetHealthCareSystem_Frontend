@@ -7,6 +7,7 @@ const useRefreshToken = () => {
 	const fullName = Cookies.get("fullName");
 	const userName = Cookies.get("username");
 	const refToken = Cookies.get("refToken");
+	const phoneNumber = Cookies.get("phoneNumber");
 	const role = Cookies.get("role");
 
 	const refresh = async () => {
@@ -23,6 +24,7 @@ const useRefreshToken = () => {
 					userName: userName,
 					refToken: refToken,
 					role: role,
+					phoneNumber: phoneNumber,
 					accessToken: response.data.data.token,
 				};
 			});

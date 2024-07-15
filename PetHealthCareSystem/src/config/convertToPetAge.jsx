@@ -10,5 +10,9 @@ export const convertToPetAge = (dateOfBirth) => {
 		months += 12;
 	}
 
+	if (years === 0) {
+		return `${months} tháng`;
+	}
+
 	return `${years} năm ${months} tháng`;
 };
